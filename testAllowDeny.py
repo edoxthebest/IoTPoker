@@ -34,7 +34,7 @@ s = Solver()
 s.add(InRe(id1, re_id1))
 
 # ID1 can publish
-mqtt_free_id = Re(Replace(id1, StringVal('#'), Re('s')))
+mqtt_free_id = Re(Replace(id1, StringVal('#'), StringVal('s')))
 print(mqtt_free_id)
 s.add(InRe(topic, Concat(Re('/topic/'), mqtt_free_id)))
 
