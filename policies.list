@@ -1,8 +1,2 @@
-policies/aws-samples/unreg_cid-var.json
-policies/aws-samples/unreg_connect.json
-policies/aws-samples/unreg_deny-pub.json
-policies/aws-samples/unreg_deny-sub.json
-policies/aws-samples/unreg_mqtt-wildcards.json
-policies/aws-samples/unreg_sub-pub-topic.json
-policies/aws-samples/unreg_topic-wildcards.json
-policies/aws-samples/unreg_sub-pub-topic2.json
+A policies/aws-samples/unreg_sub-pub-topic.json
+B policies/aws-samples/unreg_sub-pub-topic2.json

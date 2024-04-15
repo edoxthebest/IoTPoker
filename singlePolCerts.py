@@ -3,16 +3,20 @@
 # 
 # We parse them, the construct the information flow graph
 import json
+import matplotlib.pyplot as plt
+import networkx as nx
 import re
 import sys
-from z3 import String, Solver, InRe, Union, Re, Not, sat, Empty, StringSort, ReSort, And
-from policyuniverse.policy import Policy
+from networkx.algorithms import bipartite
 from policyuniverse.arn import ARN
+from policyuniverse.policy import Policy
+from z3 import String, Solver, InRe, Union, Re, Not, sat, Empty, StringSort, ReSort, And
 
 # Pairs (Filename, Policy) -- as substitute for certificates
 policies = []
 
-nodes = []
+nodes_certs = []
+nodes_formulas = []
 edges = []
 
 re_empty = Empty(ReSort(StringSort()))
@@ -27,8 +31,7 @@ def printPols():
 
 # Algorithm 1
 def buildSymGraph():
-  nodes = [name for (name, _) in policies]
-  edges = []
+  nodes_certs = [name for (name, _) in policies]
   
   for (cert1, pol1) in policies:
     for (cert2, pol2) in policies:
@@ -49,7 +52,14 @@ def buildSymGraph():
 
       print(s.check())
       if s.check() == sat:
-        print(s.model())
+        model = s.model()
+        print(model)
+        
+        node = f'{cert1}->{cert2}({model[topic]})'
+        
+        nodes_formulas.append(node)
+        edges.append((cert1, node))
+        edges.append((node, cert2))
       # if sat
         # add edge
         # add node
@@ -154,15 +164,26 @@ def main():
   print(sys.argv)
   
   for line in open(sys.argv[1]):
-    line = line.strip()
-    file = open(line)
+    line = line.strip().split(' ')
+    file = open(line[1])
     policy = Policy(json.load(file))
-    policies.append((line, policy))
+    policies.append((line[0], policy))
   
   printPols()
-  buildReConnect(policies[5][1])
   
   buildSymGraph()
+  
+  G = nx.DiGraph()
+  G.add_nodes_from(nodes_certs, bipartite=0)
+  G.add_nodes_from(nodes_formulas, bipartite=1)
+  G.add_edges_from(edges)
+  
+  pos = nx.bipartite_layout(G, bipartite.sets(G)[1])
+  nx.draw_networkx_nodes(G, pos,)
+  nx.draw_networkx_labels(G, pos)
+  nx.draw_networkx_edges(G, pos, arrows=True, connectionstyle='arc3, rad = 0.1')
+
+  plt.show()
   
 if __name__ == '__main__':
   main()
