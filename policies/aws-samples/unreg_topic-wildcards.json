@@ -1,0 +1,26 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": ["iot:Connect"],
+      "Resource": [
+        "arn:aws:iot:us-east-1:123456789012:client/clientId1",
+        "arn:aws:iot:us-east-1:123456789012:client/clientId2",
+        "arn:aws:iot:us-east-1:123456789012:client/clientId3"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["iot:Publish", "iot:Receive"],
+      "Resource": ["arn:aws:iot:us-east-1:123456789012:topic/topic_prefix*"]
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["iot:Subscribe"],
+      "Resource": [
+        "arn:aws:iot:us-east-1:123456789012:topicfilter/topic_prefix*"
+      ]
+    }
+  ]
+}
