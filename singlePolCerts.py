@@ -15,6 +15,13 @@ from z3 import String, Solver, InRe, Union, Re, Not, sat, Empty, StringSort, ReS
 # Pairs (Filename, Policy) -- as substitute for certificates
 policies = []
 
+# Actions
+class iot:
+  con = 'iot:Connect'
+  pub = 'iot:Publish'
+  sub = 'iot:Subscribe'
+  rec = 'iot:Receive'
+
 nodes_certs = []
 nodes_formulas = []
 edges = []
@@ -39,14 +46,11 @@ def buildSymGraph():
       id2 = String('id_2')
       topic = String('common_topic')
       
-      re_id1 = buildReConnect(pol1)
-      re_id2 = buildReConnect(pol2)
-      
       s = Solver()
-      s.add(InRe(id1, re_id1))
-      s.add(InRe(id2, re_id2))
-      s.add(InRe(topic, buildRePub(pol1)))
-      s.add(And(InRe(topic, buildReSub(pol2)), InRe(topic, buildReRec(pol2))))
+      s.add(buildConnect(id1, pol1))
+      s.add(buildConnect(id2, pol2))
+      s.add(buildPublish(topic, pol1))
+      s.add(And(buildSubscribe(topic, pol2), buildReceive(topic, pol2)))
       
       print(f'-- {cert1}  &  {cert2} --')
 
@@ -64,101 +68,44 @@ def buildSymGraph():
         # add edge
         # add node
         
-def buildReConnect(policy: Policy):
-  re_con = re_empty
+def buildConnect(id, policy: Policy):
+  return buildConsVarAllowed(id, policy, iot.con)
+
+def buildPublish(topic, policy: Policy):
+  return buildConsVarAllowed(topic, policy, iot.pub)
+
+def buildSubscribe(topic, policy: Policy):
+  return buildConsVarAllowed(topic, policy, iot.sub)
+
+def buildReceive(topic, policy: Policy):
+  return buildConsVarAllowed(topic, policy, iot.rec)
+
+
+def buildConsVarAllowed(variable, policy: Policy, action):
+  allow_res = []
+  deny_res = []
   
   for stmt in policy.statements:
-    if not 'iot:Connect' in stmt.actions:
+    if not action in stmt.actions:
       continue
     
-    if len(stmt.resources) > 1:
-      re_res = Union([parseRe(res) for res in stmt.resources])
-    else:
-      re_res = parseRe(stmt.resources.pop())
-         
     if stmt.effect == 'Allow':
-      re_con = Union(re_con, re_res)
+      for res in stmt.resources:
+        allow_res.append(res)
     elif stmt.effect == 'Deny':
-      re_con = Union(re_con, Not(re_res))
-  
-  print(re_con)
-  return re_con
+      for res in stmt.resources:
+        deny_res.append(res)
 
-def buildRePub(policy: Policy):
-  re_pub = re_empty
-  
-  for stmt in policy.statements:
-    if not 'iot:Publish' in stmt.actions:
-      continue
-    
-    if len(stmt.resources) > 1:
-      re_res = Union([parseRe(res) for res in stmt.resources])
-    else:
-      re_res = parseRe(stmt.resources.pop())
-        
-    if stmt.effect == 'Allow':
-      re_pub = Union(re_pub, re_res)
-    elif stmt.effect == 'Deny':
-      pass
-      # re_pub = Union(re_pub, Not(re_res))
-  
-  print(re_pub)
-  return re_pub
+  re_allow = Union([parseRe(res) for res in allow_res]) if allow_res else re_empty
+  re_deny = Union([parseRe(res) for res in deny_res]) if deny_res else re_empty
 
-def buildReSub(policy: Policy):
-  re_sub = re_empty
-  
-  for stmt in policy.statements:
-    if not 'iot:Publish' in stmt.actions:
-      continue
-    
-    if len(stmt.resources) > 1:
-      re_res = Union([parseRe(res) for res in stmt.resources])
-    else:
-      re_res = parseRe(stmt.resources.pop())  
-            
-    if stmt.effect == 'Allow':
-      re_sub = Union(re_sub, re_res)
-    elif stmt.effect == 'Deny':
-      pass
-      # re_sub = Union(re_sub, Not(re_res))
-  
-  print(re_sub)
-  return re_sub
-
-def buildReRec(policy: Policy):
-  re_rec = re_empty
-  
-  for stmt in policy.statements:
-    if not 'iot:Publish' in stmt.actions:
-      continue
-    
-    if len(stmt.resources) > 1:
-      re_res = Union([parseRe(res) for res in stmt.resources])
-    else:
-      re_res = parseRe(stmt.resources.pop())        
-    
-    if stmt.effect == 'Allow':
-      re_rec = Union(re_rec, re_res)
-    elif stmt.effect == 'Deny':
-      pass
-      # re_rec = Union(re_rec, Not(re_res))
-  
-  print(re_rec)
-  return re_rec
-
+  return And(InRe(variable, re_allow), Not(InRe(variable, re_deny)))
 
 def parseRe(arn):
   res = ARN(arn).name
   res = re.sub('^(client|topic|topicfilter)\/', '', res)
   return Re(res)
             
-def buildF_c1_c2():
-  # AND F_out_c1 F_in_c2
-  pass
-
-def buildF_out():
-  pass
 
 def main():
   print(sys.argv)
