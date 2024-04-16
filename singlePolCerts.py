@@ -25,9 +25,7 @@ class iot:
   sub = 'iot:Subscribe'
   rec = 'iot:Receive'
 
-nodes_certs = []
-nodes_formulas = []
-edges = []
+G = nx.DiGraph()
 
 re_empty = Empty(ReSort(StringSort()))
 re_qmark = Intersect(AllChar(ReSort(StringSort())),Complement(Union(Re('*'), Re('?'))))
@@ -44,9 +42,7 @@ def printPols():
       white += '  '
 
 # Algorithm 1
-def buildSymGraph():
-  nodes_certs = [name for (name, _) in policies]
-  
+def buildSymGraph():  
   for (cert1, pol1) in policies:
     for (cert2, pol2) in policies:
       id1 = String('id_1')
@@ -66,15 +62,11 @@ def buildSymGraph():
         model = s.model()
         print(model)
         
-        node = f'{cert1}->{cert2}({model[topic]})'
-        
-        nodes_formulas.append(node)
-        edges.append((cert1, node))
-        edges.append((node, cert2))
-      # if sat
-        # add edge
-        # add node
-        
+        node = f'{cert1}->{cert2}'  
+        G.add_node(node, bipartite=1)
+        G.add_edge(cert1, node, weight=model[topic])
+        G.add_edge(node, cert2, weight=model[topic])
+
 def buildConnect(id, policy: Policy):
   return buildConsVarAllowed(id, policy, iot.con, None)
 
@@ -146,26 +138,20 @@ def parseRe(arn, client_id):
             
 
 def main():
-  print(sys.argv)
-  
   for line in open(sys.argv[1]):
     line = line.strip().split(' ')
     file = open(line[1])
     policy = Policy(json.load(file))
     policies.append((line[0], policy))
-  
+    
+    G.add_node(line[0], bipartite=0)
   printPols()
   
   buildSymGraph()
-  
-  G = nx.DiGraph()
-  G.add_nodes_from(nodes_certs, bipartite=0)
-  G.add_nodes_from(nodes_formulas, bipartite=1)
-  G.add_edges_from(edges)
-  
-  pos = nx.bipartite_layout(G, bipartite.sets(G)[1])
+  pos = nx.bipartite_layout(G, bipartite.sets(G)[0])
   nx.draw_networkx_nodes(G, pos,)
   nx.draw_networkx_labels(G, pos)
+  nx.draw_networkx_edge_labels(G, pos, nx.get_edge_attributes(G, 'weight'), connectionstyle='arc3, rad = 0.1')
   nx.draw_networkx_edges(G, pos, arrows=True, connectionstyle='arc3, rad = 0.1')
 
   plt.show()
