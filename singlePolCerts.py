@@ -56,8 +56,8 @@ def buildSymGraph():
       s = Solver()
       s.add(buildConnect(id1, pol1))
       s.add(buildConnect(id2, pol2))
-      s.add(buildPublish(topic, pol1))
-      s.add(And(buildSubscribe(topic, pol2), buildReceive(topic, pol2)))
+      s.add(buildPublish(topic, pol1, id1))
+      s.add(And(buildSubscribe(topic, pol2, id2), buildReceive(topic, pol2, id2)))
       
       print(f'-- {cert1}  &  {cert2} --')
 
@@ -76,19 +76,19 @@ def buildSymGraph():
         # add node
         
 def buildConnect(id, policy: Policy):
-  return buildConsVarAllowed(id, policy, iot.con)
+  return buildConsVarAllowed(id, policy, iot.con, None)
 
-def buildPublish(topic, policy: Policy):
-  return buildConsVarAllowed(topic, policy, iot.pub)
+def buildPublish(topic, policy: Policy, client_id):
+  return buildConsVarAllowed(topic, policy, iot.pub, client_id)
 
-def buildSubscribe(topic, policy: Policy):
-  return buildConsVarAllowed(topic, policy, iot.sub)
+def buildSubscribe(topic, policy: Policy, client_id):
+  return buildConsVarAllowed(topic, policy, iot.sub, client_id)
 
-def buildReceive(topic, policy: Policy):
-  return buildConsVarAllowed(topic, policy, iot.rec)
+def buildReceive(topic, policy: Policy, client_id):
+  return buildConsVarAllowed(topic, policy, iot.rec, client_id)
 
 
-def buildConsVarAllowed(variable, policy: Policy, action):
+def buildConsVarAllowed(variable, policy: Policy, action, client_id):
   allow_res = []
   deny_res = []
   
@@ -103,12 +103,12 @@ def buildConsVarAllowed(variable, policy: Policy, action):
       for res in stmt.resources:
         deny_res.append(res)
 
-  re_allow = Union([parseRe(res) for res in allow_res]) if allow_res else re_empty
-  re_deny = Union([parseRe(res) for res in deny_res]) if deny_res else re_empty
+  re_allow = Union([parseRe(res, client_id) for res in allow_res]) if allow_res else re_empty
+  re_deny = Union([parseRe(res, client_id) for res in deny_res]) if deny_res else re_empty
 
   return And(InRe(variable, re_allow), Not(InRe(variable, re_deny)))
 
-def parseRe(arn):
+def parseRe(arn, client_id):
   res = ARN(arn).name
   is_sub_action = re.match('^topicfilter\/', res)
   res = re.sub('^(client|topic|topicfilter)\/', '', res)
@@ -116,24 +116,29 @@ def parseRe(arn):
   aws_wildcards = r'(\?|\*)'
   mqtt_plus = r'(\+)'
   mqtt_hash = r'(^#$|\/#$)'
-  aws_mqtt_wildcards = re.compile('%s|%s|%s' % (aws_wildcards, mqtt_plus, mqtt_hash))
+  cid_var = r'(\$\{iot:ClientId\})'
+  aws_mqtt_wildcards = re.compile('%s|%s|%s|%s' % (aws_wildcards, mqtt_plus, mqtt_hash, cid_var))
+  aws_only_wildcards = re.compile('%s|%s' % (aws_wildcards, cid_var))
   if is_sub_action:
     #Both AWS and MQTT Wildcards
     res_split = [x for x in re.split(aws_mqtt_wildcards, res) if x]
   else:
     # Only AWS Wildcards - substitute ? and * with their regular expressions
-    res_split = [x for x in re.split(aws_wildcards, res) if x]
+    res_split = [x for x in re.split(aws_only_wildcards, res) if x]
   res = []
   for x in res_split:
     match x:
       case '?':
         res.append(re_qmark)
-      case  '*':
+      case '*':
         res.append(re_star)
       case '+':
         res.append(re_plus)
       case '#' | '/#' :
         res.append(re_hash)
+      case '${iot:ClientId}':
+        # Does not handle possible mqtt wildcards in the client id
+        res.append(Re(client_id))
       case _:
         res.append(Re(x))
 
