@@ -2,3 +2,5 @@ A policies/aws-samples/unreg_sub-pub-topic.json
 B policies/aws-samples/unreg_sub-pub-topic2.json
 C policies/simple-test/unreg_deny-pub-spec.json
 D policies/simple-test/unreg_topic-wildcards.json
+E policies/simple-test/unreg_mqtt-+-wildcard.json
+F policies/simple-test/unreg_mqtt-#-wildcard.json

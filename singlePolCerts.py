@@ -12,7 +12,7 @@ from networkx.algorithms import bipartite
 from policyuniverse.arn import ARN
 from policyuniverse.policy import Policy
 from z3 import String, Not, Empty, StringSort, ReSort, And
-from z3 import Re, InRe, Union, Complement, Star, Concat, AllChar, Intersect
+from z3 import Re, InRe, Union, Complement, Star, Concat, AllChar, Intersect, Plus
 from z3 import Solver, sat
 
 # Pairs (Filename, Policy) -- as substitute for certificates
@@ -32,6 +32,8 @@ edges = []
 re_empty = Empty(ReSort(StringSort()))
 re_qmark = Intersect(AllChar(ReSort(StringSort())),Complement(Union(Re('*'), Re('?'))))
 re_star = Star(re_qmark)
+re_plus = Plus(Intersect(AllChar(ReSort(StringSort())),Complement(Union(Re('*'), Re('?'), Re('/')))))
+re_hash = Union(re_empty, Concat(Re('/'), re_star))
 
 def printPols():
   for (name, pol) in policies:
@@ -108,18 +110,32 @@ def buildConsVarAllowed(variable, policy: Policy, action):
 
 def parseRe(arn):
   res = ARN(arn).name
+  is_sub_action = re.match('^topicfilter\/', res)
   res = re.sub('^(client|topic|topicfilter)\/', '', res)
   
-  # AWS Wildcards - substitute ? and * with their regular expressions
-  res_split = [x for x in re.split('(\?|\*)', res) if x]
+  aws_wildcards = r'(\?|\*)'
+  mqtt_plus = r'(\+)'
+  mqtt_hash = r'(^#$|\/#$)'
+  aws_mqtt_wildcards = re.compile('%s|%s|%s' % (aws_wildcards, mqtt_plus, mqtt_hash))
+  if is_sub_action:
+    #Both AWS and MQTT Wildcards
+    res_split = [x for x in re.split(aws_mqtt_wildcards, res) if x]
+  else:
+    # Only AWS Wildcards - substitute ? and * with their regular expressions
+    res_split = [x for x in re.split(aws_wildcards, res) if x]
   res = []
   for x in res_split:
-    if x == '?':
-      res.append(re_qmark)
-    elif x == '*':
-      res.append(re_star)
-    else:
-      res.append(Re(x))
+    match x:
+      case '?':
+        res.append(re_qmark)
+      case  '*':
+        res.append(re_star)
+      case '+':
+        res.append(re_plus)
+      case '#' | '/#' :
+        res.append(re_hash)
+      case _:
+        res.append(Re(x))
 
   return res.pop() if len(res) == 1 else Concat(res)
             
