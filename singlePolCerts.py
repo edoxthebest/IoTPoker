@@ -7,10 +7,13 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import re
 import sys
+
 from networkx.algorithms import bipartite
 from policyuniverse.arn import ARN
 from policyuniverse.policy import Policy
-from z3 import String, Solver, InRe, Union, Re, Not, sat, Empty, StringSort, ReSort, And
+from z3 import String, Not, Empty, StringSort, ReSort, And
+from z3 import Re, InRe, Union, Complement, Star, Concat, AllChar, Intersect
+from z3 import Solver, sat
 
 # Pairs (Filename, Policy) -- as substitute for certificates
 policies = []
@@ -27,6 +30,8 @@ nodes_formulas = []
 edges = []
 
 re_empty = Empty(ReSort(StringSort()))
+re_qmark = Intersect(AllChar(ReSort(StringSort())),Complement(Union(Re('*'), Re('?'))))
+re_star = Star(re_qmark)
 
 def printPols():
   for (name, pol) in policies:
@@ -104,7 +109,19 @@ def buildConsVarAllowed(variable, policy: Policy, action):
 def parseRe(arn):
   res = ARN(arn).name
   res = re.sub('^(client|topic|topicfilter)\/', '', res)
-  return Re(res)
+  
+  # AWS Wildcards - substitute ? and * with their regular expressions
+  res_split = [x for x in re.split('(\?|\*)', res) if x]
+  res = []
+  for x in res_split:
+    if x == '?':
+      res.append(re_qmark)
+    elif x == '*':
+      res.append(re_star)
+    else:
+      res.append(Re(x))
+
+  return res.pop() if len(res) == 1 else Concat(res)
             
 
 def main():
