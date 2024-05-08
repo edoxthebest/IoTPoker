@@ -8,7 +8,7 @@ class TestPolicyReader(unittest.TestCase):
     """
     Test reading policies from aws-samples directory
     """
-    directory = 'policies/aws-samples'
+    directory = 'tests/policies/aws-samples'
     reader = PolicyReader()
     reader.read_policy_dir(directory)
     
@@ -20,7 +20,7 @@ class TestPolicyReader(unittest.TestCase):
     """
     Test reading policies from benchmark FLAW 1
     """
-    directory = 'policies/policy_benchmark/FLAW1'
+    directory = 'tests/policies/policy_benchmark/FLAW1'
     reader = PolicyReader()
     reader.read_policy_dir(directory)
     

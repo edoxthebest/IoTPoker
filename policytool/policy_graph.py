@@ -20,11 +20,11 @@ class PolicyGraph:
         topic = z3.String('common_topic')
         
         solver = z3.Solver()
-        solver.add(cert1.policies.buildConnect(id1))
-        solver.add(cert2.policies.buildConnect(id2))
-        solver.add(cert1.policies.buildPublish(topic, id1))
-        solver.add(z3.And(cert2.policies.buildSubscribe(topic, id2),
-                          cert2.policies.buildReceive(topic, id2)))
+        solver.add(cert1.policies.build_connect(id1))
+        solver.add(cert2.policies.build_connect(id2))
+        solver.add(cert1.policies.build_publish(topic, id1))
+        solver.add(z3.And(cert2.policies.build_subscribe(topic, id2),
+                          cert2.policies.build_receive(topic, id2)))
         
         print(f'-- {cert1.name}  &  {cert2.name} --')
 

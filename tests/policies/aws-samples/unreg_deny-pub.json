@@ -13,12 +13,12 @@
     {
       "Effect": "Allow",
       "Action": ["iot:Publish"],
-      "Resource": ["arn:aws:iot:us-east-1:123456789012:topic/department/*"]
+      "Resource": ["arn:aws:iot:us-east-1:123456789012:topic/a*"]
     },
     {
       "Effect": "Deny",
       "Action": ["iot:Publish"],
-      "Resource": ["arn:aws:iot:us-east-1:123456789012:topic/department/admins"]
+      "Resource": ["arn:aws:iot:us-east-1:123456789012:topic/?"]
     }
   ]
 }

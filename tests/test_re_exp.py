@@ -1,4 +1,3 @@
-import logging
 import unittest
 import z3
 from policytool import ReExp
