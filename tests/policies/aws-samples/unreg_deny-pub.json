@@ -5,20 +5,23 @@
       "Effect": "Allow",
       "Action": ["iot:Connect"],
       "Resource": [
-        "arn:aws:iot:us-east-1:123456789012:client/clientId1",
-        "arn:aws:iot:us-east-1:123456789012:client/clientId2",
-        "arn:aws:iot:us-east-1:123456789012:client/clientId3"
+        "arn:aws:iot:us-east-1:123456789012:client/a",
+        "arn:aws:iot:us-east-1:123456789012:client/b",
+        "arn:aws:iot:us-east-1:123456789012:client/c"
       ]
     },
     {
       "Effect": "Allow",
       "Action": ["iot:Publish"],
-      "Resource": ["arn:aws:iot:us-east-1:123456789012:topic/a*"]
+      "Resource": ["arn:aws:iot:us-east-1:123456789012:topic/${iot:ClientId}"]
     },
     {
       "Effect": "Deny",
       "Action": ["iot:Publish"],
-      "Resource": ["arn:aws:iot:us-east-1:123456789012:topic/?"]
+      "Resource": [
+        "arn:aws:iot:us-east-1:123456789012:topic/a",
+        "arn:aws:iot:us-east-1:123456789012:topic/b"
+      ]
     }
   ]
 }

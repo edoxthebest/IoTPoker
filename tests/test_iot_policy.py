@@ -63,6 +63,46 @@ class TestIoTPolicy(unittest.TestCase):
     solver.add(publish_cons)
     
     self.assertEqual(solver.check(), z3.sat)
-    self.assertIn(solver.model()[id], ['clientId1', 'clientId2', 'clientId3'])
-    self.assertNotEqual(solver.model()[topic], 2)
-    self.assertEqual(solver.model()[topic][0], 'a')
+    self.assertIn(solver.model()[id], ['a', 'b', 'c'])
+    self.assertEqual(solver.model()[topic], 'c')
+    
+  def test_deny_sub_rec(self):
+    id = z3.String('id')
+    topic = z3.String('topic')
+    self.load('tests/policies/aws-samples/unreg_deny-sub.json')
+    subscribe_cons = self.policy.build_subscribe(topic, id)
+    receive_cons = self.policy.build_receive(topic, id)
+    re_star = z3.Star(z3.AllChar(z3.ReSort(z3.StringSort())))
+
+    solver = z3.Solver()
+    solver.add(z3.And(subscribe_cons, receive_cons))
+    solver.add(z3.InRe(topic, z3.Concat(re_star, z3.Re('admin'))))
+    
+    self.assertEqual(solver.check(), z3.sat)
+    self.assertEqual(solver.model()[topic], 'admin')
+    
+    solver.add(z3.InRe(topic, z3.Re('restricted/admin')))
+    self.assertEqual(solver.check(), z3.unsat)
+
+  def test_multi_statement(self):
+    id = z3.String('id')
+    topic = z3.String('topic')
+    self.load('tests/policies/aws-samples/unreg_multi-stmt.json')
+    connect_cons = self.policy.build_connect(id)
+    publish_cons = self.policy.build_publish(topic, id)
+    subscribe_cons = self.policy.build_subscribe(topic, id)
+    receive_cons = self.policy.build_receive(topic, id)
+    
+    solver = z3.Solver()
+    solver.add(connect_cons)
+    solver.add(publish_cons)
+    solver.add(z3.And(subscribe_cons, receive_cons))
+
+    solver.add(z3.InRe(id, z3.Re('client1')))
+    solver.add(z3.InRe(topic, z3.Re('testTopic')))
+    
+    self.assertEqual(solver.check(), z3.sat)
+    self.assertEqual(solver.model()[id], 'client1')
+    self.assertEqual(solver.model()[topic], 'testTopic')
+
+

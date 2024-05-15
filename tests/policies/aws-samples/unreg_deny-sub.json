@@ -13,12 +13,17 @@
     {
       "Effect": "Allow",
       "Action": "iot:Subscribe",
-      "Resource": "arn:aws:iot:us-east-1:123456789012:topicfilter/topic_prefix/*"
+      "Resource": "arn:aws:iot:us-east-1:123456789012:topicfilter/*"
     },
     {
       "Effect": "Allow",
       "Action": "iot:Receive",
-      "NotResource": "arn:aws:iot:us-east-1:123456789012:topic/topic_prefix/restricted/*"
+      "Resource": "arn:aws:iot:us-east-1:123456789012:topic/*"
+    },
+    {
+      "Effect": "Deny",
+      "Action": "iot:Receive",
+      "Resource": "arn:aws:iot:us-east-1:123456789012:topic/restricted/*"
     }
   ]
 }

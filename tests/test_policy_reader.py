@@ -1,4 +1,5 @@
 import unittest
+import os.path
 from policytool import PolicyReader
 from policyuniverse.policy import Policy
 
@@ -12,7 +13,7 @@ class TestPolicyReader(unittest.TestCase):
     reader = PolicyReader()
     reader.read_policy_dir(directory)
     
-    self.assertEqual(len(reader._policies), 8)
+    self.assertEqual(len(reader._policies), len([f for f in os.listdir(directory)]))
     for policy in reader._policies:
       self.assertIsInstance(policy, Policy)
       
