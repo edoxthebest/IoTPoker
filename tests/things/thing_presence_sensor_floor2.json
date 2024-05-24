@@ -1,0 +1,10 @@
+{
+  "defaultClientId": "presenceSensor2",
+  "thingName": "presenceSensor2",
+  "thingId": "ba6bb237-014a-4f88-821c-8af8993620cf",
+  "thingArn": "arn:aws:iot:us-east-1:123456789012:thing/presenceSensor2",
+  "attributes": {
+    "floor": "2"
+  },
+  "version": 2
+}
