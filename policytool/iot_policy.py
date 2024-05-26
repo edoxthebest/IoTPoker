@@ -1,4 +1,5 @@
 import z3
+from policyuniverse.arn import ARN
 from policyuniverse.policy import Policy
 from policytool.iot import IoT
 from policytool.re_exp import ReExp
@@ -39,3 +40,15 @@ class IoTPolicy(Policy):
     re_deny = z3.Union(parsed_deny) if deny_res else ReExp.RE_EMPTY
 
     return z3.And(z3.InRe(variable, re_allow), z3.Not(z3.InRe(variable, re_deny)))
+  
+  def get_client(self):
+    for stmt in self.statements:
+      if not IoT.CON in stmt.actions:
+        continue
+      
+      return ARN(stmt.resources.pop()).name
+    
+  @staticmethod
+  def get_union(policies: list['IoTPolicy']):
+    # TODO: implement this
+    return policies[0]
