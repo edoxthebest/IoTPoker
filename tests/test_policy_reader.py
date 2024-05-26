@@ -1,29 +1,38 @@
 import unittest
 import os.path
-from policytool import PolicyReader
+from policytool import IoT, IoTPolicy, PolicyReader
 from policyuniverse.policy import Policy
 
 
 class TestPolicyReader(unittest.TestCase):
+  def test_read_policy_file(self):
+    """
+    Test reading policy file
+    """
+    filename = 'tests/policies/aws-samples/unreg_connect.json'
+    policy = PolicyReader.read_policy_file(filename)
+    
+    self.assertIsInstance(policy, IoTPolicy)
+    self.assertSetEqual(policy.statements[0].actions, {IoT.CON})
+    
   def test_read_aws_samples_dir(self):
     """
     Test reading policies from aws-samples directory
     """
     directory = 'tests/policies/aws-samples'
-    reader = PolicyReader()
-    reader.read_policy_dir(directory)
+    policies = PolicyReader.read_policy_dir(directory)
     
-    self.assertEqual(len(reader._policies), len([f for f in os.listdir(directory)]))
-    for policy in reader._policies:
+    self.assertEqual(len(policies), len([f for f in os.listdir(directory)]))
+    for policy in policies:
       self.assertIsInstance(policy, Policy)
       
-  def test_read_bench_flaw1(self):
+  def test_read_stored_dir(self):
     """
-    Test reading policies from benchmark FLAW 1
+    Test stored policy after directory reading
     """
     directory = 'tests/policies/policy_benchmark/FLAW1'
     reader = PolicyReader()
     reader.read_policy_dir(directory)
     
-    for policy in reader._policies:
+    for policy in reader.policies:
       self.assertIsInstance(policy, Policy)

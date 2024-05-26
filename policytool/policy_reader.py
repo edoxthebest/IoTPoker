@@ -5,18 +5,21 @@ from policytool.iot_policy import IoTPolicy
 class PolicyReader:
   _policies = []
   
-  def read_policy(self, file):
-    parsed_policy = IoTPolicy(json.load(file))
-    self._policies.append(parsed_policy)
-    
-  def read_policy_file(self, filename):
-    file = open(filename)
-    self.read_policy(file)
-    file.close()
-    
-  def read_policy_dir(self, dir):
+  @property
+  def policies(self):
+    return self._policies
+  
+  @staticmethod
+  def read_policy_file(filename):
+    with open(filename) as file:
+      return IoTPolicy(json.load(file))
+   
+  @classmethod 
+  def read_policy_dir(cls, dir):
     for filename in os.listdir(dir):
       file = os.path.join(dir, filename)
       
       if os.path.isfile(file):
-        self.read_policy_file(file)
+        cls._policies.append(cls.read_policy_file(file))
+    
+    return cls._policies
