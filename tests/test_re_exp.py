@@ -1,6 +1,9 @@
 import unittest
 import z3
 from policytool import ReExp
+from policytool import Thing
+
+#TODO: add test descrp
 
 class TestReExp(unittest.TestCase):
   def test_re_expr(self):
@@ -52,5 +55,32 @@ class TestReExp(unittest.TestCase):
     re_parsed = ReExp.parse(arn, 'test')
     re_expected = z3.Concat(z3.Re('Client/'), z3.Re('test'))
     self.assertEqual(re_parsed, re_expected)
+    
+  def test_parse_thing(self):
+    res = ('client/${iot:Connection.Thing.ThingName}/'
+           'floor${iot:Connection.Thing.Attributes[floor]}/'
+           'some_other_attr/${iot:Connection.Thing.Attributes[other]}'
+          )
+    test_thing = Thing('testT', None, None, {'floor':'1', 'other':'test_value'}, None)
+    parsed_res = ReExp.parse_thing(res, test_thing.name, test_thing.attrs)
+    self.assertEqual(parsed_res, 'client/testT/floor1/some_other_attr/test_value')
 
-  # Does not handle possible mqtt wildcards in the client id
+  def test_parse_thing_name(self):
+    arn = 'arn:aws:iot:us-east-1:123456789012:client/${iot:Connection.Thing.ThingName}'
+    thing_file = 'tests/things/thing_presence_sensor_floor1.json'
+    thing: Thing = Thing.from_file(thing_file, None)
+    
+    re_parsed = ReExp.parse(arn, 'test', thing.name, thing.attrs)
+    re_expected = z3.Re('presenceSensor1')
+    self.assertEqual(re_parsed, re_expected)
+    
+  def test_parse_thing_attrs(self):
+    arn = 'topic/physicalAC/floor${iot:Connection.Thing.Attributes[floor]}/${iot:ClientId}/enable'
+    thing_file = 'tests/things/thing_presence_sensor_floor1.json'
+    thing: Thing = Thing.from_file(thing_file, None)
+    
+    re_parsed = ReExp.parse(arn, 'testT', thing.name, thing.attrs)
+    re_expected = z3.Concat(z3.Re('physicalAC/floor1/'), z3.Re('testT'), z3.Re('/enable'))
+    self.assertEqual(re_parsed, re_expected)
+
+  # TODO: Does not handle possible mqtt wildcards in the client id

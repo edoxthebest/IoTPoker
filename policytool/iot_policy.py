@@ -5,20 +5,37 @@ from policytool.iot import IoT
 from policytool.re_exp import ReExp
 
 class IoTPolicy(Policy):
-  def build_connect(self, id):
-    return self.build_allow_constraint(id, IoT.CON)
+  @staticmethod
+  def union(policies: list['IoTPolicy']):
+    # TODO: implement this
+    return policies[0]
   
-  def build_publish(self, topic, client_id):
-    return self.build_allow_constraint(topic, IoT.PUB, client_id)
+  # TODO: test this
+  @property
+  def client(self):
+    for stmt in self.statements:
+      if not IoT.CON in stmt.actions:
+        continue
+      
+      return ARN(stmt.resources.pop()).name
+    
+  def build_connect(self, id: z3.SeqRef, thing_name: str = None, thing_attrs: dict[str, str] = None):
+    return self.build_allow_constraint(id, IoT.CON, thing_name=thing_name, thing_attrs=thing_attrs)
+  
+  def build_publish(self, topic: z3.SeqRef, client_id: z3.SeqRef,
+                    thing_name: str = None, thing_attrs: dict[str, str] = None):
+    return self.build_allow_constraint(topic, IoT.PUB, client_id, thing_name, thing_attrs)
 
-  def build_subscribe(self, topic, client_id):
-    return self.build_allow_constraint(topic, IoT.SUB, client_id)
+  def build_subscribe(self, topic: z3.SeqRef, client_id: z3.SeqRef,
+                      thing_name: str = None, thing_attrs: dict[str, str] = None):
+    return self.build_allow_constraint(topic, IoT.SUB, client_id, thing_name, thing_attrs)
 
-  def build_receive(self, topic, client_id):
-    return self.build_allow_constraint(topic, IoT.REC, client_id)
+  def build_receive(self, topic: z3.SeqRef, client_id: z3.SeqRef,
+                    thing_name: str = None, thing_attrs: dict[str, str] = None):
+    return self.build_allow_constraint(topic, IoT.REC, client_id, thing_name, thing_attrs)
 
- 
-  def build_allow_constraint(self, variable, action, client_id = None):
+  def build_allow_constraint(self, variable: z3.SeqRef, action: IoT, client_id: z3.SeqRef = None,
+                             thing_name: str = None, thing_attrs: dict[str, str] = None):
     allow_res = []
     deny_res = []
     
@@ -33,22 +50,10 @@ class IoTPolicy(Policy):
         for res in stmt.resources:
           deny_res.append(res)
           
-    parsed_allow = [ReExp.parse(res, client_id) for res in allow_res]
-    parsed_deny = [ReExp.parse(res, client_id) for res in deny_res]
+    parsed_allow = [ReExp.parse(res, client_id, thing_name, thing_attrs) for res in allow_res]
+    parsed_deny = [ReExp.parse(res, client_id, thing_name, thing_attrs) for res in deny_res]
 
     re_allow = z3.Union(parsed_allow) if allow_res else ReExp.RE_EMPTY
     re_deny = z3.Union(parsed_deny) if deny_res else ReExp.RE_EMPTY
 
     return z3.And(z3.InRe(variable, re_allow), z3.Not(z3.InRe(variable, re_deny)))
-  
-  def get_client(self):
-    for stmt in self.statements:
-      if not IoT.CON in stmt.actions:
-        continue
-      
-      return ARN(stmt.resources.pop()).name
-    
-  @staticmethod
-  def get_union(policies: list['IoTPolicy']):
-    # TODO: implement this
-    return policies[0]

@@ -15,7 +15,7 @@ class PolicyReader:
       return IoTPolicy(json.load(file))
    
   @classmethod 
-  def read_policy_dir(cls, dir):
+  def read_policy_dir(cls, dir) -> list[IoTPolicy]:
     for filename in os.listdir(dir):
       file = os.path.join(dir, filename)
       
