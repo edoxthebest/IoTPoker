@@ -8,8 +8,8 @@ class TestPolicyGraph(unittest.TestCase):
     reader = PolicyReader()
     reader.read_policy_dir('tests/policies/case-study')
     
-    certs = [Certificate(pol) for pol in reader._policies]
+    certs = [Certificate([pol]) for pol in reader._policies]
     
     graph = PolicyGraph(certs)
     graph.build_sym_graph()
-    graph.draw_min()
+    graph.draw_v2()

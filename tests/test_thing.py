@@ -2,9 +2,8 @@ import json
 import unittest
 import uuid
 import z3
-from policytool import Thing, PolicyReader
+from policytool import PolicyReader, Thing
 from policyuniverse.arn import ARN
-
 
 class TestThing(unittest.TestCase):
   @classmethod
