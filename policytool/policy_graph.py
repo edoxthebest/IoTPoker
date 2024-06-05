@@ -15,6 +15,14 @@ class PolicyGraph:
   def pseudo_topics(self):
     return [node for node in self._graph.nodes if type(node) is Node]
   
+  @property
+  def size(self):
+    return len(self._graph.nodes)
+  
+  @property
+  def graph(self):
+    return self._graph
+  
   def __init__(self, certificates: list[Certificate]):
     self._graph = nx.DiGraph()
     self._simple_graph = nx.DiGraph()
@@ -87,24 +95,41 @@ class PolicyGraph:
     plt.show()
 
   def draw_tree(self, roots):
+    plt.figure(figsize=(25,10), dpi=80)
     for root in roots:
       subgraph = self._graph.subgraph(nx.descendants(self._graph, root) | {root})
       certs = [c for c in subgraph.nodes if type(c) is str]
       pseudo_topics = [n for n in subgraph.nodes if type(n) is Node]
-      pos = nx.bfs_layout(subgraph, root, align='horizontal', center=[0, 0])
+      pos = nx.bfs_layout(subgraph, root, align='horizontal', center=[-10, 10])
       pos = {node:[pos[node][0], -pos[node][1]] for node in pos}
+      pos = self.adjust_label_pos(pos)
       cert_labels = {cert:cert for cert in certs}
       pseudo_topic_labels = {n:n.topic for n in pseudo_topics}
-      label_pos = {node:[pos[node][0], pos[node][1] + .08] for node in pos}
+      # label_pos = {node:[pos[node][0], pos[node][1] + .05] for node in pos}
+      label_pos = pos
       nx.draw_networkx_nodes(subgraph, pos, certs,
-                           node_size=600, node_color='red')
+                           node_size=400, node_color='red')
       nx.draw_networkx_nodes(subgraph, pos, pseudo_topics, 
                              node_size=200, node_color='#00FF00', node_shape='s')
       nx.draw_networkx_edges(subgraph, pos, arrows=True)
-      nx.draw_networkx_labels(subgraph, label_pos, labels=cert_labels)
-      nx.draw_networkx_labels(subgraph, label_pos, labels=pseudo_topic_labels)
+      nx.draw_networkx_labels(subgraph, label_pos, labels=cert_labels, font_size=10)
+      nx.draw_networkx_labels(subgraph, label_pos, labels=pseudo_topic_labels, font_size=8)
     plt.show()
-
+    
+  def adjust_label_pos(self, pos):
+    pos_changed = True
+    for i in range(20):
+      for node_x in pos:
+        for node_y in pos:
+          if node_x != node_y and abs(pos[node_x][1] - pos[node_y][1]) < .1 and abs(pos[node_x][0] - pos[node_y][0]) < 2:
+            if pos[node_x][0] > pos[node_y][0]:
+              pos[node_x][0] = pos[node_x][0] + 1
+              pos[node_y][0] = pos[node_y][0] - 1
+            else:
+              pos[node_x][0] = pos[node_x][0] - 1
+              pos[node_y][0] = pos[node_y][0] + 1
+      
+    return pos
 
   def draw_min(self):
     pos = nx.spring_layout(self._simple_graph)

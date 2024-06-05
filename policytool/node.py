@@ -10,3 +10,10 @@ class Node():
     self.id1 = id1
     self.id2 = id2
     self.topic = topic
+    
+  def __str__(self) -> str:
+    topic = self.topic.__str__()[1:-1]
+    return f'({self.id1.__str__()[1:-1]}) -> {topic} -> ({self.id2.__str__()[1:-1]})'
+  
+  def __repr__(self):
+    return self.__str__()
