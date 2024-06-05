@@ -1,29 +1,146 @@
 #  TODO: better name
 import networkx as nx
+import time
 from policytool.node import Node
 
-# TODO:!!! On false should reply with the wrong path -- counterexample
 class Prover:
   def __init__(self, graph: nx.DiGraph):
     self._graph = graph
+  
+  @staticmethod
+  def print_time(start):
+    print('-- {:.4f}s -- '.format(time.time() - start), end='')
     
-  def reach(self, source: str, target: str):
-    return nx.has_path(self._graph, source, target)
+  @staticmethod
+  def print_path(path):
+      for node in path:
+        print (f'\t\t {node}')
+    
+  def reach(self, source: str, target: str, log_level=None):
+    start_time = time.time()
+    try:
+      path = nx.shortest_path(self._graph, source, target)
+    except:
+      if log_level == 'info':
+        self.print_time(start_time)
+        print(f'No path found from {source} to {target}.')
+      return False
+    
+    if log_level == 'info':
+      self.print_time(start_time)
+      print('Found the path:')
+      # for node in path:
+      #   print (f'\t\t {node}')
+      self.print_path(path)
+      print(f'{" " *13} from {source} to {target}.')
+    return True, path
   
   # TODO: change name
   def weak_reach_only(self, source: str, targets: list[str]):
     paths = nx.single_source_shortest_path(self._graph, source)
     return set(paths).issubset([source] + targets)
 
-  def reach_only(self, source: str, targets: list[str]):
+  def reach_only(self, source: str, targets: list[str], log_level=None):
+    start_time = time.time()
+    if log_level == 'info':
+      self.print_time(start_time)
+      print(f'Checkin if {source} reaches only {targets}.')
+
     paths = nx.single_source_shortest_path(self._graph, source)
-    return set(paths) == set([source] + targets)
+    paths_no_topics = dict()
+    for key, val in paths.items():
+      if type(key) is not Node:
+        paths_no_topics[key] = val
+        
+    if set(paths_no_topics) == set([source] + targets):
+      if log_level == 'info':
+        self.print_time(start_time)
+        print(f'Correct: {source} reaches only {targets}.')
+      return True
+    else:
+      if log_level == 'info':
+        diff = set(paths_no_topics) - set([source] + targets)
+        if len(diff) != 0:
+          self.print_time(start_time)
+          print(f'Found the following unexpected paths ({len(diff)}):')
+          for node in diff:
+            self.print_path(paths[node])
+            print()
+            
+        diff = set([source] + targets) - set(paths_no_topics)
+        if len(diff) != 0:
+          self.print_time(start_time)
+          print('No path found for the nodes:')
+          for node in diff:
+            print(f'\t\t{node}')
+      return False, paths
   
-  def only_reached_by(self, target: str, sources: list[str]):
+  def only_reached_by(self, target: str, sources: list[str], log_level=None):
+    start_time = time.time()
+    if log_level == 'info':
+      self.print_time(start_time)
+      print(f'Checking if {target} is only reached by {sources}.')
+    
     paths = nx.single_target_shortest_path(self._graph, target)
-    return set(paths) == set([target] + sources)
+    paths_no_topics = dict()
+    for key, val in paths.items():
+      if type(key) is not Node:
+        paths_no_topics[key] = val
+
+    if set(paths_no_topics) == set([target] + sources):
+      if log_level == 'info':
+        self.print_time(start_time)
+        print(f'Correct: {target} is only reached by {sources}.')
+      return True
+    else:
+      if log_level == 'info':
+        self.print_time(start_time)
+        diff = set(paths_no_topics) - set([target] + sources)
+        if len(diff) != 0:
+          print(f'Found the following unexpected paths ({len(diff)}):')
+          for node in diff:
+            self.print_path(paths[node])
+            print()
+            
+        diff = set([target] + sources) - set(paths_no_topics)
+        if len(diff) != 0:
+          print('No path found for the nodes:')
+          for node in diff:
+            print(f'\t\t{node}')
+      return False, paths
   
-  def isolated(self, sys1:list[str], sys2: list[str],
+  def isolated(self, sys1:list[str], sys2: list[str], log_level=None):
+    start_time = time.time()
+    if log_level == 'info':
+      self.print_time(start_time)
+      print(f'Checking if the subsystems {sys1} and {sys2} are isolated.')
+    
+    intersection = set(sys1).intersection(sys2)
+    if len(intersection) != 0:
+      if log_level == 'info':
+        self.print_time(start_time)
+        print(f'Not isolated since both contain: {intersection}')
+        return False
+    
+    for dev1 in sys1:
+      for dev2 in sys2:
+        if self.reach(dev1, dev2):
+          if log_level == 'info':
+            self.print_time(start_time)
+            print(f'Not isolated since {dev1} can reach {dev2} with the path:')
+          return False, self.reach(dev1, dev2, log_level=log_level)[1]
+        if self.reach(dev2, dev1):
+          if log_level == 'info':
+            self.print_time(start_time)
+            print(f'Not isolated since {dev2} can reach {dev1} with the path:')
+          return False, self.reach(dev2, dev1, log_level=log_level)[1]
+          
+    if log_level == 'info':
+      self.print_time(start_time)
+      print(f'The subsystems {sys1} and {sys2} are isolated')
+    return True
+  
+  def isolated_old(self, sys1:list[str], sys2: list[str],
                outgoing_allowed_topics: list[str] = [],
                incoming_allowed_topics: list[str] = []):
     if not set(sys1).isdisjoint(sys2):

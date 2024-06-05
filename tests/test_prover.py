@@ -51,9 +51,18 @@ class TestProver(unittest.TestCase):
     prover = Prover(self.graph_1)
     self.assertTrue(prover.reach_only('a', ['b', 'c']))
     self.assertTrue(prover.reach_only('d', ['a', 'b', 'c']))
-    self.assertFalse(prover.reach_only('a', ['b']))
-    self.assertFalse(prover.reach_only('d', ['a', 'b']))
-    self.assertFalse(prover.reach_only('b', ['a', 'c']))
+    self.assertFalse(prover.reach_only('a', ['b'])[0])
+    self.assertFalse(prover.reach_only('d', ['a', 'b'])[0])
+    self.assertFalse(prover.reach_only('b', ['a', 'c'])[0])
+
+    
+  def test_reach_only_certs(self):
+    prover = Prover(self.graph_2)
+    self.assertTrue(prover.reach_only('lock1', ['presenceSensor1']))
+    self.assertTrue(prover.reach_only('elevator', []))
+    self.assertFalse(prover.reach_only('lambda_fire_alarm', ['elevator', 'lock1'])[0])
+    self.assertFalse(prover.reach_only('elevator', ['lock1'])[0])
+
 
   def test_only_reached_by(self):
     prover = Prover(self.graph_1)
@@ -64,12 +73,20 @@ class TestProver(unittest.TestCase):
     self.assertFalse(prover.only_reached_by('b', ['a']))
     self.assertFalse(prover.only_reached_by('c', ['a', 'b']))
 
+  def test_only_reached_by(self):
+    prover = Prover(self.graph_2)
+    self.assertTrue(prover.only_reached_by('lock1', ['lambda_fire_alarm']))
+    self.assertTrue(prover.only_reached_by('elevator', ['lambda_fire_alarm']))    
+    self.assertTrue(prover.only_reached_by('presenceSensor1', ['lambda_fire_alarm', 'lock']))    
+    self.assertTrue(prover.only_reached_by('lambda_fire_alarm', []))
+    self.assertFalse(prover.only_reached_by('presenceSensor1', ['lock'])[0])
+    self.assertFalse(prover.only_reached_by('lambda_fire_alarm', ['lock'])[0])
+
+
   def test_isolated_certs(self):
     prover = Prover(self.graph_2)
     
-    self.assertTrue(prover.isolated(['lambda_fire_alarm'], ['elevator']))
-    self.assertTrue(prover.isolated(['elevator'], ['lambda_fire_alarm']))
-    self.assertTrue(prover.isolated(['lambda_fire_alarm'], ['lock1']))
-    self.assertTrue(prover.isolated(['lock1'], ['lambda_fire_alarm']))
-    self.assertFalse(prover.isolated(['presenceSensor1'], ['lambda_fire_alarm']))
-    self.assertFalse(prover.isolated(['lambda_fire_alarm'], ['presenceSensor1']))
+    self.assertTrue(prover.isolated(['lock1'], ['elevator']))
+    self.assertTrue(prover.isolated(['elevator'], ['lock1']))
+    self.assertFalse(prover.isolated(['presenceSensor1'], ['lambda_fire_alarm'])[0])
+    self.assertFalse(prover.isolated(['lambda_fire_alarm'], ['presenceSensor1'])[0])
