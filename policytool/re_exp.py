@@ -1,6 +1,7 @@
 import re
 import z3
 from policyuniverse.arn import ARN
+from policytool.iot import IoT
 
 class ReExp:
   RE_EMPTY = z3.Empty(z3.ReSort(z3.StringSort()))
@@ -13,6 +14,7 @@ class ReExp:
 
   @staticmethod
   def parse(arn: str, client_id: str | z3.SeqRef,
+            effect: str,
             thing_name: str = None, thing_attrs: dict[str, str] = None):
     # Only care about resource-id
     res = ARN(arn).name or arn
@@ -34,7 +36,7 @@ class ReExp:
                                     % (aws_wildcards, mqtt_plus, mqtt_hash, var_cid))
     aws_only_wildcards = re.compile('%s|%s' % (aws_wildcards, var_cid))
     
-    if action_is_subscribe:
+    if action_is_subscribe and effect == IoT.ALLOW:
       #Both AWS and MQTT Wildcards
       res_split = [x for x in re.split(aws_mqtt_wildcards, res) if x]
     else:

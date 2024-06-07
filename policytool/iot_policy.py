@@ -50,8 +50,8 @@ class IoTPolicy(Policy):
         for res in stmt.resources:
           deny_res.append(res)
           
-    parsed_allow = [ReExp.parse(res, client_id, thing_name, thing_attrs) for res in allow_res]
-    parsed_deny = [ReExp.parse(res, client_id, thing_name, thing_attrs) for res in deny_res]
+    parsed_allow = [ReExp.parse(res, client_id, IoT.ALLOW, thing_name, thing_attrs) for res in allow_res]
+    parsed_deny = [ReExp.parse(res, client_id, IoT.DENY, thing_name, thing_attrs) for res in deny_res]
 
     re_allow = z3.Union(parsed_allow) if allow_res else ReExp.RE_EMPTY
     re_deny = z3.Union(parsed_deny) if deny_res else ReExp.RE_EMPTY

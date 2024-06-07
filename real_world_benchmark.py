@@ -3,7 +3,7 @@ import random
 import time
 from policytool import Certificate, PolicyGraph, PolicyReader, Prover, Thing
 
-bench_dir = 'tests/policies/policy_benchmark/FLAW1_secure'
+bench_dir = 'tests/policies/policy_benchmark/FLAW1'
 # bench_dir = 'tests/policies/case-study/'
 start_time = time.time()
 PolicyReader.read_policy_dir(bench_dir)

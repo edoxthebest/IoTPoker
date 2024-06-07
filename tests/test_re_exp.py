@@ -2,6 +2,7 @@ import unittest
 import z3
 from policytool import ReExp
 from policytool import Thing
+from policytool import IoT
 
 #TODO: add test descrp
 
@@ -26,13 +27,13 @@ class TestReExp(unittest.TestCase):
   
   def test_parse_qmark(self):
     arn = 'arn:aws:iot:us-east-1:123456789012:client/test?'
-    re_parsed = ReExp.parse(arn, None)
+    re_parsed = ReExp.parse(arn, None, IoT.ALLOW)
     re_expected = z3.Concat(z3.Re('test'), ReExp.RE_QMARK)
     self.assertEqual(re_parsed, re_expected)
     
   def test_parse_star(self):
     arn = 'arn:aws:iot:us-east-1:123456789012:topic/topic/*/status'
-    re_parsed = ReExp.parse(arn, None)
+    re_parsed = ReExp.parse(arn, None, IoT.ALLOW)
     re_expected = z3.Concat(z3.Re('topic/'), 
                             ReExp.RE_STAR,
                             z3.Re('/status'))
@@ -40,19 +41,19 @@ class TestReExp(unittest.TestCase):
       
   def test_parse_plus(self):
     arn = 'arn:aws:iot:us-east-1:123456789012:topicfilter/+/temp'
-    re_parsed = ReExp.parse(arn, None)
+    re_parsed = ReExp.parse(arn, None, IoT.ALLOW)
     re_expected = z3.Concat(ReExp.RE_PLUS, z3.Re('/temp'))
     self.assertEqual(re_parsed, re_expected)
       
   def test_parse_hash(self):
     arn = 'arn:aws:iot:us-east-1:123456789012:topicfilter/#'
-    re_parsed = ReExp.parse(arn, None)
+    re_parsed = ReExp.parse(arn, None, IoT.ALLOW)
     re_expected = ReExp.RE_HASH
     self.assertEqual(re_parsed, re_expected)
 
   def test_parse_client_id(self):
     arn = 'arn:aws:iot:us-east-1:123456789012:client/Client/${iot:ClientId}'
-    re_parsed = ReExp.parse(arn, 'test')
+    re_parsed = ReExp.parse(arn, 'test', IoT.ALLOW)
     re_expected = z3.Concat(z3.Re('Client/'), z3.Re('test'))
     self.assertEqual(re_parsed, re_expected)
     
@@ -70,7 +71,7 @@ class TestReExp(unittest.TestCase):
     thing_file = 'tests/things/thing_presence_sensor_floor1.json'
     thing: Thing = Thing.from_file(thing_file, None)
     
-    re_parsed = ReExp.parse(arn, 'test', thing.name, thing.attrs)
+    re_parsed = ReExp.parse(arn, 'test', IoT.ALLOW, thing.name, thing.attrs)
     re_expected = z3.Re('presenceSensor1')
     self.assertEqual(re_parsed, re_expected)
     
@@ -79,7 +80,7 @@ class TestReExp(unittest.TestCase):
     thing_file = 'tests/things/thing_presence_sensor_floor1.json'
     thing: Thing = Thing.from_file(thing_file, None)
     
-    re_parsed = ReExp.parse(arn, 'testT', thing.name, thing.attrs)
+    re_parsed = ReExp.parse(arn, 'testT', IoT.ALLOW, thing.name, thing.attrs)
     re_expected = z3.Concat(z3.Re('physicalAC/floor1/'), z3.Re('testT'), z3.Re('/enable'))
     self.assertEqual(re_parsed, re_expected)
 
