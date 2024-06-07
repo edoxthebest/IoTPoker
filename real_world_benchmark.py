@@ -1,10 +1,9 @@
-import json
 import random
+import sys
 import time
 from policytool import Certificate, PolicyGraph, PolicyReader, Prover, Thing
 
-bench_dir = 'tests/policies/policy_benchmark/FLAW1'
-# bench_dir = 'tests/policies/case-study/'
+bench_dir = sys.argv[1]
 start_time = time.time()
 PolicyReader.read_policy_dir(bench_dir)
 policies = PolicyReader._policies

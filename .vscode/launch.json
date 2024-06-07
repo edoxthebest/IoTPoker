@@ -18,7 +18,7 @@
       "request": "launch",
       "program": "${file}",
       "console": "integratedTerminal",
-      "args": "policies.list",
+      "args": "tests/policies/case-study",
       "env": { "PYTHONPATH": "${workspaceFolder}" }
     }
   ]
