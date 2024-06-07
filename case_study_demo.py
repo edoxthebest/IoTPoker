@@ -30,12 +30,13 @@ print(f'Built symbolic information flow graph of {policy_graph.size} nodes.')
 # policy_graph.draw_tree(['floor1_badge_reader'])
 
 prover = Prover(policy_graph.graph)
-prover.reach('floor1_badge_reader', 'floor1_door_lock', log_level='info')
+prover.reach('floor1_door_lock', 'floor2_light', log_level='info')
 prover.reach('elevator', 'floor1_door_lock', log_level='info')
 
 prover.reach_only('elevator', [], log_level='info')
-prover.reach_only('lambda_fire_alarm', ['elevator', 'floor1_door_lock'], log_level='info')
-prover.reach_only('elevator', ['lambda_fire_alarm'], log_level='info')
+prover.reach_only('floor1_door_lock', ['floor1_light', 'presenceSensor1', 'lambda_logger'], log_level='info')
+prover.reach_only('floor1_smoke_sensor', ['elevator', 'floor1_door_lock'], log_level='info')
+prover.reach_only('elevator', ['floor2_water_pump'], log_level='info')
 
 prover.only_reached_by('elevator', [
     'lambda_fire_alarm', 
@@ -44,11 +45,18 @@ prover.only_reached_by('elevator', [
     'floor1_fire_alarm',
     'floor2_fire_alarm'
   ], log_level='info')
-prover.only_reached_by('floor1_fire_siren', ['lambda_fire_alarm'], log_level='info')
+prover.only_reached_by('floor1_fire_siren', [
+    'floor1_smoke_sensor',
+    'floor2_smoke_sensor',
+    'floor1_fire_alarm',
+    'floor2_fire_alarm',
+    'lambda_fire_alarm',
+    'elevator'
+    ], log_level='info')
 prover.only_reached_by('floor1_light', ['lambda_fire_alarm'], log_level='info')
 
-prover.isolated(['elevator'], ['floor1_light'], log_level='info')
-prover.isolated(['lambda_fire_alarm', 'elevator', 'floor2_smoke_sensor'], 
-                ['floor1_badge_reader', 'floor2_badge_reader'], log_level='info')
-prover.isolated(['lambda_fire_alarm', 'elevator', 'floor2_smoke_sensor'], 
-                ['floor1_light', 'floor2_light'], log_level='info')
+prover.isolated(['floor1_badge_reader'], ['floor1_water_pump', 'elevator'], log_level='info')
+prover.isolated(['floor2_badge_reader'],
+                ['lambda_fire_alarm', 'elevator', 'floor2_smoke_sensor'], log_level='info')
+prover.isolated(['floor1_light', 'floor2_light'],
+                ['lambda_fire_alarm', 'elevator', 'floor2_smoke_sensor'], log_level='info')

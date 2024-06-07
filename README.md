@@ -29,6 +29,23 @@ python case_study_demo.py
 
 This will load the configuration file provided in `case_study.config`, construct the corresponding Symbolic Information Flow Graph, and execute some reachability queries on the resulting graph.
 
+### Detailed queries
+
+| query           | parameter 1                    | parameter 2                                                                                                     | return | reason                                                                                       | time (ms) |
+| --------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------- | ------ | -------------------------------------------------------------------------------------------- | --------: |
+| reach           | `floor1_door_lock`             | `floor2_light`                                                                                                  | True   | `floor1_door_lock` &rarr; `presenceSensor1` &rarr; `floor2_light`                            |        <1 |
+| reach           | `elevator`                     | `floor1_door_lock`                                                                                              | False  |                                                                                              |        <1 |
+| reach_only      | `elevator`                     | `[]`                                                                                                            | True   |                                                                                              |        <1 |
+| reach_only      | `floor1_door_lock`             | `[floor1_light, presenceSensor1, lambda_logger]`                                                                | False  | `floor1_light` &rarr; `presenceSensor1` &rarr; `floor2_light`                                |        <1 |
+| reach_only      | `floor1_smoke_sensor`          | `[elevator, floor1_door_lock]`                                                                                  | False  | Found 10 violating paths.                                                                    |        <1 |
+| reach_only      | `elevator`                     | `[floor2_water_pump]`                                                                                           | False  | Missing path                                                                                 |        <1 |
+| only_reached_by | `elevator`                     | `[floor1_smoke_sensor, floor2_smoke_sensor, floor1_fire_alarm, floor2_fire_alarm, lambda_fire_alarm]`           | True   |                                                                                              |        <1 |
+| only_reached_by | `floor1_fire_alarm`            | `[floor1_smoke_sensor, floor2_smoke_sensor, floor1_fire_alarm, floor2_fire_alarm, lambda_fire_alarm, elevator]` | False  | Missing path to `elevator`                                                                   |        <1 |
+| only_reached_by | `floor1_light`                 | `[lambda_fire_alarm]`                                                                                           | False  | Found 11 violating paths                                                                     |        <1 |
+| isolated        | `[floor1_badge_reader]`        | `[floor1_water_pump, elevator]`                                                                                 | True   |                                                                                              |        <1 |
+| isolated        | `[floor2_badge_reader]`        | `[lambda_fire_alarm, elevator, floor2_smoke_sensor]`                                                            | True   |                                                                                              |        <1 |
+| isolated        | `[floor1_light, floor2_light]` | `[lambda_fire_alarm, elevator, floor2_smoke_sensor]`                                                            | False  | `lambda_fire_alarm` &rarr; `floor1_door_lock` &rarr; `presenceSensor1` &rarr; `floor1_light` |        <1 |
+
 ### RQ2: How does IoT:Poker scale when an IoT configuration's size (number of certificates) grows?
 
 The code provided in `real_world_benchmark.py` will instead construct graphs of different sizes loading policies at random from a specified configuration folder.
