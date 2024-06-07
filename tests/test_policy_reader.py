@@ -5,7 +5,7 @@ from policyuniverse.policy import Policy
 
 class TestPolicyReader(unittest.TestCase):
   def setUp(self):
-    PolicyReader._policies = []
+    PolicyReader._policies = {}
     
   def test_read_policy_file(self):
     """

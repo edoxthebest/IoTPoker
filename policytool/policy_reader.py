@@ -3,11 +3,11 @@ import os
 from policytool.iot_policy import IoTPolicy
 
 class PolicyReader:
-  _policies = []
+  _policies = {}
   
   @property
   def policies(self):
-    return self._policies
+    return list(self._policies.values())
   
   @staticmethod
   def read_policy_file(filename):
@@ -20,6 +20,6 @@ class PolicyReader:
       file = os.path.join(dir, filename)
       
       if os.path.isfile(file):
-        cls._policies.append(cls.read_policy_file(file))
+        cls._policies.update({filename: cls.read_policy_file(file)})
     
-    return cls._policies
+    return list(cls._policies.values())

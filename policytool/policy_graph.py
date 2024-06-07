@@ -50,6 +50,8 @@ class PolicyGraph:
         solver.add(z3.And(cert2.get_subscribe(topic, id2),
                           cert2.get_receive(topic, id2)))
 
+        # print(f'-- {cert1.name}  &  {cert2.name} --')
+        # print(solver.check())
         if solver.check() == z3.sat:
           model = solver.model()
           

@@ -1,0 +1,697 @@
+TEST1 
+-- 0.0025s -- Read 15 policies from tests/policies/case-study/.
+-- 0.0000s -- Starting Test_0 (2^0 = 1 certificates). --
+-- 0.0198s -- Test_0 -- Built symbolic information flow graph of 0 nodes 0.020335912704467773s.
+-- 0.0342s -- Test_0 -- Run 1000 reach queries in 0.013888359069824219s.
+-- 0.0347s -- Test_0 ended (0.034720420837402344s).
+-- 0.0000s -- Starting Test_1 (2^1 = 2 certificates). --
+-- 0.3765s -- Test_1 -- Built symbolic information flow graph of 0 nodes 0.3764634132385254s.
+-- 0.3894s -- Test_1 -- Run 1000 reach queries in 0.012399435043334961s.
+-- 0.3894s -- Test_1 ended (0.3893592357635498s).
+-- 0.0000s -- Starting Test_2 (2^2 = 4 certificates). --
+-- 0.2559s -- Test_2 -- Built symbolic information flow graph of 0 nodes 0.2559356689453125s.
+-- 0.2693s -- Test_2 -- Run 1000 reach queries in 0.012895822525024414s.
+-- 0.2693s -- Test_2 ended (0.26932787895202637s).
+-- 0.0000s -- Starting Test_3 (2^3 = 8 certificates). --
+-- 1.8342s -- Test_3 -- Built symbolic information flow graph of 14 nodes 1.834702968597412s.
+-- 1.8570s -- Test_3 -- Run 1000 reach queries in 0.021823644638061523s.
+-- 1.8575s -- Test_3 ended (1.8575189113616943s).
+-- 0.0000s -- Starting Test_4 (2^4 = 16 certificates). --
+-- 8.6135s -- Test_4 -- Built symbolic information flow graph of 31 nodes 8.61353087425232s.
+-- 8.6443s -- Test_4 -- Run 1000 reach queries in 0.020832300186157227s.
+-- 8.6448s -- Test_4 ended (8.644779920578003s).
+-- 0.0000s -- Starting Test_5 (2^5 = 32 certificates). --
+-- 29.5262s -- Test_5 -- Built symbolic information flow graph of 144 nodes 29.526230573654175s.
+-- 29.5738s -- Test_5 -- Run 1000 reach queries in 0.024800777435302734s.
+-- 29.5743s -- Test_5 ended (29.574342966079712s).
+-- 0.0000s -- Starting Test_6 (2^6 = 64 certificates). --
+-- 87.9556s -- Test_6 -- Built symbolic information flow graph of 341 nodes 87.95563459396362s.
+-- 88.1486s -- Test_6 -- Run 1000 reach queries in 0.030751943588256836s.
+-- 88.1491s -- Test_6 ended (88.14907455444336s).
+-- 0.0000s -- Starting Test_7 (2^7 = 128 certificates). --
+-- 402.5582s -- Test_7 -- Built symbolic information flow graph of 1297 nodes 402.558650970459s.
+-- 403.0482s -- Test_7 -- Run 1000 reach queries in 0.06596899032592773s.
+-- 403.0482s -- Test_7 ended (403.0486979484558s).
+
+TEST2
+-- 0.0025s -- Read 15 policies from tests/policies/case-study/.
+-- 0.0000s -- Starting Test_0 (2^0 = 1 certificates). --
+-- 0.0203s -- Test_0 -- Built symbolic information flow graph of 0 nodes 0.02033519744873047s.
+-- 0.0347s -- Test_0 -- Run 1000 reach queries in 0.014384746551513672s.
+-- 0.0347s -- Test_0 ended (0.03471994400024414s).
+-- 0.0000s -- Starting Test_1 (2^1 = 2 certificates). --
+-- 0.0724s -- Test_1 -- Built symbolic information flow graph of 0 nodes 0.07291197776794434s.
+-- 0.0858s -- Test_1 -- Run 1000 reach queries in 0.01289510726928711s.
+-- 0.0858s -- Test_1 ended (0.08580708503723145s).
+-- 0.0000s -- Starting Test_2 (2^2 = 4 certificates). --
+-- 0.2683s -- Test_2 -- Built symbolic information flow graph of 0 nodes 0.2683370113372803s.
+-- 0.2812s -- Test_2 -- Run 1000 reach queries in 0.012400150299072266s.
+-- 0.2812s -- Test_2 ended (0.2812330722808838s).
+-- 0.0000s -- Starting Test_3 (2^3 = 8 certificates). --
+-- 1.1244s -- Test_3 -- Built symbolic information flow graph of 9 nodes 1.12443208694458s.
+-- 1.1398s -- Test_3 -- Run 1000 reach queries in 0.015375614166259766s.
+-- 1.1398s -- Test_3 ended (1.140303611755371s).
+-- 0.0000s -- Starting Test_4 (2^4 = 16 certificates). --
+-- 6.2689s -- Test_4 -- Built symbolic information flow graph of 28 nodes 6.268944025039673s.
+-- 6.2937s -- Test_4 -- Run 1000 reach queries in 0.019840240478515625s.
+-- 6.2942s -- Test_4 ended (6.29423975944519s).
+-- 0.0000s -- Starting Test_5 (2^5 = 32 certificates). --
+-- 20.3681s -- Test_5 -- Built symbolic information flow graph of 56 nodes 20.36810541152954s.
+-- 20.4088s -- Test_5 -- Run 1000 reach queries in 0.019343852996826172s.
+-- 20.4093s -- Test_5 ended (20.409273862838745s).
+-- 0.0000s -- Starting Test_6 (2^6 = 64 certificates). --
+-- 116.3800s -- Test_6 -- Built symbolic information flow graph of 488 nodes 116.37997126579285s.
+-- 116.4821s -- Test_6 -- Run 1000 reach queries in 0.048111677169799805s.
+-- 116.4821s -- Test_6 ended (116.48264503479004s).
+-- 0.0000s -- Starting Test_7 (2^7 = 128 certificates). --
+-- 375.7564s -- Test_7 -- Built symbolic information flow graph of 1619 nodes 375.75639390945435s.
+-- 376.4458s -- Test_7 -- Run 1000 reach queries in 0.06249690055847168s.
+-- 376.4458s -- Test_7 ended (376.44583320617676s).
+
+TEST3
+-- 0.0020s -- Read 15 policies from tests/policies/case-study/.
+-- 0.0000s -- Starting Test_0 (2^0 = 1 certificates). --
+-- 0.0174s -- Test_0 -- Built symbolic information flow graph of 0 nodes 0.017359256744384766s.
+-- 0.0203s -- Test_0 -- Run 1000 reach queries in 0.0029754638671875s.
+-- 0.0203s -- Test_0 ended (0.020334720611572266s).
+-- 0.0000s -- Starting Test_1 (2^1 = 2 certificates). --
+-- 0.5396s -- Test_1 -- Built symbolic information flow graph of 3 nodes 0.5396475791931152s.
+-- 0.5431s -- Test_1 -- Run 1000 reach queries in 0.0029761791229248047s.
+-- 0.5436s -- Test_1 ended (0.5436162948608398s).
+-- 0.0000s -- Starting Test_2 (2^2 = 4 certificates). --
+-- 0.2748s -- Test_2 -- Built symbolic information flow graph of 5 nodes 0.27478456497192383s.
+-- 0.2793s -- Test_2 -- Run 1000 reach queries in 0.003469705581665039s.
+-- 0.2798s -- Test_2 ended (0.2797815799713135s).
+-- 0.0000s -- Starting Test_3 (2^3 = 8 certificates). --
+-- 0.8828s -- Test_3 -- Built symbolic information flow graph of 0 nodes 0.8828432559967041s.
+-- 0.8883s -- Test_3 -- Run 1000 reach queries in 0.0039670467376708984s.
+-- 0.8888s -- Test_3 ended (0.8888206481933594s).
+-- 0.0000s -- Starting Test_4 (2^4 = 16 certificates). --
+-- 5.8965s -- Test_4 -- Built symbolic information flow graph of 18 nodes 5.896509647369385s.
+-- 5.9001s -- Test_4 -- Run 1000 reach queries in 0.002975940704345703s.
+-- 5.9006s -- Test_4 ended (5.9006407260894775s).
+-- 0.0000s -- Starting Test_5 (2^5 = 32 certificates). --
+-- 25.6368s -- Test_5 -- Built symbolic information flow graph of 105 nodes 25.63676142692566s.
+-- 25.6552s -- Test_5 -- Run 1000 reach queries in 0.005456209182739258s.
+-- 25.6556s -- Test_5 ended (25.655646324157715s).
+-- 0.0000s -- Starting Test_6 (2^6 = 64 certificates). --
+-- 107.9751s -- Test_6 -- Built symbolic information flow graph of 476 nodes 107.97508430480957s.
+-- 108.0976s -- Test_6 -- Run 1000 reach queries in 0.00843191146850586s.
+-- 108.0982s -- Test_6 ended (108.0982141494751s).
+-- 0.0000s -- Starting Test_7 (2^7 = 128 certificates). --
+-- 356.4994s -- Test_7 -- Built symbolic information flow graph of 1535 nodes 356.4993875026703s.
+-- 357.1963s -- Test_7 -- Run 1000 reach queries in 0.01983952522277832s.
+-- 357.1968s -- Test_7 ended (357.19680619239807s).
+
+Test4
+-- 0.0020s -- Read 15 policies from tests/policies/case-study/.
+-- 0.0000s -- Starting Test_0 (2^0 = 1 certificates). --
+-- 0.0154s -- Test_0 -- Built symbolic information flow graph of 0 nodes 0.015377283096313477s.
+-- 0.0190s -- Test_0 -- Run 1000 reach queries in 0.0034890174865722656s.
+-- 0.0190s -- Test_0 ended (0.01897263526916504s).
+-- 0.0000s -- Starting Test_1 (2^1 = 2 certificates). --
+-- 0.0585s -- Test_1 -- Built symbolic information flow graph of 0 nodes 0.05852794647216797s.
+-- 0.0615s -- Test_1 -- Run 1000 reach queries in 0.002976655960083008s.
+-- 0.0615s -- Test_1 ended (0.06150460243225098s).
+-- 0.0000s -- Starting Test_2 (2^2 = 4 certificates). --
+-- 0.2505s -- Test_2 -- Built symbolic information flow graph of 5 nodes 0.2505209445953369s.
+-- 0.2545s -- Test_2 -- Run 1000 reach queries in 0.002975940704345703s.
+-- 0.2550s -- Test_2 ended (0.25498509407043457s).
+-- 0.0000s -- Starting Test_3 (2^3 = 8 certificates). --
+-- 0.8744s -- Test_3 -- Built symbolic information flow graph of 5 nodes 0.8744473457336426s.
+-- 0.8806s -- Test_3 -- Run 1000 reach queries in 0.0029757022857666016s.
+-- 0.8811s -- Test_3 ended (0.8810641765594482s).
+-- 0.0000s -- Starting Test_4 (2^4 = 16 certificates). --
+-- 5.9361s -- Test_4 -- Built symbolic information flow graph of 48 nodes 5.936131238937378s.
+-- 5.9441s -- Test_4 -- Run 1000 reach queries in 0.004464149475097656s.
+-- 5.9446s -- Test_4 ended (5.944563865661621s).
+-- 0.0000s -- Starting Test_5 (2^5 = 32 certificates). --
+-- 26.4170s -- Test_5 -- Built symbolic information flow graph of 149 nodes 26.416975259780884s.
+-- 26.4671s -- Test_5 -- Run 1000 reach queries in 0.005951881408691406s.
+-- 26.4676s -- Test_5 ended (26.467567205429077s).
+-- 0.0000s -- Starting Test_6 (2^6 = 64 certificates). --
+-- 60.4376s -- Test_6 -- Built symbolic information flow graph of 321 nodes 60.43763542175293s.
+-- 60.6043s -- Test_6 -- Run 1000 reach queries in 0.007439851760864258s.
+-- 60.6048s -- Test_6 ended (60.60481643676758s).
+-- 0.0000s -- Starting Test_7 (2^7 = 128 certificates). --
+-- 357.6991s -- Test_7 -- Built symbolic information flow graph of 1437 nodes 357.69905614852905s.
+-- 358.0825s -- Test_7 -- Run 1000 reach queries in 0.01785564422607422s.
+-- 358.0830s -- Test_7 ended (358.08296036720276s).
+
+TEST5
+-- 0.0020s -- Read 15 policies from tests/policies/case-study/.
+-- 0.0000s -- Starting Test_0 (2^0 = 1 certificates). --
+-- 0.0883s -- Test_0 -- Built symbolic information flow graph of 0 nodes 0.08828854560852051s.
+-- 0.0918s -- Test_0 -- Run 1000 reach queries in 0.002975940704345703s.
+-- 0.0924s -- Test_0 ended (0.09238147735595703s).
+-- 0.0000s -- Starting Test_1 (2^1 = 2 certificates). --
+-- 0.0729s -- Test_1 -- Built symbolic information flow graph of 3 nodes 0.07291603088378906s.
+-- 0.0768s -- Test_1 -- Run 1000 reach queries in 0.003471851348876953s.
+-- 0.0768s -- Test_1 ended (0.07679152488708496s).
+-- 0.0000s -- Starting Test_2 (2^2 = 4 certificates). --
+-- 0.2351s -- Test_2 -- Built symbolic information flow graph of 0 nodes 0.23510384559631348s.
+-- 0.2411s -- Test_2 -- Run 1000 reach queries in 0.0034723281860351562s.
+-- 0.2411s -- Test_2 ended (0.2410564422607422s).
+-- 0.0000s -- Starting Test_3 (2^3 = 8 certificates). --
+-- 1.0113s -- Test_3 -- Built symbolic information flow graph of 10 nodes 1.0113439559936523s.
+-- 1.0158s -- Test_3 -- Run 1000 reach queries in 0.0034728050231933594s.
+-- 1.0158s -- Test_3 ended (1.0158090591430664s).
+-- 0.0000s -- Starting Test_4 (2^4 = 16 certificates). --
+-- 3.3857s -- Test_4 -- Built symbolic information flow graph of 11 nodes 3.385697841644287s.
+-- 3.3951s -- Test_4 -- Run 1000 reach queries in 0.0029761791229248047s.
+-- 3.3957s -- Test_4 ended (3.3956663608551025s).
+-- 0.0000s -- Starting Test_5 (2^5 = 32 certificates). --
+-- 20.9805s -- Test_5 -- Built symbolic information flow graph of 133 nodes 20.98048973083496s.
+-- 20.9920s -- Test_5 -- Run 1000 reach queries in 0.005455970764160156s.
+-- 20.9920s -- Test_5 ended (20.991955995559692s).
+-- 0.0000s -- Starting Test_6 (2^6 = 64 certificates). --
+-- 79.1807s -- Test_6 -- Built symbolic information flow graph of 361 nodes 79.18067622184753s.
+-- 79.3240s -- Test_6 -- Run 1000 reach queries in 0.007439851760864258s.
+-- 79.3245s -- Test_6 ended (79.3245165348053s).
+-- 0.0000s -- Starting Test_7 (2^7 = 128 certificates). --
+-- 335.1162s -- Test_7 -- Built symbolic information flow graph of 1801 nodes 335.1162004470825s.
+-- 335.5485s -- Test_7 -- Run 1000 reach queries in 0.018352031707763672s.
+-- 335.5490s -- Test_7 ended (335.5490379333496s).
+
+TEST6
+-- 0.0031s -- Read 15 policies from tests/policies/case-study/.
+-- 0.0000s -- Starting Test_0 (2^0 = 1 certificates). --
+-- 0.1309s -- Test_0 -- Built symbolic information flow graph of 0 nodes 0.13089656829833984s.
+-- 0.1339s -- Test_0 -- Run 1000 reach queries in 0.003010272979736328s.
+-- 0.1343s -- Test_0 ended (0.13434338569641113s).
+-- 0.0000s -- Starting Test_1 (2^1 = 2 certificates). --
+-- 1.4840s -- Test_2 -- Built symbolic information flow graph of 5 nodes 1.4840381145477295s.
+-- 1.4875s -- Test_2 -- Run 1000 reach queries in 0.003471851348876953s.
+-- 1.4875s -- Test_2 ended (1.4875099658966064s).
+-- 0.0000s -- Starting Test_3 (2^3 = 8 certificates). --
+-- 0.9399s -- Test_3 -- Built symbolic information flow graph of 9 nodes 0.9399230480194092s.
+-- 0.9459s -- Test_3 -- Run 1000 reach queries in 0.002975940704345703s.
+-- 0.9459s -- Test_3 ended (0.9458749294281006s).
+-- 0.0000s -- Starting Test_4 (2^4 = 16 certificates). --
+-- 7.9519s -- Test_4 -- Built symbolic information flow graph of 33 nodes 7.951934337615967s.
+-- 7.9619s -- Test_4 -- Run 1000 reach queries in 0.0044248104095458984s.
+-- 7.9624s -- Test_4 ended (7.962350606918335s).
+-- 0.0000s -- Starting Test_5 (2^5 = 32 certificates). --
+-- 16.9414s -- Test_5 -- Built symbolic information flow graph of 147 nodes 16.941394329071045s.
+-- 16.9751s -- Test_5 -- Run 1000 reach queries in 0.006448030471801758s.
+-- 16.9751s -- Test_5 ended (16.975122451782227s).
+-- 0.0000s -- Starting Test_6 (2^6 = 64 certificates). --
+-- 88.1854s -- Test_6 -- Built symbolic information flow graph of 288 nodes 88.18542432785034s.
+-- 88.3546s -- Test_6 -- Run 1000 reach queries in 0.008928298950195312s.
+-- 88.3551s -- Test_6 ended (88.35510063171387s).
+-- 0.0000s -- Starting Test_7 (2^7 = 128 certificates). --
+-- 384.9035s -- Test_7 -- Built symbolic information flow graph of 1311 nodes 384.90353775024414s.
+-- 385.2493s -- Test_7 -- Run 1000 reach queries in 0.013888120651245117s.
+-- 385.2493s -- Test_7 ended (385.24925208091736s).
+
+TEST7
+-- 0.0030s -- Read 15 policies from tests/policies/case-study/.
+-- 0.0000s -- Starting Test_0 (2^0 = 1 certificates). --       
+-- 0.0233s -- Test_0 -- Built symbolic information flow graph of 0 nodes 0.023311614990234375s.
+-- 0.0387s -- Test_0 -- Run 1000 reach queries in 0.01488041877746582s.
+-- 0.0392s -- Test_0 ended (0.0391848087310791s).
+-- 0.0000s -- Starting Test_1 (2^1 = 2 certificates). --
+-- 0.1438s -- Test_1 -- Built symbolic information flow graph of 0 nodes 0.14383864402770996s.
+-- 0.1567s -- Test_1 -- Run 1000 reach queries in 0.012400388717651367s.
+-- 0.1572s -- Test_1 ended (0.15723133087158203s).
+-- 0.0000s -- Starting Test_2 (2^2 = 4 certificates). --
+-- 0.2728s -- Test_2 -- Built symbolic information flow graph of 0 nodes 0.2728006839752197s.
+-- 0.2857s -- Test_2 -- Run 1000 reach queries in 0.01240086555480957s.
+-- 0.2857s -- Test_2 ended (0.2861912250518799s).
+-- 0.0000s -- Starting Test_3 (2^3 = 8 certificates). --
+-- 2.8059s -- Test_3 -- Built symbolic information flow graph of 9 nodes 2.805875539779663s.
+-- 2.8222s -- Test_3 -- Run 1000 reach queries in 0.01587200164794922s.
+-- 2.8222s -- Test_3 ended (2.8222439289093018s).
+-- 0.0000s -- Starting Test_4 (2^4 = 16 certificates). --
+-- 9.2459s -- Test_4 -- Built symbolic information flow graph of 22 nodes 9.245947360992432s.
+-- 9.2722s -- Test_4 -- Run 1000 reach queries in 0.01835346221923828s.
+-- 9.2727s -- Test_4 ended (9.272729635238647s).
+-- 0.0000s -- Starting Test_5 (2^5 = 32 certificates). --
+-- 17.3704s -- Test_5 -- Built symbolic information flow graph of 115 nodes 17.370434284210205s.
+-- 17.4032s -- Test_5 -- Run 1000 reach queries in 0.019840002059936523s.
+-- 17.4037s -- Test_5 ended (17.403666734695435s).
+-- 0.0000s -- Starting Test_6 (2^6 = 64 certificates). --
+-- 112.3913s -- Test_6 -- Built symbolic information flow graph of 421 nodes 112.39177632331848s.
+-- 112.5624s -- Test_6 -- Run 1000 reach queries in 0.03422427177429199s.
+-- 112.5624s -- Test_6 ended (112.56236386299133s).
+-- 0.0000s -- Starting Test_7 (2^7 = 128 certificates). --
+-- 373.2951s -- Test_7 -- Built symbolic information flow graph of 1458 nodes 373.2950780391693s.
+-- 373.9672s -- Test_7 -- Run 1000 reach queries in 0.06844687461853027s.
+-- 373.9672s -- Test_7 ended (373.9671561717987s).
+
+TEST8
+-- 0.0020s -- Read 15 policies from tests/policies/case-study/.
+-- 0.0000s -- Starting Test_0 (2^0 = 1 certificates). --
+-- 0.0154s -- Test_0 -- Built symbolic information flow graph of 0 nodes 0.015374898910522461s.
+-- 0.0193s -- Test_0 -- Run 1000 reach queries in 0.0034723281860351562s.
+-- 0.0193s -- Test_0 ended (0.019344329833984375s).
+-- 0.0000s -- Starting Test_1 (2^1 = 2 certificates). --
+-- 0.0715s -- Test_1 -- Built symbolic information flow graph of 3 nodes 0.07152843475341797s.
+-- 0.0760s -- Test_1 -- Run 1000 reach queries in 0.003505229949951172s.
+-- 0.0765s -- Test_1 ended (0.07648754119873047s).
+-- 0.0000s -- Starting Test_2 (2^2 = 4 certificates). --
+-- 0.2386s -- Test_2 -- Built symbolic information flow graph of 3 nodes 0.23857688903808594s.
+-- 0.2430s -- Test_2 -- Run 1000 reach queries in 0.0034720897674560547s.
+-- 0.2430s -- Test_2 ended (0.2430408000946045s).
+-- 0.0000s -- Starting Test_3 (2^3 = 8 certificates). --
+-- 2.4403s -- Test_3 -- Built symbolic information flow graph of 12 nodes 2.4403228759765625s.
+-- 2.4458s -- Test_3 -- Run 1000 reach queries in 0.003967761993408203s.
+-- 2.4458s -- Test_3 ended (2.4457790851593018s).
+-- 0.0000s -- Starting Test_4 (2^4 = 16 certificates). --
+-- 5.8498s -- Test_4 -- Built symbolic information flow graph of 30 nodes 5.849830627441406s.
+-- 5.8622s -- Test_4 -- Run 1000 reach queries in 0.003968238830566406s.
+-- 5.8627s -- Test_4 ended (5.86272668838501s).
+-- 0.0000s -- Starting Test_5 (2^5 = 32 certificates). --
+-- 29.5329s -- Test_5 -- Built symbolic information flow graph of 80 nodes 29.532867908477783s.
+-- 29.5656s -- Test_5 -- Run 1000 reach queries in 0.004958629608154297s.
+-- 29.5656s -- Test_5 ended (29.56560254096985s).
+-- 0.0000s -- Starting Test_6 (2^6 = 64 certificates). --
+-- 111.4890s -- Test_6 -- Built symbolic information flow graph of 432 nodes 111.48902821540833s.
+-- 111.5848s -- Test_6 -- Run 1000 reach queries in 0.010416984558105469s.
+-- 111.5853s -- Test_6 ended (111.58525276184082s).
+-- 0.0000s -- Starting Test_7 (2^7 = 128 certificates). --
+-- 376.9049s -- Test_7 -- Built symbolic information flow graph of 1384 nodes 376.90489625930786s.
+-- 377.4981s -- Test_7 -- Run 1000 reach queries in 0.01735973358154297s.
+-- 377.4981s -- Test_7 ended (377.49811339378357s).
+
+TEST9
+-- 0.0020s -- Read 15 policies from tests/policies/case-study/.
+-- 0.0000s -- Starting Test_0 (2^0 = 1 certificates). --
+-- 0.0992s -- Test_0 -- Built symbolic information flow graph of 0 nodes 0.09920096397399902s.
+-- 0.1037s -- Test_0 -- Run 1000 reach queries in 0.0034728050231933594s.
+-- 0.1037s -- Test_0 ended (0.10366415977478027s).
+-- 0.0000s -- Starting Test_1 (2^1 = 2 certificates). --
+-- 0.0928s -- Test_1 -- Built symbolic information flow graph of 3 nodes 0.09275150299072266s.
+-- 0.0967s -- Test_1 -- Run 1000 reach queries in 0.0039675235748291016s.
+-- 0.0967s -- Test_1 ended (0.09671902656555176s).
+-- 0.0000s -- Starting Test_2 (2^2 = 4 certificates). --
+-- 0.5104s -- Test_2 -- Built symbolic information flow graph of 3 nodes 0.510385274887085s.
+-- 0.5153s -- Test_2 -- Run 1000 reach queries in 0.0029752254486083984s.
+-- 0.5153s -- Test_2 ended (0.515841007232666s).
+-- 0.0000s -- Starting Test_3 (2^3 = 8 certificates). --
+-- 1.9825s -- Test_3 -- Built symbolic information flow graph of 7 nodes 1.9825139045715332s.
+-- 1.9880s -- Test_3 -- Run 1000 reach queries in 0.005456209182739258s.
+-- 1.9880s -- Test_3 ended (1.9879701137542725s).
+-- 0.0000s -- Starting Test_4 (2^4 = 16 certificates). --
+-- 9.5743s -- Test_4 -- Built symbolic information flow graph of 20 nodes 9.574299812316895s.
+-- 9.5832s -- Test_4 -- Run 1000 reach queries in 0.003472566604614258s.
+-- 9.5837s -- Test_4 ended (9.5837242603302s).
+-- 0.0000s -- Starting Test_5 (2^5 = 32 certificates). --
+-- 21.6916s -- Test_5 -- Built symbolic information flow graph of 113 nodes 21.691593647003174s.
+-- 21.7099s -- Test_5 -- Run 1000 reach queries in 0.0069429874420166016s.
+-- 21.7099s -- Test_5 ended (21.709944009780884s).
+-- 0.0000s -- Starting Test_6 (2^6 = 64 certificates). --
+-- 71.2991s -- Test_6 -- Built symbolic information flow graph of 391 nodes 71.29909324645996s.
+-- 71.4295s -- Test_6 -- Run 1000 reach queries in 0.009920358657836914s.
+-- 71.4300s -- Test_6 ended (71.4300377368927s).
+-- 0.0000s -- Starting Test_7 (2^7 = 128 certificates). --
+-- 276.1012s -- Test_7 -- Built symbolic information flow graph of 1363 nodes 276.1012089252472s.
+-- 276.6156s -- Test_7 -- Run 1000 reach queries in 0.013391971588134766s.
+-- 276.6161s -- Test_7 ended (276.61605763435364s).
+
+TEST10
+-- 0.0020s -- Read 15 policies from tests/policies/case-study/.
+-- 0.0000s -- Starting Test_0 (2^0 = 1 certificates). --
+-- 0.0144s -- Test_0 -- Built symbolic information flow graph of 0 nodes 0.014383554458618164s.
+-- 0.0184s -- Test_0 -- Run 1000 reach queries in 0.0034720897674560547s.
+-- 0.0184s -- Test_0 ended (0.018350839614868164s).
+-- 0.0000s -- Starting Test_1 (2^1 = 2 certificates). --
+-- 0.0605s -- Test_1 -- Built symbolic information flow graph of 0 nodes 0.060511112213134766s.
+-- 0.0640s -- Test_1 -- Run 1000 reach queries in 0.0029761791229248047s.
+-- 0.0640s -- Test_1 ended (0.06398463249206543s).
+-- 0.0000s -- Starting Test_2 (2^2 = 4 certificates). --
+-- 0.2371s -- Test_2 -- Built symbolic information flow graph of 0 nodes 0.23708891868591309s.
+-- 0.2401s -- Test_2 -- Run 1000 reach queries in 0.0029754638671875s.
+-- 0.2406s -- Test_2 ended (0.24056124687194824s).
+-- 0.0000s -- Starting Test_3 (2^3 = 8 certificates). --
+-- 0.9652s -- Test_3 -- Built symbolic information flow graph of 7 nodes 0.9652166366577148s.
+-- 0.9687s -- Test_3 -- Run 1000 reach queries in 0.0034723281860351562s.
+-- 0.9687s -- Test_3 ended (0.96868896484375s).
+-- 0.0000s -- Starting Test_4 (2^4 = 16 certificates). --
+-- 6.3672s -- Test_4 -- Built symbolic information flow graph of 8 nodes 6.367159366607666s.
+-- 6.3746s -- Test_4 -- Run 1000 reach queries in 0.0029757022857666016s.
+-- 6.3746s -- Test_4 ended (6.374599456787109s).
+-- 0.0000s -- Starting Test_5 (2^5 = 32 certificates). --
+-- 15.6563s -- Test_5 -- Built symbolic information flow graph of 124 nodes 15.656259775161743s.
+-- 15.6657s -- Test_5 -- Run 1000 reach queries in 0.004463911056518555s.
+-- 15.6657s -- Test_5 ended (15.665682792663574s).
+-- 0.0000s -- Starting Test_6 (2^6 = 64 certificates). --
+-- 76.2482s -- Test_6 -- Built symbolic information flow graph of 349 nodes 76.24818587303162s.
+-- 76.3995s -- Test_6 -- Run 1000 reach queries in 0.008928537368774414s.
+-- 76.3995s -- Test_6 ended (76.39946675300598s).
+-- 0.0000s -- Starting Test_7 (2^7 = 128 certificates). --
+-- 380.7707s -- Test_7 -- Built symbolic information flow graph of 1533 nodes 380.7707257270813s.
+-- 381.2241s -- Test_7 -- Run 1000 reach queries in 0.017360210418701172s.
+-- 381.2241s -- Test_7 ended (381.2240688800812s).
+
+
+-----------------------------------
+NODE1
+-- 0.0055s -- Read 42 policies from tests/policies/policy_benchmark/FLAW1_secure.
+-- 0.0000s -- Starting Test_0 (2^0 = 1 certificates). --
+-- 0.0148s -- Test_0 -- Built symbolic information flow graph of 0 nodes 0.014843940734863281s.
+-- 0.0183s -- Test_0 -- Run 1000 reach queries in 0.00347137451171875s.
+-- 0.0183s -- Test_0 ended (0.01831531524658203s).
+-- 0.0000s -- Starting Test_1 (2^1 = 2 certificates). --
+-- 0.0600s -- Test_1 -- Built symbolic information flow graph of 0 nodes 0.060009002685546875s.
+-- 0.0625s -- Test_1 -- Run 1000 reach queries in 0.0024788379669189453s.
+-- 0.0630s -- Test_1 ended (0.06298375129699707s).
+-- 0.0000s -- Starting Test_2 (2^2 = 4 certificates). --
+-- 0.2366s -- Test_2 -- Built symbolic information flow graph of 0 nodes 0.23656320571899414s.
+-- 0.2395s -- Test_2 -- Run 1000 reach queries in 0.0024802684783935547s.
+-- 0.2395s -- Test_2 ended (0.23953890800476074s).
+-- 0.0000s -- Starting Test_3 (2^3 = 8 certificates). --
+-- 0.9319s -- Test_3 -- Built symbolic information flow graph of 0 nodes 0.9318668842315674s.
+-- 0.9348s -- Test_3 -- Run 1000 reach queries in 0.0024797916412353516s.
+-- 0.9348s -- Test_3 ended (0.9348428249359131s).
+-- 0.0000s -- Starting Test_4 (2^4 = 16 certificates). --
+-- 3.7141s -- Test_4 -- Built symbolic information flow graph of 0 nodes 3.714076280593872s.
+-- 3.7171s -- Test_4 -- Run 1000 reach queries in 0.0024802684783935547s.
+-- 3.7175s -- Test_4 ended (3.717547655105591s).
+-- 0.0000s -- Starting Test_5 (2^5 = 32 certificates). --
+-- 15.2615s -- Test_5 -- Built symbolic information flow graph of 0 nodes 15.26148772239685s.
+-- 15.2645s -- Test_5 -- Run 1000 reach queries in 0.0029757022857666016s.
+-- 15.2645s -- Test_5 ended (15.264463424682617s).
+-- 0.0000s -- Starting Test_6 (2^6 = 64 certificates). --
+-- 63.2435s -- Test_6 -- Built symbolic information flow graph of 0 nodes 63.2434515953064s.
+-- 63.2464s -- Test_6 -- Run 1000 reach queries in 0.0024793148040771484s.
+-- 63.2469s -- Test_6 ended (63.246923208236694s).
+-- 0.0000s -- Starting Test_7 (2^7 = 128 certificates). --
+-- 247.9394s -- Test_7 -- Built symbolic information flow graph of 0 nodes 247.939439535141s.
+-- 247.9434s -- Test_7 -- Run 1000 reach queries in 0.0029754638671875s.
+-- 247.9434s -- Test_7 ended (247.9434072971344s).
+
+TEST2
+-- 0.0114s -- Read 42 policies from tests/policies/policy_benchmark/FLAW1_secure.
+-- 0.0000s -- Starting Test_0 (2^0 = 1 certificates). --
+-- 0.0169s -- Test_0 -- Built symbolic information flow graph of 0 nodes 0.01686263084411621s.
+-- 0.0208s -- Test_0 -- Run 1000 reach queries in 0.00347137451171875s.
+-- 0.0208s -- Test_0 ended (0.02082991600036621s).
+-- 0.0000s -- Starting Test_1 (2^1 = 2 certificates). --
+-- 0.0655s -- Test_1 -- Built symbolic information flow graph of 0 nodes 0.06546568870544434s.
+-- 0.0684s -- Test_1 -- Run 1000 reach queries in 0.002975940704345703s.
+-- 0.0684s -- Test_1 ended (0.06844162940979004s).
+-- 0.0000s -- Starting Test_2 (2^2 = 4 certificates). --
+-- 0.2624s -- Test_2 -- Built symbolic information flow graph of 0 nodes 0.2623589038848877s.
+-- 0.2658s -- Test_2 -- Run 1000 reach queries in 0.0024797916412353516s.
+-- 0.2658s -- Test_2 ended (0.266326904296875s).
+-- 0.0000s -- Starting Test_3 (2^3 = 8 certificates). --
+-- 1.0331s -- Test_3 -- Built symbolic information flow graph of 0 nodes 1.0330727100372314s.
+-- 1.0356s -- Test_3 -- Run 1000 reach queries in 0.0024797916412353516s.
+-- 1.0360s -- Test_3 ended (1.036048412322998s).
+-- 0.0000s -- Starting Test_4 (2^4 = 16 certificates). --
+-- 4.0911s -- Test_4 -- Built symbolic information flow graph of 0 nodes 4.091126918792725s.
+-- 4.0941s -- Test_4 -- Run 1000 reach queries in 0.0029757022857666016s.
+-- 4.0941s -- Test_4 ended (4.094102621078491s).
+-- 0.0000s -- Starting Test_5 (2^5 = 32 certificates). --
+-- 15.9742s -- Test_5 -- Built symbolic information flow graph of 0 nodes 15.974189281463623s.
+-- 15.9772s -- Test_5 -- Run 1000 reach queries in 0.0029757022857666016s.
+-- 15.9772s -- Test_5 ended (15.97716498374939s).
+-- 0.0000s -- Starting Test_6 (2^6 = 64 certificates). --
+-- 63.1414s -- Test_6 -- Built symbolic information flow graph of 0 nodes 63.14141869544983s.
+-- 63.1449s -- Test_6 -- Run 1000 reach queries in 0.00247955322265625s.
+-- 63.1454s -- Test_6 ended (63.145386934280396s).
+-- 0.0000s -- Starting Test_7 (2^7 = 128 certificates). --
+-- 251.1706s -- Test_7 -- Built symbolic information flow graph of 0 nodes 251.17055821418762s.
+-- 251.1745s -- Test_7 -- Run 1000 reach queries in 0.0029757022857666016s.
+-- 251.1745s -- Test_7 ended (251.17452573776245s).
+
+TEST3
+-- 0.0248s -- Read 42 policies from tests/policies/policy_benchmark/FLAW1_secure.
+-- 0.0000s -- Starting Test_0 (2^0 = 1 certificates). --
+-- 0.0159s -- Test_0 -- Built symbolic information flow graph of 0 nodes 0.015869855880737305s.
+-- 0.0193s -- Test_0 -- Run 1000 reach queries in 0.0034728050231933594s.
+-- 0.0193s -- Test_0 ended (0.019342660903930664s).
+-- 0.0000s -- Starting Test_1 (2^1 = 2 certificates). --
+-- 0.0655s -- Test_1 -- Built symbolic information flow graph of 0 nodes 0.06546521186828613s.
+-- 0.0684s -- Test_1 -- Run 1000 reach queries in 0.0029752254486083984s.
+-- 0.0684s -- Test_1 ended (0.06844043731689453s).
+-- 0.0000s -- Starting Test_2 (2^2 = 4 certificates). --
+-- 0.2435s -- Test_2 -- Built symbolic information flow graph of 0 nodes 0.2435135841369629s.
+-- 0.2460s -- Test_2 -- Run 1000 reach queries in 0.0024797916412353516s.
+-- 0.2460s -- Test_2 ended (0.24599337577819824s).
+-- 0.0000s -- Starting Test_3 (2^3 = 8 certificates). --
+-- 0.9741s -- Test_3 -- Built symbolic information flow graph of 0 nodes 0.9740543365478516s.
+-- 0.9770s -- Test_3 -- Run 1000 reach queries in 0.00247955322265625s.
+-- 0.9775s -- Test_3 ended (0.9775261878967285s).
+-- 0.0000s -- Starting Test_4 (2^4 = 16 certificates). --
+-- 3.8580s -- Test_4 -- Built symbolic information flow graph of 0 nodes 3.858027458190918s.
+-- 3.8610s -- Test_4 -- Run 1000 reach queries in 0.0029761791229248047s.
+-- 3.8615s -- Test_4 ended (3.861499547958374s).
+-- 0.0000s -- Starting Test_5 (2^5 = 32 certificates). --
+-- 15.4276s -- Test_5 -- Built symbolic information flow graph of 0 nodes 15.427647590637207s.
+-- 15.4311s -- Test_5 -- Run 1000 reach queries in 0.0029752254486083984s.
+-- 15.4311s -- Test_5 ended (15.431119203567505s).
+-- 0.0000s -- Starting Test_6 (2^6 = 64 certificates). --
+-- 61.6848s -- Test_6 -- Built symbolic information flow graph of 0 nodes 61.68480205535889s.
+-- 61.6883s -- Test_6 -- Run 1000 reach queries in 0.002975940704345703s.
+-- 61.6883s -- Test_6 ended (61.68827414512634s).
+-- 0.0000s -- Starting Test_7 (2^7 = 128 certificates). --
+-- 246.1676s -- Test_7 -- Built symbolic information flow graph of 0 nodes 246.167551279068s.
+-- 246.1710s -- Test_7 -- Run 1000 reach queries in 0.0029404163360595703s.
+-- 246.1710s -- Test_7 ended (246.17098331451416s).
+
+TEST4
+-- 0.0109s -- Read 42 policies from tests/policies/policy_benchmark/FLAW1_secure.
+-- 0.0000s -- Starting Test_0 (2^0 = 1 certificates). --
+-- 0.0159s -- Test_0 -- Built symbolic information flow graph of 0 nodes 0.015869855880737305s.
+-- 0.0193s -- Test_0 -- Run 1000 reach queries in 0.0034723281860351562s.
+-- 0.0193s -- Test_0 ended (0.01934218406677246s).
+-- 0.0000s -- Starting Test_1 (2^1 = 2 certificates). --
+-- 0.0640s -- Test_1 -- Built symbolic information flow graph of 0 nodes 0.0639805793762207s.
+-- 0.0675s -- Test_1 -- Run 1000 reach queries in 0.0029761791229248047s.
+-- 0.0675s -- Test_1 ended (0.06745243072509766s).
+-- 0.0000s -- Starting Test_2 (2^2 = 4 certificates). --
+-- 0.2465s -- Test_2 -- Built symbolic information flow graph of 0 nodes 0.24650025367736816s.
+-- 0.2500s -- Test_2 -- Run 1000 reach queries in 0.0029745101928710938s.
+-- 0.2500s -- Test_2 ended (0.2499709129333496s).
+-- 0.0000s -- Starting Test_3 (2^3 = 8 certificates). --
+-- 0.9761s -- Test_3 -- Built symbolic information flow graph of 0 nodes 0.9760787487030029s.
+-- 0.9791s -- Test_3 -- Run 1000 reach queries in 0.002974987030029297s.
+-- 0.9791s -- Test_3 ended (0.9790537357330322s).
+-- 0.0000s -- Starting Test_4 (2^4 = 16 certificates). --
+-- 3.9410s -- Test_4 -- Built symbolic information flow graph of 0 nodes 3.9410147666931152s.
+-- 3.9435s -- Test_4 -- Run 1000 reach queries in 0.002480030059814453s.
+-- 3.9440s -- Test_4 ended (3.943990707397461s).
+-- 0.0000s -- Starting Test_5 (2^5 = 32 certificates). --
+-- 15.5880s -- Test_5 -- Built symbolic information flow graph of 0 nodes 15.587987661361694s.
+-- 15.5915s -- Test_5 -- Run 1000 reach queries in 0.003471851348876953s.
+-- 15.5920s -- Test_5 ended (15.591955661773682s).
+-- 0.0000s -- Starting Test_6 (2^6 = 64 certificates). --
+-- 61.8411s -- Test_6 -- Built symbolic information flow graph of 0 nodes 61.841094732284546s.
+-- 61.8441s -- Test_6 -- Run 1000 reach queries in 0.0029761791229248047s.
+-- 61.8446s -- Test_6 ended (61.844566822052s).
+-- 0.0000s -- Starting Test_7 (2^7 = 128 certificates). --
+-- 248.8543s -- Test_7 -- Built symbolic information flow graph of 0 nodes 248.85428953170776s.
+-- 248.8578s -- Test_7 -- Run 1000 reach queries in 0.0029757022857666016s.
+-- 248.8583s -- Test_7 ended (248.85825634002686s).
+
+TEST5
+-- 0.0055s -- Read 42 policies from tests/policies/policy_benchmark/FLAW1_secure.
+-- 0.0000s -- Starting Test_0 (2^0 = 1 certificates). --
+-- 0.0149s -- Test_0 -- Built symbolic information flow graph of 0 nodes 0.014879226684570312s.
+-- 0.0184s -- Test_0 -- Run 1000 reach queries in 0.0029761791229248047s.
+-- 0.0184s -- Test_0 ended (0.018350839614868164s).
+-- 0.0000s -- Starting Test_1 (2^1 = 2 certificates). --
+-- 0.0610s -- Test_1 -- Built symbolic information flow graph of 0 nodes 0.0610044002532959s.
+-- 0.0640s -- Test_1 -- Run 1000 reach queries in 0.0029764175415039062s.
+-- 0.0640s -- Test_1 ended (0.0639808177947998s).
+-- 0.0000s -- Starting Test_2 (2^2 = 4 certificates). --
+-- 0.2410s -- Test_2 -- Built symbolic information flow graph of 0 nodes 0.2410438060760498s.
+-- 0.2440s -- Test_2 -- Run 1000 reach queries in 0.00247955322265625s.
+-- 0.2445s -- Test_2 ended (0.24451541900634766s).
+-- 0.0000s -- Starting Test_3 (2^3 = 8 certificates). --
+-- 0.9513s -- Test_3 -- Built symbolic information flow graph of 0 nodes 0.9517760276794434s.
+-- 0.9543s -- Test_3 -- Run 1000 reach queries in 0.00247955322265625s.
+-- 0.9548s -- Test_3 ended (0.9547514915466309s).
+-- 0.0000s -- Starting Test_4 (2^4 = 16 certificates). --
+-- 3.8398s -- Test_4 -- Built symbolic information flow graph of 0 nodes 3.8398354053497314s.
+-- 3.8428s -- Test_4 -- Run 1000 reach queries in 0.0029757022857666016s.
+-- 3.8433s -- Test_4 ended (3.8433079719543457s).
+-- 0.0000s -- Starting Test_5 (2^5 = 32 certificates). --
+-- 15.3306s -- Test_5 -- Built symbolic information flow graph of 0 nodes 15.330575942993164s.
+-- 15.3340s -- Test_5 -- Run 1000 reach queries in 0.0029752254486083984s.
+-- 15.3340s -- Test_5 ended (15.334047079086304s).
+-- 0.0000s -- Starting Test_6 (2^6 = 64 certificates). --
+-- 60.5367s -- Test_6 -- Built symbolic information flow graph of 0 nodes 60.53668141365051s.
+-- 60.5406s -- Test_6 -- Run 1000 reach queries in 0.0029752254486083984s.
+-- 60.5406s -- Test_6 ended (60.54064965248108s).
+-- 0.0000s -- Starting Test_7 (2^7 = 128 certificates). --
+-- 230.2910s -- Test_7 -- Built symbolic information flow graph of 0 nodes 230.29099583625793s.
+-- 230.2945s -- Test_7 -- Run 1000 reach queries in 0.002975940704345703s.
+-- 230.2945s -- Test_7 ended (230.2944691181183s).
+
+TEST6
+-- 0.0055s -- Read 42 policies from tests/policies/policy_benchmark/FLAW1_secure.
+-- 0.0000s -- Starting Test_0 (2^0 = 1 certificates). --
+-- 0.0149s -- Test_0 -- Built symbolic information flow graph of 0 nodes 0.014879941940307617s.
+-- 0.0184s -- Test_0 -- Run 1000 reach queries in 0.0029757022857666016s.
+-- 0.0184s -- Test_0 ended (0.018351316452026367s).
+-- 0.0000s -- Starting Test_1 (2^1 = 2 certificates). --
+-- 0.0570s -- Test_1 -- Built symbolic information flow graph of 0 nodes 0.0570375919342041s.
+-- 0.0605s -- Test_1 -- Run 1000 reach queries in 0.003471851348876953s.
+-- 0.0605s -- Test_1 ended (0.060509443283081055s).
+-- 0.0000s -- Starting Test_2 (2^2 = 4 certificates). --
+-- 0.2222s -- Test_2 -- Built symbolic information flow graph of 0 nodes 0.2221972942352295s.
+-- 0.2252s -- Test_2 -- Run 1000 reach queries in 0.002974987030029297s.
+-- 0.2252s -- Test_2 ended (0.2251722812652588s).
+-- 0.0000s -- Starting Test_3 (2^3 = 8 certificates). --
+-- 0.8789s -- Test_3 -- Built symbolic information flow graph of 0 nodes 0.8788678646087646s.
+-- 0.8816s -- Test_3 -- Run 1000 reach queries in 0.002519369125366211s.
+-- 0.8820s -- Test_3 ended (0.8820488452911377s).
+-- 0.0000s -- Starting Test_4 (2^4 = 16 certificates). --
+-- 3.5799s -- Test_4 -- Built symbolic information flow graph of 0 nodes 3.5799460411071777s.
+-- 3.5829s -- Test_4 -- Run 1000 reach queries in 0.00247955322265625s.
+-- 3.5829s -- Test_4 ended (3.5829217433929443s).
+-- 0.0000s -- Starting Test_5 (2^5 = 32 certificates). --
+-- 14.1164s -- Test_5 -- Built symbolic information flow graph of 0 nodes 14.116431713104248s.
+-- 14.1194s -- Test_5 -- Run 1000 reach queries in 0.0024802684783935547s.
+-- 14.1194s -- Test_5 ended (14.119407415390015s).
+-- 0.0000s -- Starting Test_6 (2^6 = 64 certificates). --
+-- 56.7719s -- Test_6 -- Built symbolic information flow graph of 0 nodes 56.771854877471924s.
+-- 56.7749s -- Test_6 -- Run 1000 reach queries in 0.0030090808868408203s.
+-- 56.7749s -- Test_6 ended (56.774863958358765s).
+-- 0.0000s -- Starting Test_7 (2^7 = 128 certificates). --
+-- 225.0757s -- Test_7 -- Built symbolic information flow graph of 0 nodes 225.07568454742432s.
+-- 225.0791s -- Test_7 -- Run 1000 reach queries in 0.0029757022857666016s.
+-- 225.0791s -- Test_7 ended (225.07912230491638s).
+
+TEST7
+-- 0.0070s -- Read 42 policies from tests/policies/policy_benchmark/FLAW1_secure.
+-- 0.0000s -- Starting Test_0 (2^0 = 1 certificates). --
+-- 0.0149s -- Test_0 -- Built symbolic information flow graph of 0 nodes 0.014880657196044922s.
+-- 0.0179s -- Test_0 -- Run 1000 reach queries in 0.0029754638671875s.
+-- 0.0179s -- Test_0 ended (0.017856121063232422s).
+-- 0.0000s -- Starting Test_1 (2^1 = 2 certificates). --
+-- 0.0570s -- Test_1 -- Built symbolic information flow graph of 0 nodes 0.0570371150970459s.
+-- 0.0600s -- Test_1 -- Run 1000 reach queries in 0.002480030059814453s.
+-- 0.0605s -- Test_1 ended (0.06050872802734375s).
+-- 0.0000s -- Starting Test_2 (2^2 = 4 certificates). --
+-- 0.2301s -- Test_2 -- Built symbolic information flow graph of 0 nodes 0.23013544082641602s.
+-- 0.2336s -- Test_2 -- Run 1000 reach queries in 0.0029754638671875s.
+-- 0.2336s -- Test_2 ended (0.23360633850097656s).
+-- 0.0000s -- Starting Test_3 (2^3 = 8 certificates). --
+-- 0.8952s -- Test_3 -- Built symbolic information flow graph of 0 nodes 0.8952462673187256s.
+-- 0.8982s -- Test_3 -- Run 1000 reach queries in 0.00247955322265625s.
+-- 0.8982s -- Test_3 ended (0.8982210159301758s).
+-- 0.0000s -- Starting Test_4 (2^4 = 16 certificates). --
+-- 3.5329s -- Test_4 -- Built symbolic information flow graph of 0 nodes 3.5328710079193115s.
+-- 3.5358s -- Test_4 -- Run 1000 reach queries in 0.002479076385498047s.
+-- 3.5358s -- Test_4 ended (3.536341667175293s).
+-- 0.0000s -- Starting Test_5 (2^5 = 32 certificates). --
+-- 13.9536s -- Test_5 -- Built symbolic information flow graph of 0 nodes 13.953554153442383s.
+-- 13.9565s -- Test_5 -- Run 1000 reach queries in 0.0029757022857666016s.
+-- 13.9565s -- Test_5 ended (13.95652985572815s).
+-- 0.0000s -- Starting Test_6 (2^6 = 64 certificates). --
+-- 55.5466s -- Test_6 -- Built symbolic information flow graph of 0 nodes 55.5470814704895s.
+-- 55.5501s -- Test_6 -- Run 1000 reach queries in 0.0029761791229248047s.
+-- 55.5501s -- Test_6 ended (55.55005764961243s).
+-- 0.0000s -- Starting Test_7 (2^7 = 128 certificates). --
+-- 223.9899s -- Test_7 -- Built symbolic information flow graph of 0 nodes 223.9898669719696s.
+-- 223.9939s -- Test_7 -- Run 1000 reach queries in 0.002974987030029297s.
+-- 223.9941s -- Test_7 ended (223.99407196044922s).
+
+TEST8
+-- 0.0050s -- Read 42 policies from tests/policies/policy_benchmark/FLAW1_secure.
+-- 0.0000s -- Starting Test_0 (2^0 = 1 certificates). --
+-- 0.0144s -- Test_0 -- Built symbolic information flow graph of 0 nodes 0.014383316040039062s.
+-- 0.0184s -- Test_0 -- Run 1000 reach queries in 0.0034711360931396484s.
+-- 0.0184s -- Test_0 ended (0.01835036277770996s).
+-- 0.0000s -- Starting Test_1 (2^1 = 2 certificates). --
+-- 0.0565s -- Test_1 -- Built symbolic information flow graph of 0 nodes 0.056542396545410156s.
+-- 0.0600s -- Test_1 -- Run 1000 reach queries in 0.0029754638671875s.
+-- 0.0600s -- Test_1 ended (0.060013771057128906s).
+-- 0.0000s -- Starting Test_2 (2^2 = 4 certificates). --
+-- 0.2257s -- Test_2 -- Built symbolic information flow graph of 0 nodes 0.22567033767700195s.
+-- 0.2291s -- Test_2 -- Run 1000 reach queries in 0.0029754638671875s.
+-- 0.2291s -- Test_2 ended (0.22914338111877441s).
+-- 0.0000s -- Starting Test_3 (2^3 = 8 certificates). --
+-- 0.8789s -- Test_3 -- Built symbolic information flow graph of 0 nodes 0.878878116607666s.
+-- 0.8819s -- Test_3 -- Run 1000 reach queries in 0.0029752254486083984s.
+-- 0.8819s -- Test_3 ended (0.8818533420562744s).
+-- 0.0000s -- Starting Test_4 (2^4 = 16 certificates). --
+-- 3.4932s -- Test_4 -- Built symbolic information flow graph of 0 nodes 3.493192434310913s.
+-- 3.4965s -- Test_4 -- Run 1000 reach queries in 0.0024824142456054688s.
+-- 3.4970s -- Test_4 ended (3.496999740600586s).
+-- 0.0000s -- Starting Test_5 (2^5 = 32 certificates). --
+-- 13.9748s -- Test_5 -- Built symbolic information flow graph of 0 nodes 13.974755048751831s.
+-- 13.9782s -- Test_5 -- Run 1000 reach queries in 0.0029761791229248047s.
+-- 13.9782s -- Test_5 ended (13.978249549865723s).
+-- 0.0000s -- Starting Test_6 (2^6 = 64 certificates). --
+-- 55.4506s -- Test_6 -- Built symbolic information flow graph of 0 nodes 55.45064949989319s.
+-- 55.4537s -- Test_6 -- Run 1000 reach queries in 0.002480030059814453s.
+-- 55.4542s -- Test_6 ended (55.454219579696655s).
+-- 0.0000s -- Starting Test_7 (2^7 = 128 certificates). --
+-- 222.4538s -- Test_7 -- Built symbolic information flow graph of 0 nodes 222.45378518104553s.
+-- 222.4573s -- Test_7 -- Run 1000 reach queries in 0.002975940704345703s.
+-- 222.4578s -- Test_7 ended (222.4577555656433s).
+
+TEST9
+-- 0.0055s -- Read 42 policies from tests/policies/policy_benchmark/FLAW1_secure.
+-- 0.0000s -- Starting Test_0 (2^0 = 1 certificates). --
+-- 0.0144s -- Test_0 -- Built symbolic information flow graph of 0 nodes 0.014383077621459961s.
+-- 0.0184s -- Test_0 -- Run 1000 reach queries in 0.003471851348876953s.
+-- 0.0184s -- Test_0 ended (0.018351316452026367s).
+-- 0.0000s -- Starting Test_1 (2^1 = 2 certificates). --
+-- 0.0585s -- Test_1 -- Built symbolic information flow graph of 0 nodes 0.058525800704956055s.
+-- 0.0620s -- Test_1 -- Run 1000 reach queries in 0.0029768943786621094s.
+-- 0.0620s -- Test_1 ended (0.061998844146728516s).
+-- 0.0000s -- Starting Test_2 (2^2 = 4 certificates). --
+-- 0.2316s -- Test_2 -- Built symbolic information flow graph of 0 nodes 0.23162555694580078s.
+-- 0.2351s -- Test_2 -- Run 1000 reach queries in 0.0029757022857666016s.
+-- 0.2351s -- Test_2 ended (0.23509669303894043s).
+-- 0.0000s -- Starting Test_3 (2^3 = 8 certificates). --
+-- 0.8873s -- Test_3 -- Built symbolic information flow graph of 0 nodes 0.8873155117034912s.
+-- 0.8912s -- Test_3 -- Run 1000 reach queries in 0.0030014514923095703s.
+-- 0.8912s -- Test_3 ended (0.891204833984375s).
+-- 0.0000s -- Starting Test_4 (2^4 = 16 certificates). --
+-- 3.4922s -- Test_4 -- Built symbolic information flow graph of 0 nodes 3.4922327995300293s.
+-- 3.4956s -- Test_4 -- Run 1000 reach queries in 0.002480030059814453s.
+-- 3.4956s -- Test_4 ended (3.4956445693969727s).
+-- 0.0000s -- Starting Test_5 (2^5 = 32 certificates). --
+-- 13.8529s -- Test_5 -- Built symbolic information flow graph of 0 nodes 13.852864980697632s.
+-- 13.8564s -- Test_5 -- Run 1000 reach queries in 0.0029778480529785156s.
+-- 13.8564s -- Test_5 ended (13.856372117996216s).
+-- 0.0000s -- Starting Test_6 (2^6 = 64 certificates). --
+-- 55.4851s -- Test_6 -- Built symbolic information flow graph of 0 nodes 55.4850652217865s.
+-- 55.4885s -- Test_6 -- Run 1000 reach queries in 0.002480745315551758s.
+-- 55.4890s -- Test_6 ended (55.48903298377991s).
+-- 0.0000s -- Starting Test_7 (2^7 = 128 certificates). --
+-- 221.1368s -- Test_7 -- Built symbolic information flow graph of 0 nodes 221.13680267333984s.
+-- 221.1408s -- Test_7 -- Run 1000 reach queries in 0.0029757022857666016s.
+-- 221.1408s -- Test_7 ended (221.14077019691467s).
+
+TEST10
+-- 0.0055s -- Read 42 policies from tests/policies/policy_benchmark/FLAW1_secure.
+-- 0.0000s -- Starting Test_0 (2^0 = 1 certificates). --
+-- 0.0149s -- Test_0 -- Built symbolic information flow graph of 0 nodes 0.01487874984741211s.
+-- 0.0183s -- Test_0 -- Run 1000 reach queries in 0.0034711360931396484s.
+-- 0.0183s -- Test_0 ended (0.018349885940551758s).
+-- 0.0000s -- Starting Test_1 (2^1 = 2 certificates). --
+-- 0.0610s -- Test_1 -- Built symbolic information flow graph of 0 nodes 0.06100654602050781s.
+-- 0.0650s -- Test_1 -- Run 1000 reach queries in 0.0034737586975097656s.
+-- 0.0655s -- Test_1 ended (0.06547045707702637s).
+-- 0.0000s -- Starting Test_2 (2^2 = 4 certificates). --
+-- 0.2306s -- Test_2 -- Built symbolic information flow graph of 0 nodes 0.23063421249389648s.
+-- 0.2336s -- Test_2 -- Run 1000 reach queries in 0.0029752254486083984s.
+-- 0.2336s -- Test_2 ended (0.23360943794250488s).
+-- 0.0000s -- Starting Test_3 (2^3 = 8 certificates). --
+-- 0.9042s -- Test_3 -- Built symbolic information flow graph of 0 nodes 0.9041814804077148s.
+-- 0.9072s -- Test_3 -- Run 1000 reach queries in 0.0025136470794677734s.
+-- 0.9077s -- Test_3 ended (0.9076523780822754s).
+-- 0.0000s -- Starting Test_4 (2^4 = 16 certificates). --
+-- 3.5056s -- Test_4 -- Built symbolic information flow graph of 0 nodes 3.5061192512512207s.
+-- 3.5091s -- Test_4 -- Run 1000 reach queries in 0.0024793148040771484s.
+-- 3.5096s -- Test_4 ended (3.5096280574798584s).
+-- 0.0000s -- Starting Test_5 (2^5 = 32 certificates). --
+-- 13.8132s -- Test_5 -- Built symbolic information flow graph of 0 nodes 13.813185691833496s.
+-- 13.8167s -- Test_5 -- Run 1000 reach queries in 0.0025141239166259766s.
+-- 13.8171s -- Test_5 ended (13.817149639129639s).
+-- 0.0000s -- Starting Test_6 (2^6 = 64 certificates). --
+-- 55.8179s -- Test_6 -- Built symbolic information flow graph of 0 nodes 55.81787729263306s.
+-- 55.8213s -- Test_6 -- Run 1000 reach queries in 0.0029752254486083984s.
+-- 55.8213s -- Test_6 ended (55.8213152885437s).
+-- 0.0000s -- Starting Test_7 (2^7 = 128 certificates). --
+-- 224.0655s -- Test_7 -- Built symbolic information flow graph of 0 nodes 224.06553292274475s.
+-- 224.0690s -- Test_7 -- Run 1000 reach queries in 0.002974987030029297s.
+-- 224.0690s -- Test_7 ended (224.06900477409363s).
