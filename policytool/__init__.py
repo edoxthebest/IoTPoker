@@ -5,6 +5,7 @@ from .policy_reader import PolicyReader
 from .prover import Prover
 from .re_exp import ReExp
 from .thing import Thing
+from .topic_witness import TopicWitness
 
 from .policy_graph import PolicyGraph
 from .node import Node

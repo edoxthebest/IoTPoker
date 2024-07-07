@@ -1,5 +1,6 @@
 import z3
 from policytool.iot_policy import IoTPolicy
+from policytool.topic_witness import TopicWitness
 
 class Certificate:
   @property
@@ -27,4 +28,96 @@ class Certificate:
   def get_receive(self, topic: z3.SeqRef, id: z3.SeqRef):
     return self.policy.build_receive(topic, id)
   
+  def get_topic_witness(self, other: 'Certificate') -> TopicWitness:
+    id1 = z3.String('id_1')
+    id2 = z3.String('id_2')
+    topic = z3.String('topic')
+    topic_filter = z3.String('topic_filter')
+
+    # Init solver and test for the following necessary conditions:
+    s = z3.Solver()
+    s.add(self.get_connect(id1))                    # c1 can connect
+    s.add(other.get_connect(id2))                   # c2 can connect
+    s.add(self.get_publish(topic, id1))             # c1 can publish on a topic t
+    s.add(other.get_receive(topic, id2))            # c2 can receive on the same topic t
+    s.add(other.get_subscribe(topic_filter, id2))   # c2 can subscribe to some topic filter
+    if s.check() == z3.unsat:
+      return None
+    
+    # Test for an easy solution: c2 can subscribe to t
+    s.push()
+    s.add(topic == topic_filter)
+    if s.check() == z3.sat:
+      return TopicWitness(self, other, s)
+    s.pop()
+    
+    # TOPIC LEVELS
+    # topic_levels = z3.Strings('topic_lv_0 topic_lv_1 '
+    #                           'topic_lv_2 topic_lv_3 '
+    #                           'topic_lv_4 topic_lv_5 '
+    #                           'topic_lv_6 topic_lv_7')
+    topic_levels = z3.Strings('topic_lv_0 topic_lv_1 topic_lv_2 topic_lv_3 topic_lv_4 topic_lv_5 topic_lv_6 topic_lv_7')
+    for level in topic_levels:
+      s.add(z3.Not(z3.Contains(level, '/')))
+
+    def get_topic_for_level(level):
+      topic_T = ['', topic_levels[0]]
+      for topic_level in range(level):
+        topic_T.append('/')
+        topic_T.append(topic_levels[topic_level + 1])
+      return z3.Concat(topic_T)
+
+    # TOPIC FILTER LEVELS
+    # tf_levels = z3.Strings('tf_lv_0 tf_lv_1 tf_lv_2 tf_lv_3 '
+    #                        'tf_lv_4 tf_lv_5 tf_lv_6 tf_lv_7')
+    tf_levels = z3.Strings('tf_lv_0 tf_lv_1 tf_lv_2 tf_lv_3 tf_lv_4 tf_lv_5 tf_lv_6 tf_lv_7')
+    for level in tf_levels:
+      s.add(z3.Not(z3.Contains(level, '/')))
+
+    def get_tf_for_level(level):
+      topic_filter = ['', tf_levels[0]]
+      for tf_level in range(level):
+        topic_filter.append('/')
+        topic_filter.append(tf_levels[tf_level + 1])
+      return z3.Concat(topic_filter)
+
+    for topic_level in range(8):
+      s.push()
+      s.add(topic == get_topic_for_level(topic_level))
+      if s.check() == z3.unsat:
+        print(f'#{topic_level+1} topic levels is {z3.unsat}')
+        s.pop()
+        continue
+      print(f'#{topic_level+1} topic levels is {z3.sat}')
+      print(s.model())
+      
+      # CASE1: same length
+      s.push()
+      s.add(topic_filter == get_tf_for_level(topic_level))
+      for level in range(topic_level+1):
+        s.add(z3.Or(tf_levels[level] == topic_levels[level],
+                    tf_levels[level] == '+',
+                    tf_levels[level] == '#' if level == topic_level else False)) 
+      if s.check() == z3.sat:
+        print('FOUND')
+        print(s.model())
+        return TopicWitness(self, other, s)
+      s.pop()
+
+      # CASE 2: using # at the end of a shorter tf
+      for tf_level in range(topic_level):
+        s.push()
+        s.add(topic_filter == get_tf_for_level(tf_level))
+        s.add(tf_levels[tf_level] == '#')
+        for level in range(tf_level):
+          s.add(z3.Or(tf_levels[level] == topic_levels[level],
+                      tf_levels[level] == '+'))
+        if s.check() == z3.sat:
+          print('FOUND')
+          print(s.model())
+          return TopicWitness(self, other, s)
+        s.pop()
+
+      s.pop()
+
   # TODO: might be smart to add here method that takes solver and adds correct queries to it

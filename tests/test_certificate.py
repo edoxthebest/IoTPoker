@@ -1,6 +1,6 @@
 import unittest
 import z3
-from policytool import Certificate, IoTPolicy, PolicyReader
+from policytool import Certificate, IoTPolicy, TopicWitness, PolicyReader
 
 class TestCertificate(unittest.TestCase):
   @classmethod
@@ -8,6 +8,7 @@ class TestCertificate(unittest.TestCase):
     policy_dir = 'tests/policies/aws-samples'
     cls.policies = PolicyReader.read_policy_dir(policy_dir)
     cls.policy = IoTPolicy.union(cls.policies)
+    cls.pol_dir = 'tests/policies/wildcard_issues/'
       
   def test_certificate(self):
     cert = Certificate(self.policies)
@@ -41,3 +42,28 @@ class TestCertificate(unittest.TestCase):
     self.assertEqual(solver.model()[id], 'lambdaFireAlarm')
     self.assertEqual(solver.model()[topic_pub], 'fire/detected')
     self.assertEqual(solver.model()[topic_sub], 'fire/floorA/smokeLevels')
+
+  def test_get_topic_witness_early_no_solution(self):
+    pol = PolicyReader.read_policy_file(self.pol_dir + 'easy_no_solution.json')
+    cert1 = Certificate([pol], 'cert_1')
+    cert2 = Certificate([pol], 'cert_2')
+    
+    self.assertIsNone(cert1.get_topic_witness(cert2))
+
+  
+  def test_get_topic_witness_no_wildcards(self):
+    pol = PolicyReader.read_policy_file(self.pol_dir + 'easy_solution.json')
+    cert1 = Certificate([pol], 'cert_1')
+    cert2 = Certificate([pol], 'cert_2')
+    witness = cert1.get_topic_witness(cert2)
+    
+    self.assertIsNotNone(witness)
+    self.assertIn(witness.id1, ['clientId1', 'clientId2', 'clientId3'])
+    self.assertIn(witness.id2, ['clientId1', 'clientId2', 'clientId3'])
+    self.assertEqual(witness.topic, witness.topic_filter)
+    self.assertEqual(witness.topic, 'some_specific_topic')
+  
+  def test_get_topic_witness_multi_level_sub(self):
+    pass
+  
+  # def test_get_topic_witne
