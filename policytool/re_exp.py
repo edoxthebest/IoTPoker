@@ -49,10 +49,10 @@ class ReExp:
           res.append(ReExp.RE_QMARK)
         case '*':
           res.append(ReExp.RE_STAR)
-        case '+':
-          res.append(ReExp.RE_PLUS)
-        case '#' | '/#' :
-          res.append(ReExp.RE_HASH)
+        # case '+':
+        #   res.append(ReExp.RE_PLUS)
+        # case '#' | '/#' :
+        #   res.append(ReExp.RE_HASH)
         case '${iot:ClientId}':
           # TODO: Does not handle possible mqtt wildcards in the client id
           res.append(z3.Re(client_id))

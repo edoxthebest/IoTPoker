@@ -1,3 +1,5 @@
+import z3
+
 class TopicWitness:
   def __init__(self, cert1, cert2, solver):
     self.cert1 = cert1
@@ -6,7 +8,7 @@ class TopicWitness:
     # TODO: can i still use the solver, regardless from where i created it?
     
     model = solver.model()
-    self.id1 = model['id_1']
-    self.id2 = model['id_2']
-    self.topic = model['topic']
-    self.topic_filter = model['topic_filter']
+    self.id1 = str(model[z3.String('id_1')]).strip('\"')
+    self.id2 = str(model[z3.String('id_2')]).strip('\"')
+    self.topic = str(model[z3.String('topic')]).strip('\"')
+    self.topic_filter = str(model[z3.String('topic_filter')]).strip('\"')
