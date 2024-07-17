@@ -5,12 +5,18 @@ from policytool.iot import IoT
 
 class ReExp:
   RE_EMPTY = z3.Empty(z3.ReSort(z3.StringSort()))
-  RE_QMARK = z3.Diff(z3.AllChar(z3.ReSort(z3.StringSort())),
-                     z3.Union(z3.Re('*'), z3.Re('?')))
+  RE_QMARK = z3.Union(z3.Range('a', 'z'),
+                      z3.Range('A', 'Z'),
+                      z3.Range('0', '9'),
+                      z3.Re('+'),
+                      z3.Re('#'),
+                      z3.Re('/'))
+  # z3.Diff(z3.AllChar(z3.ReSort(z3.StringSort())),
+                    #  z3.Union(z3.Re('*'), z3.Re('?')))
   RE_STAR = z3.Star(RE_QMARK)
-  RE_PLUS = z3.Plus(z3.Diff(z3.AllChar(z3.ReSort(z3.StringSort())),
-                            z3.Union(z3.Re('*'), z3.Re('?'), z3.Re('/'))))
-  RE_HASH = z3.Union(RE_EMPTY, z3.Concat(z3.Re('/'), RE_STAR))
+  # RE_PLUS = z3.Plus(z3.Diff(z3.AllChar(z3.ReSort(z3.StringSort())),
+  #                           z3.Union(z3.Re('*'), z3.Re('?'), z3.Re('/'))))
+  # RE_HASH = z3.Union(RE_EMPTY, z3.Concat(z3.Re('/'), RE_STAR))
 
   @staticmethod
   def parse(arn: str, client_id: str | z3.SeqRef,

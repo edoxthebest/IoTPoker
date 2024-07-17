@@ -88,13 +88,6 @@ class TestCertificate(unittest.TestCase):
     self.assertEqual(witness.topic, 'A/B/C')
     self.assertRegex(witness.topic_filter, r'[A+]/[B+]/[C+]')
     
-  # def test_get_topic_witness_pub2_sub1(self):
-  #   pol = PolicyReader.read_policy_file(self.pol_dir + 'pub_on_2_sub_on_1.json')
-  #   cert1 = Certificate([pol], 'cert_1')
-  #   cert2 = Certificate([pol], 'cert_2')
-    
-  #   self.assertIsNone(cert1.get_topic_witness(cert2))
-    
 def make_test_policy(con, pub, sub, rec):
   base_arn = 'arn:aws:iot:us-east-1:123456789012:'
   stmts = []
@@ -194,3 +187,10 @@ class TestGetTopicWitness(unittest.TestCase):
     self.assertEqual(witness.id2, 'B')
     self.assertEqual(witness.topic, 'A/B')
     self.assertEqual(witness.topic_filter, '+/B')
+
+  def test_case_study_reader1_light1(self):
+    pol1 = PolicyReader.read_policy_file('tests/policies/case-study/floor1_badge_reader.json')
+    pol2 = PolicyReader.read_policy_file('tests/policies/case-study/light.json')
+    cert1 = Certificate([pol1], 'cert_1')
+    cert2 = Certificate([pol2], 'cert_2')
+    self.assertIsNone(cert1.get_topic_witness(cert2))

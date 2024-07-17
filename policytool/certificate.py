@@ -1,6 +1,7 @@
 import z3
 from policytool.iot_policy import IoTPolicy
 from policytool.topic_witness import TopicWitness
+z3.set_option(verbose=10) 
 
 class Certificate:
   @property
@@ -92,6 +93,7 @@ class Certificate:
       print(s.model())
       
       # CASE1: same length
+      print('-- CASE1')
       s.push()
       s.add(topic_filter == get_tf_for_level(topic_level))
       for level in range(topic_level+1):
@@ -104,6 +106,7 @@ class Certificate:
         return TopicWitness(self, other, s)
       s.pop()
 
+      print('--- CASE2')
       # CASE 2: using # at the end of a shorter tf
       for tf_level in range(topic_level):
         s.push()
@@ -119,5 +122,7 @@ class Certificate:
         s.pop()
 
       s.pop()
-
+    
+    print('---- None found')
+    return None
   # TODO: might be smart to add here method that takes solver and adds correct queries to it

@@ -33,30 +33,23 @@ class PolicyGraph:
     for cert1 in self._certs:
       # self._graph.add_node(cert1.name, bipartite=0)
       for cert2 in self._certs:
-        id1 = z3.String('id_1')
-        id2 = z3.String('id_2')
-        topic = z3.String('common_topic')
+        # id1 = z3.String('id_1')
+        # id2 = z3.String('id_2')
+        # topic = z3.String('common_topic')
         
         # solver = z3.Solver()
-        # solver.add(cert1.policies.build_connect(id1))
-        # solver.add(cert2.policies.build_connect(id2))
-        # solver.add(cert1.policies.build_publish(topic, id1))
-        # solver.add(z3.And(cert2.policies.build_subscribe(topic, id2),
-        #                   cert2.policies.build_receive(topic, id2)))
-        solver = z3.Solver()
-        solver.add(cert1.get_connect(id1))
-        solver.add(cert2.get_connect(id2))
-        solver.add(cert1.get_publish(topic, id1))
-        solver.add(z3.And(cert2.get_subscribe(topic, id2),
-                          cert2.get_receive(topic, id2)))
+        # solver.add(cert1.get_connect(id1))
+        # solver.add(cert2.get_connect(id2))
+        # solver.add(cert1.get_publish(topic, id1))
+        # solver.add(z3.And(cert2.get_subscribe(topic, id2),
+        #                   cert2.get_receive(topic, id2)))
+        print(f'-- {cert1.name}  &  {cert2.name} --')
+        witness = cert1.get_topic_witness(cert2)
 
-        # print(f'-- {cert1.name}  &  {cert2.name} --')
-        # print(solver.check())
-        if solver.check() == z3.sat:
-          model = solver.model()
-          
+        if witness is not None:
           # TODO: should change cert.name to cert
-          node = Node(cert1.name, cert2.name, solver, model[id1], model[id2], model[topic])
+          # TODO: change node to witness
+          node = Node(cert1.name, cert2.name, witness.solver, witness.id1, witness.id2, witness.topic)
           self._graph.add_edge(cert1.name, node)
           self._graph.add_edge(node, cert2.name)
 
@@ -64,7 +57,7 @@ class PolicyGraph:
           # self._graph.add_node(node, bipartite=1)
           # self._graph.add_edge(cert1.name, node, weight=model[topic])
           # self._graph.add_edge(node, cert2.name, weight=model[topic])
-          self._simple_graph.add_edge(cert1.name, cert2.name, topic=model[topic])
+          self._simple_graph.add_edge(cert1.name, cert2.name, topic=node.topic)
   
   def draw(self):
     pos = nx.bipartite_layout(self._graph, bipartite.sets(self._graph)[0])
