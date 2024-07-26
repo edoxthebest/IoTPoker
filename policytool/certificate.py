@@ -1,7 +1,7 @@
 import z3
 from policytool.iot_policy import IoTPolicy
 from policytool.topic_witness import TopicWitness
-z3.set_option(verbose=10) 
+# z3.set_option(verbose=10) 
 
 class Certificate:
   @property
@@ -82,46 +82,53 @@ class Certificate:
         topic_filter.append(tf_levels[tf_level + 1])
       return z3.Concat(topic_filter)
 
+    s_asserts = s.assertions()
     for topic_level in range(8):
-      s.push()
-      s.add(topic == get_topic_for_level(topic_level))
-      if s.check() == z3.unsat:
+      # s.push()
+      s_new = z3.Solver()
+      s_new.add(s_asserts)
+      s_new.add(topic == get_topic_for_level(topic_level))
+      if s_new.check() == z3.unsat:
         print(f'#{topic_level+1} topic levels is {z3.unsat}')
-        s.pop()
+        # s.pop()
         continue
       print(f'#{topic_level+1} topic levels is {z3.sat}')
-      print(s.model())
+      print(s_new.model())
       
       # CASE1: same length
       print('-- CASE1')
-      s.push()
-      s.add(topic_filter == get_tf_for_level(topic_level))
+      # s.push()
+      s_case_1 = z3.Solver()
+      s_case_1.add(s_new.assertions())
+      s_case_1.add(topic_filter == get_tf_for_level(topic_level))
       for level in range(topic_level+1):
-        s.add(z3.Or(tf_levels[level] == topic_levels[level],
+        s_case_1.add(z3.Or(tf_levels[level] == topic_levels[level],
                     tf_levels[level] == '+',
                     tf_levels[level] == '#' if level == topic_level else False)) 
-      if s.check() == z3.sat:
+      if s_case_1.check() == z3.sat:
         print('FOUND')
-        print(s.model())
-        return TopicWitness(self, other, s)
-      s.pop()
+        print(s_case_1.model())
+        return TopicWitness(self, other, s_case_1)
+      # s.pop()
 
       print('--- CASE2')
       # CASE 2: using # at the end of a shorter tf
       for tf_level in range(topic_level):
-        s.push()
-        s.add(topic_filter == get_tf_for_level(tf_level))
-        s.add(tf_levels[tf_level] == '#')
+        # s.push()
+        s_case_2 = z3.Solver()
+        s_case_2.add(s_new.assertions())
+        s_case_2.add(topic_filter == get_tf_for_level(tf_level))
+        s_case_2.add(tf_levels[tf_level] == '#')
         for level in range(tf_level):
-          s.add(z3.Or(tf_levels[level] == topic_levels[level],
+          s_case_2.add(z3.Or(tf_levels[level] == topic_levels[level],
                       tf_levels[level] == '+'))
-        if s.check() == z3.sat:
+        if s_case_2.check() == z3.sat:
           print('FOUND')
-          print(s.model())
-          return TopicWitness(self, other, s)
-        s.pop()
+          print(s_new.model())
+          return TopicWitness(self, other, s_new)
+        # s.pop()
 
-      s.pop()
+      # s.pop()
     
     print('---- None found')
     return None
