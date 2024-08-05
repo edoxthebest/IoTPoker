@@ -1,6 +1,7 @@
 import z3
 import time
 # z3.set_option(verbose=8) 
+z3.set_param('smt.string_solver','z3str3')
 
 
 RE_QMARK = z3.Union(z3.Range('a', 'z'),
@@ -12,10 +13,10 @@ RE_QMARK = z3.Union(z3.Range('a', 'z'),
 RE_STAR = z3.Star(RE_QMARK)
 
 RE_QMARK_NO_SLASH = z3.Union(z3.Range('a', 'z'),
-                    z3.Range('A', 'Z'),
-                    z3.Range('0', '9'),
-                    z3.Re('+'),
-                    z3.Re('#'))
+                             z3.Range('A', 'Z'),
+                             z3.Range('0', '9'),
+                             z3.Re('+'),
+                             z3.Re('#'))
 RE_STAR_NO_SLASH = z3.Star(RE_QMARK_NO_SLASH)
 RE_SLASH = z3.Concat(RE_STAR_NO_SLASH, z3.Re('/'), RE_STAR_NO_SLASH)
 
@@ -52,8 +53,8 @@ s.add(z3.And(z3.InRe(topic_filter, z3.Concat(z3.Re('physicalAC/floor'), RE_QMARK
              z3.Not(z3.InRe(topic_filter, z3.Empty(z3.ReSort(z3.StringSort()))))))
 
 #TODO: can we do this any differently
-# for level in topic_levels:
-#   s.add(z3.Not(z3.Contains(level, '/')))
+for level in topic_levels:
+  s.add(z3.Not(z3.Contains(level, '/')))
 # for level in tf_levels:
 #   s.add(z3.Not(z3.Contains(level, '/')))
   
@@ -83,10 +84,10 @@ for topic_level in range(8):
   s1 = z3.Solver()
   s1.add(assertions)
   s1.add(topic == get_topic_for_level(topic_level))
-  if topic_level == 0:
-    s1.add(z3.Not(z3.Contains(topic, '/')))
-  else:
-    s1.add(z3.InRe(topic, z3.Loop(RE_SLASH, topic_level, topic_level)))
+  # if topic_level == 0:
+  #   s1.add(z3.Not(z3.Contains(topic, '/')))
+  # else:
+  #   s1.add(z3.InRe(topic, z3.Loop(RE_SLASH, topic_level, topic_level)))
 
   # print(s1.assertions())
   # for i,v in enumerate(s1.assertions()):
@@ -120,8 +121,8 @@ for topic_level in range(8):
     exit()
   print(f'T:{time.time() - start_time} -- CASE 1 -- DONE')
 
-  start_time = time.time()
   # CASE 2: using # at the end of a shorter tf
+  start_time = time.time()
   for tf_level in range(topic_level):
     s_case_2 = z3.Solver()
     s_case_2.add(s1.assertions())

@@ -1,7 +1,21 @@
+import time
 import z3
 from policytool.iot_policy import IoTPolicy
 from policytool.topic_witness import TopicWitness
-# z3.set_option(verbose=10) 
+# z3.set_option(verbose=10)
+
+
+RE_QMARK_NO_SLASH = z3.Union(z3.Range('a', 'z'),
+                    z3.Range('A', 'Z'),
+                    z3.Range('0', '9'),
+                    z3.Re('+'),
+                    z3.Re('#'))
+RE_STAR_NO_SLASH = z3.Star(RE_QMARK_NO_SLASH)
+RE_SLASH = z3.Concat(RE_STAR_NO_SLASH, z3.Re('/'), RE_STAR_NO_SLASH)
+
+def print_model(model):
+  for k,v in sorted([(k, model[k]) for k in model], key = lambda x: str(x[0])):
+    print(f'\t{k}\t->\t{v}')
 
 class Certificate:
   @property
@@ -46,11 +60,11 @@ class Certificate:
       return None
     
     # Test for an easy solution: c2 can subscribe to t
-    s.push()
-    s.add(topic == topic_filter)
-    if s.check() == z3.sat:
-      return TopicWitness(self, other, s)
-    s.pop()
+    # s.push()
+    # s.add(topic == topic_filter)
+    # if s.check() == z3.sat:
+    #   return TopicWitness(self, other, s)
+    # s.pop()
     
     # TOPIC LEVELS
     # topic_levels = z3.Strings('topic_lv_0 topic_lv_1 '
@@ -58,8 +72,8 @@ class Certificate:
     #                           'topic_lv_4 topic_lv_5 '
     #                           'topic_lv_6 topic_lv_7')
     topic_levels = z3.Strings('topic_lv_0 topic_lv_1 topic_lv_2 topic_lv_3 topic_lv_4 topic_lv_5 topic_lv_6 topic_lv_7')
-    for level in topic_levels:
-      s.add(z3.Not(z3.Contains(level, '/')))
+    # for level in topic_levels:
+    #   s.add(z3.Not(z3.Contains(level, '/')))
 
     def get_topic_for_level(level):
       topic_T = ['', topic_levels[0]]
@@ -72,8 +86,8 @@ class Certificate:
     # tf_levels = z3.Strings('tf_lv_0 tf_lv_1 tf_lv_2 tf_lv_3 '
     #                        'tf_lv_4 tf_lv_5 tf_lv_6 tf_lv_7')
     tf_levels = z3.Strings('tf_lv_0 tf_lv_1 tf_lv_2 tf_lv_3 tf_lv_4 tf_lv_5 tf_lv_6 tf_lv_7')
-    for level in tf_levels:
-      s.add(z3.Not(z3.Contains(level, '/')))
+    # for level in tf_levels:
+    #   s.add(z3.Not(z3.Contains(level, '/')))
 
     def get_tf_for_level(level):
       topic_filter = ['', tf_levels[0]]
@@ -82,54 +96,60 @@ class Certificate:
         topic_filter.append(tf_levels[tf_level + 1])
       return z3.Concat(topic_filter)
 
-    s_asserts = s.assertions()
+    global_t = time.time()
     for topic_level in range(8):
-      # s.push()
-      s_new = z3.Solver()
-      s_new.add(s_asserts)
-      s_new.add(topic == get_topic_for_level(topic_level))
-      if s_new.check() == z3.unsat:
-        print(f'#{topic_level+1} topic levels is {z3.unsat}')
-        # s.pop()
+      s_tlevels = z3.Solver()
+      s_tlevels.add(s.assertions())
+      s_tlevels.add(topic == get_topic_for_level(topic_level))
+      if topic_level == 0:
+        s_tlevels.add(z3.Not(z3.Contains(topic, '/')))
+      else:
+        s_tlevels.add(z3.InRe(topic, z3.Loop(RE_SLASH, topic_level, topic_level)))
+
+      start_time = time.time()
+      if s_tlevels.check() == z3.unsat:
+        print(f'T:{time.time() - start_time} -- #{topic_level+1} topic levels is {z3.unsat}')
         continue
-      print(f'#{topic_level+1} topic levels is {z3.sat}')
-      print(s_new.model())
-      
+      print(f'T:{time.time() - start_time} -- #{topic_level+1} topic levels is {z3.sat}')
+      print_model(s_tlevels.model())
+          
       # CASE1: same length
-      print('-- CASE1')
-      # s.push()
+      start_time = time.time()
       s_case_1 = z3.Solver()
-      s_case_1.add(s_new.assertions())
+      s_case_1.add(s_tlevels.assertions())
       s_case_1.add(topic_filter == get_tf_for_level(topic_level))
+      if topic_level == 0:
+        s_case_1.add(z3.Not(z3.Contains(topic_filter, '/')))
+      else:
+        s_case_1.add(z3.InRe(topic_filter, z3.Loop(RE_SLASH, topic_level, topic_level)))
+
       for level in range(topic_level+1):
         s_case_1.add(z3.Or(tf_levels[level] == topic_levels[level],
                     tf_levels[level] == '+',
-                    tf_levels[level] == '#' if level == topic_level else False)) 
-      if s_case_1.check() == z3.sat:
-        print('FOUND')
-        print(s_case_1.model())
-        return TopicWitness(self, other, s_case_1)
-      # s.pop()
+                    tf_levels[level] == '#' if level == topic_level else False))
 
-      print('--- CASE2')
+      if s_case_1.check() == z3.sat:
+        print(f'T:{time.time() - start_time} -- CASE 1 -- FOUND')
+        print_model(s_case_1.model())
+        return TopicWitness(self, other, s_case_1)
+      print(f'T:{time.time() - start_time} -- CASE 1 -- DONE')
+
       # CASE 2: using # at the end of a shorter tf
+      start_time = time.time()
       for tf_level in range(topic_level):
-        # s.push()
         s_case_2 = z3.Solver()
-        s_case_2.add(s_new.assertions())
+        s_case_2.add(s_tlevels.assertions())
         s_case_2.add(topic_filter == get_tf_for_level(tf_level))
         s_case_2.add(tf_levels[tf_level] == '#')
         for level in range(tf_level):
           s_case_2.add(z3.Or(tf_levels[level] == topic_levels[level],
                       tf_levels[level] == '+'))
         if s_case_2.check() == z3.sat:
-          print('FOUND')
-          print(s_new.model())
-          return TopicWitness(self, other, s_new)
-        # s.pop()
-
-      # s.pop()
+          print(f'T:{time.time() - start_time} -- CASE 2 -- FOUND')
+          print_model(s_case_2.model())
+          return TopicWitness(self, other, s_case_2)
+        print(f'T:{time.time() - start_time} -- CASE 2 -- DONE')
     
-    print('---- None found')
+    print(f'T:{time.time() - global_t} -- NONE FOUND')
     return None
   # TODO: might be smart to add here method that takes solver and adds correct queries to it
