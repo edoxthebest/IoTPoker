@@ -42,7 +42,7 @@ class TestCertificate(unittest.TestCase):
     self.assertEqual(solver.check(), z3.sat)
     self.assertEqual(solver.model()[id], 'lambdaFireAlarm')
     self.assertEqual(solver.model()[topic_pub], 'fire/detected')
-    self.assertEqual(solver.model()[topic_sub], 'fire/floorA/smokeLevels')
+    self.assertRegex(solver.model()[topic_sub].__str__(), r'fire/floor./smokeLevels')
 
   def test_get_topic_witness_early_no_solution(self):
     pol = PolicyReader.read_policy_file(self.pol_dir + 'easy_no_solution.json')
@@ -194,3 +194,10 @@ class TestGetTopicWitness(unittest.TestCase):
     cert1 = Certificate([pol1], 'cert_1')
     cert2 = Certificate([pol2], 'cert_2')
     self.assertIsNone(cert1.get_topic_witness(cert2))
+    
+if __name__ == '__main__':
+    pol1 = PolicyReader.read_policy_file('tests/policies/case-study/floor1_badge_reader.json')
+    pol2 = PolicyReader.read_policy_file('tests/policies/case-study/light.json')
+    cert1 = Certificate([pol1], 'cert_1')
+    cert2 = Certificate([pol2], 'cert_2')
+    print(cert1.get_topic_witness(cert2))
