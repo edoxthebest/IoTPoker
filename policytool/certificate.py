@@ -11,7 +11,10 @@ RE_QMARK_NO_SLASH = z3.Union(z3.Range('a', 'z'),
                     z3.Re('+'),
                     z3.Re('#'))
 RE_STAR_NO_SLASH = z3.Star(RE_QMARK_NO_SLASH)
-# RE_SLASH = z3.Concat(RE_STAR_NO_SLASH, z3.Re('/'), RE_STAR_NO_SLASH)
+RE_QMARK_CHARS_ONLY = z3.Union(z3.Range('a', 'z'),
+                             z3.Range('A', 'Z'),
+                             z3.Range('0', '9'))
+RE_STAR_CHARS_ONLY = z3.Star(RE_QMARK_CHARS_ONLY)
 RE_SLASH = [RE_STAR_NO_SLASH, z3.Re('/')]
 
 def print_model(model):
@@ -44,8 +47,10 @@ class Certificate:
   def get_receive(self, topic: z3.SeqRef, id: z3.SeqRef):
     return self.policy.build_receive(topic, id)
   
-  def _get_basic_solver(self, other, id1, id2, topic, topic_filter):
+  def _get_basic_solver(self, other, id1, id2, topic, topic_filter, topic_lvls = []):
     s = z3.Solver()
+    for topic_level in topic_lvls:
+      s.add(z3.InRe(topic_level, RE_STAR_CHARS_ONLY))
     s.add(self.get_connect(id1))                    # c1 can connect
     s.add(other.get_connect(id2))                   # c2 can connect
     s.add(self.get_publish(topic, id1))             # c1 can publish on a topic t
@@ -84,13 +89,13 @@ class Certificate:
     
     global_t = time.time()
     for topic_level in range(8):
-      hard_solver = self._get_basic_solver(other, id1, id2, get_topic_for_level(topic_level), topic_filter)
+      hard_solver = self._get_basic_solver(other, id1, id2, get_topic_for_level(topic_level), topic_filter, topic_levels[0:topic_level+1])
       cons = []
       for i in range(topic_level):
-        hard_solver.add(z3.InRe(topic_levels[i], RE_STAR_NO_SLASH))
+        # hard_solver.add(z3.InRe(topic_levels[i], RE_STAR_NO_SLASH))
         cons.append(z3.Union(z3.Re(topic_levels[i]), z3.Re('+')))
         cons.append(z3.Re('/'))
-      hard_solver.add(z3.InRe(topic_levels[topic_level], RE_STAR_NO_SLASH))
+      # hard_solver.add(z3.InRe(topic_levels[topic_level], RE_STAR_NO_SLASH))
       cons.append(z3.Union(z3.Re(topic_levels[topic_level]),
                           z3.Re('+'),
                           z3.Re('#')))

@@ -16,6 +16,10 @@ RE_QMARK_NO_SLASH = z3.Union(z3.Range('a', 'z'),
                              z3.Re('+'),
                              z3.Re('#'))
 RE_STAR_NO_SLASH = z3.Star(RE_QMARK_NO_SLASH)
+RE_QMARK_CHARS_ONLY = z3.Union(z3.Range('a', 'z'),
+                             z3.Range('A', 'Z'),
+                             z3.Range('0', '9'))
+RE_STAR_CHARS_ONLY = z3.Star(RE_QMARK_CHARS_ONLY)
 RE_SLASH = [RE_STAR_NO_SLASH, z3.Re('/')]
 
 id1 = z3.String('id_1')
@@ -49,6 +53,9 @@ def get_basic_solver(level):
   # topic_filter = get_tf_for_level(level)
   
   solver = z3.Solver(logFile='log.smt2')
+  for i in range(level+1):
+    solver.add(z3.InRe(topic_levels[i], RE_STAR_CHARS_ONLY))
+  
   # ID1
   solver.add(z3.And(z3.InRe(id1, z3.Concat(z3.Re("badgeReader"),
                                       RE_QMARK, RE_QMARK)),
@@ -67,8 +74,6 @@ def get_basic_solver(level):
   solver.add(z3.And(z3.InRe(topic_filter, z3.Concat(z3.Re('physicalAC/floor'), RE_QMARK, z3.Re('/detectedMovement/'), z3.Re(id2))),
               z3.Not(z3.InRe(topic_filter, z3.Empty(z3.ReSort(z3.StringSort()))))))
   
-  for i in range(level+1):
-    solver.add(z3.InRe(topic_levels[i], RE_STAR_NO_SLASH))
   
   return solver
 
