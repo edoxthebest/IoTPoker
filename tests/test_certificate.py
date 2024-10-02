@@ -195,6 +195,20 @@ class TestGetTopicWitness(unittest.TestCase):
     cert2 = Certificate([pol2], 'cert_2')
     self.assertIsNone(cert1.get_topic_witness(cert2))
     
+  def test_case_2(self):
+    pol1 = make_test_policy('A', 'A/B', '*', '*')
+    pol2 = make_test_policy('B', '*', '#', 'A/*')
+    cert1 = Certificate([pol1], 'cert_1')
+    cert2 = Certificate([pol2], 'cert_2')
+    witness = cert1.get_topic_witness(cert2)
+    
+    self.assertIsNotNone(witness)
+    self.assertEqual(witness.id1, 'A')
+    self.assertEqual(witness.id2, 'B')
+    self.assertEqual(witness.topic, 'A/B')
+    self.assertEqual(witness.topic_filter, '#')
+
+    
 if __name__ == '__main__':
     pol1 = PolicyReader.read_policy_file('tests/policies/case-study/floor1_badge_reader.json')
     pol2 = PolicyReader.read_policy_file('tests/policies/case-study/light.json')
