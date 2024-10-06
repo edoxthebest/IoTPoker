@@ -52,7 +52,9 @@ def get_basic_solver(level):
   topic = get_topic_for_level(level)
   # topic_filter = get_tf_for_level(level)
   
-  solver = z3.Solver(logFile='log.smt2')
+  solver = z3.Solver()
+  solver.add(z3.Length(topic) < 30)
+
   for i in range(level+1):
     solver.add(z3.InRe(topic_levels[i], RE_STAR_CHARS_ONLY))
   
@@ -103,15 +105,25 @@ for topic_level in range(8):
   #   s1.add(z3.Not(z3.Contains(topic, '/')))
   # else:
   #   s1.add(z3.InRe(topic, z3.Concat(z3.Loop(z3.Concat(RE_STAR_NO_SLASH, z3.Re('/')), topic_level, topic_level), RE_STAR_NO_SLASH)))
-  cons = []
+  case_1 = []
   for i in range(topic_level):
-    cons.append(z3.Union(z3.Re(topic_levels[i]), z3.Re('+')))
-    cons.append(z3.Re('/'))
-  cons.append(z3.Union(z3.Re(topic_levels[topic_level]),
+    case_1.append(z3.Union(z3.Re(topic_levels[i]), z3.Re('+')))
+    case_1.append(z3.Re('/'))
+  case_1.append(z3.Union(z3.Re(topic_levels[topic_level]),
                        z3.Re('+'),
                        z3.Re('#')))
+  
+  case_2 = []
+  for i in range(topic_level):
+    sub_case_2 = []
+    for j in range(i):
+      sub_case_2.append(z3.Union(z3.Re(topic_levels[j]), z3.Re('+')))
+      sub_case_2.append(z3.Re('/'))
+    sub_case_2.append(z3.Re('#'))
+    case_2.append(z3.InRe(topic_filter, z3.Concat(sub_case_2) if i != 0 else sub_case_2[0]))
 
-  s1.add(z3.InRe(topic_filter, z3.Concat(cons) if topic_level != 0 else cons[0]))
+  s1.add(z3.Or(z3.InRe(topic_filter, z3.Concat(case_1) if topic_level != 0 else case_1[0]),
+               z3.Or(case_2 if topic_level != 0 else False)))
   start_time = time.time()
   if s1.check() == z3.unsat:
     print(f'T:{time.time() - start_time} -- #{topic_level+1} topic levels is {z3.unsat}')

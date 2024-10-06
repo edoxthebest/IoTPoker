@@ -49,6 +49,7 @@ class Certificate:
   
   def _get_basic_solver(self, other, id1, id2, topic, topic_filter, topic_lvls = []):
     s = z3.Solver()
+    s.add(z3.Length(topic) < 15)
     for topic_level in topic_lvls:
       s.add(z3.InRe(topic_level, RE_STAR_CHARS_ONLY))
     s.add(self.get_connect(id1))                    # c1 can connect
@@ -90,17 +91,30 @@ class Certificate:
     global_t = time.time()
     for topic_level in range(8):
       hard_solver = self._get_basic_solver(other, id1, id2, get_topic_for_level(topic_level), topic_filter, topic_levels[0:topic_level+1])
-      cons = []
+      case_1 = []
       for i in range(topic_level):
         # hard_solver.add(z3.InRe(topic_levels[i], RE_STAR_NO_SLASH))
-        cons.append(z3.Union(z3.Re(topic_levels[i]), z3.Re('+')))
-        cons.append(z3.Re('/'))
+        case_1.append(z3.Union(z3.Re(topic_levels[i]), z3.Re('+')))
+        case_1.append(z3.Re('/'))
       # hard_solver.add(z3.InRe(topic_levels[topic_level], RE_STAR_NO_SLASH))
-      cons.append(z3.Union(z3.Re(topic_levels[topic_level]),
+      case_1.append(z3.Union(z3.Re(topic_levels[topic_level]),
                           z3.Re('+'),
                           z3.Re('#')))
 
-      hard_solver.add(z3.InRe(topic_filter, z3.Concat(cons) if topic_level != 0 else cons[0]))
+      case_2 = []
+      for i in range(topic_level):
+        sub_case_2 = []
+        for j in range(i):
+          sub_case_2.append(z3.Union(z3.Re(topic_levels[j]), z3.Re('+')))
+          sub_case_2.append(z3.Re('/'))
+        sub_case_2.append(z3.Re('#'))
+        case_2.append(z3.InRe(topic_filter, z3.Concat(sub_case_2) if i != 0 else sub_case_2[0]))
+
+      hard_solver.add(z3.Or(z3.InRe(topic_filter, z3.Concat(case_1) if topic_level != 0 else case_1[0]),
+                            z3.Or(case_2 if topic_level != 0 else False)))
+
+
+      # hard_solver.add(z3.InRe(topic_filter, z3.Concat(case_1) if topic_level != 0 else case_1[0]))
 
       start_time = time.time()
       if hard_solver.check() == z3.unsat:
