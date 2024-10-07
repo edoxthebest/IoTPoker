@@ -49,7 +49,7 @@ class Certificate:
   
   def _get_basic_solver(self, other, id1, id2, topic, topic_filter, topic_lvls = []):
     s = z3.Solver()
-    s.add(z3.Length(topic) < 15)
+    # s.add(z3.Length(topic) < 40)
     for topic_level in topic_lvls:
       s.add(z3.InRe(topic_level, RE_STAR_CHARS_ONLY))
     s.add(self.get_connect(id1))                    # c1 can connect
