@@ -19,22 +19,22 @@ class IoTPolicy(Policy):
       
       return ARN(stmt.resources.pop()).name
     
-  def build_connect(self, id: z3.SeqRef, thing_name: str = None, thing_attrs: dict[str, str] = None):
-    return self.build_allow_constraint(id, IoT.CON, thing_name=thing_name, thing_attrs=thing_attrs)
+  def build_connect(self, id: z3.SeqRef, string_tokens, thing_name: str = None, thing_attrs: dict[str, str] = None):
+    return self.build_allow_constraint(id, IoT.CON, string_tokens, thing_name=thing_name, thing_attrs=thing_attrs)
   
-  def build_publish(self, topic: z3.SeqRef, client_id: z3.SeqRef,
+  def build_publish(self, topic: z3.SeqRef, client_id: z3.SeqRef, string_tokens,
                     thing_name: str = None, thing_attrs: dict[str, str] = None):
-    return self.build_allow_constraint(topic, IoT.PUB, client_id, thing_name, thing_attrs)
+    return self.build_allow_constraint(topic, IoT.PUB, string_tokens, client_id, thing_name, thing_attrs)
 
-  def build_subscribe(self, topic: z3.SeqRef, client_id: z3.SeqRef,
+  def build_subscribe(self, topic: z3.SeqRef, client_id: z3.SeqRef, string_tokens,
                       thing_name: str = None, thing_attrs: dict[str, str] = None):
-    return self.build_allow_constraint(topic, IoT.SUB, client_id, thing_name, thing_attrs)
+    return self.build_allow_constraint(topic, IoT.SUB, string_tokens, client_id, thing_name, thing_attrs)
 
-  def build_receive(self, topic: z3.SeqRef, client_id: z3.SeqRef,
+  def build_receive(self, topic: z3.SeqRef, client_id: z3.SeqRef, string_tokens,
                     thing_name: str = None, thing_attrs: dict[str, str] = None):
-    return self.build_allow_constraint(topic, IoT.REC, client_id, thing_name, thing_attrs)
+    return self.build_allow_constraint(topic, IoT.REC, string_tokens, client_id, thing_name, thing_attrs)
 
-  def build_allow_constraint(self, variable: z3.SeqRef, action: IoT, client_id: z3.SeqRef = None,
+  def build_allow_constraint(self, variable: z3.SeqRef, action: IoT, string_tokens, client_id: z3.SeqRef = None,
                              thing_name: str = None, thing_attrs: dict[str, str] = None):
     allow_res = []
     deny_res = []
@@ -50,8 +50,8 @@ class IoTPolicy(Policy):
         for res in stmt.resources:
           deny_res.append(res)
           
-    parsed_allow = [ReExp.parse(res, client_id, IoT.ALLOW, thing_name, thing_attrs) for res in allow_res]
-    parsed_deny = [ReExp.parse(res, client_id, IoT.DENY, thing_name, thing_attrs) for res in deny_res]
+    parsed_allow = [ReExp.parse(res, client_id, IoT.ALLOW, string_tokens, thing_name, thing_attrs) for res in allow_res]
+    parsed_deny = [ReExp.parse(res, client_id, IoT.DENY, string_tokens, thing_name, thing_attrs) for res in deny_res]
 
     re_allow = z3.Union(parsed_allow) if allow_res else ReExp.RE_EMPTY
     re_deny = z3.Union(parsed_deny) if deny_res else ReExp.RE_EMPTY

@@ -12,8 +12,9 @@ RE_QMARK_NO_SLASH = z3.Union(z3.Range('a', 'z'),
                     z3.Re('#'))
 RE_STAR_NO_SLASH = z3.Star(RE_QMARK_NO_SLASH)
 RE_QMARK_CHARS_ONLY = z3.Union(z3.Range('a', 'z'),
-                             z3.Range('A', 'Z'),
-                             z3.Range('0', '9'))
+                               z3.Range('A', 'Z'),
+                               z3.Range('0', '9'),
+                               z3.Range('α', 'ω'))
 RE_STAR_CHARS_ONLY = z3.Star(RE_QMARK_CHARS_ONLY)
 RE_SLASH = [RE_STAR_NO_SLASH, z3.Re('/')]
 
@@ -36,20 +37,23 @@ class Certificate:
     self._name = name if not name is None else self.policy.client
     
   def get_connect(self, id: z3.SeqRef):
-    return self.policy.build_connect(id)
+    return self.policy.build_connect(id, self._string_tokens)
   
   def get_publish(self, topic: z3.SeqRef, id: z3.SeqRef):
-    return self.policy.build_publish(topic, id)
+    return self.policy.build_publish(topic, id, self._string_tokens)
   
   def get_subscribe(self, topic: z3.SeqRef, id: z3.SeqRef):
-    return self.policy.build_subscribe(topic, id)
+    return self.policy.build_subscribe(topic, id, self._string_tokens)
     
   def get_receive(self, topic: z3.SeqRef, id: z3.SeqRef):
-    return self.policy.build_receive(topic, id)
+    return self.policy.build_receive(topic, id, self._string_tokens)
   
   def _get_basic_solver(self, other, id1, id2, topic, topic_filter, topic_lvls = []):
     s = z3.Solver()
-    s.add(z3.Length(topic) < 15)
+    self._string_tokens = []
+    other._string_tokens = self._string_tokens
+
+    s.add(z3.Length(topic) < 40)
     for topic_level in topic_lvls:
       s.add(z3.InRe(topic_level, RE_STAR_CHARS_ONLY))
     s.add(self.get_connect(id1))                    # c1 can connect
@@ -59,7 +63,8 @@ class Certificate:
     s.add(other.get_subscribe(topic_filter, id2))   # c2 can subscribe to some topic filter
     return s
   
-  def get_topic_witness(self,other: 'Certificate') -> TopicWitness:
+  def get_topic_witness(self, other: 'Certificate') -> TopicWitness:
+
     id1 = z3.String('id_1')
     id2 = z3.String('id_2')
     topic = z3.String('topic')
@@ -73,7 +78,7 @@ class Certificate:
     # Test for an easy solution: c2 can subscribe to t
     easy_solver.add(topic == topic_filter)
     if easy_solver.check() == z3.sat:
-      return TopicWitness(self, other, easy_solver)
+      return TopicWitness(self, other, easy_solver, self._string_tokens)
     
     topic_levels = z3.Strings('topic_lv_0 topic_lv_1 topic_lv_2 '
                               'topic_lv_3 topic_lv_4 topic_lv_5 '
@@ -122,7 +127,7 @@ class Certificate:
         continue
       print(f'T:{time.time() - start_time} -- #{topic_level+1} topic levels is {z3.sat}')
       print_model(hard_solver.model())
-      return TopicWitness(self, other, hard_solver)
+      return TopicWitness(self, other, hard_solver, self._string_tokens)
 
     print(f'T:{time.time() - global_t} -- NONE FOUND')
     return None
