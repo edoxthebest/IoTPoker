@@ -76,10 +76,19 @@ class ReExp:
       elif x == '+' or x == '#':
         res.append(z3.Re(x))
       else:
-        current_token_index = string_tokens.index(x) if x in string_tokens else len(string_tokens)
+        if x in string_tokens:
+          current_token_index = string_tokens.index(x)
+        else:
+          current_token_index = len(string_tokens)
+          string_tokens.append(x)
         current_token = ReExp.token_list[current_token_index]
         res.append(z3.Re(current_token))
-        string_tokens.append(x)
+        
+
+        # current_token_index = string_tokens.index(x) if x in string_tokens else len(string_tokens)
+        # current_token = ReExp.token_list[current_token_index]
+        # res.append(z3.Re(current_token))
+        # string_tokens.append(x)
         
     return res.pop() if len(res) == 1 else z3.Concat(res)
   
