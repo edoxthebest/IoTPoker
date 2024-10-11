@@ -1,16 +1,74 @@
+import logging
+import re
 import z3
+from collections import namedtuple
 from policyuniverse.arn import ARN
 from policyuniverse.policy import Policy
 from policytool.iot import IoT
 from policytool.re_exp import ReExp
 
+logger = logging.getLogger('IoT:Poker')
+
 class IoTPolicy(Policy):
+  Resource = namedtuple('Resource', 'allow deny')
+
   @staticmethod
   def union(policies: list['IoTPolicy']):
     # TODO: implement this
     return policies[0]
+
+  
+  def __init__(self, policy):
+    super().__init__(policy)
+    
+    self._con_alw_res = set()
+    self._con_den_res = set()
+    self._pub_alw_res = set()
+    self._pub_den_res = set()
+    self._sub_alw_res = set()
+    self._sub_den_res = set()
+    self._rec_alw_res = set()
+    self._rec_den_res = set()
+    self._strings_literal = set()
+    self._strings_literals_unsafe = set()
+    self._strings_literal_safe = set()
+
+    self.init_resources()
+  
+  @property
+  def connect(self):
+    return IoTPolicy.Resource(self._con_alw_res, self._con_den_res)
+  
+  @property
+  def publish(self):
+    return IoTPolicy.Resource(self._pub_alw_res, self._pub_den_res)
+  
+  @property
+  def subscribe(self):
+    return IoTPolicy.Resource(self._sub_alw_res, self._sub_den_res)
+  
+  @property
+  def receive(self):
+    return IoTPolicy.Resource(self._rec_alw_res, self._rec_den_res)
+  
+  @property
+  def strings(self):
+    return self._strings_literal
+  
+  @property
+  def danger_strings(self):
+    return self._strings_literals_unsafe
+
+  @property
+  def safe_strings(self):
+    return self._strings_literal_safe
+  
+  @property
+  def is_tokenable(self):
+    return not self._qmark_near_star
   
   # TODO: test this
+  # TODO: change this implementation
   @property
   def client(self):
     for stmt in self.statements:
@@ -19,41 +77,164 @@ class IoTPolicy(Policy):
       
       return ARN(stmt.resources.pop()).name
     
-  def build_connect(self, id: z3.SeqRef, string_tokens, thing_name: str = None, thing_attrs: dict[str, str] = None):
-    return self.build_allow_constraint(id, IoT.CON, string_tokens, thing_name=thing_name, thing_attrs=thing_attrs)
-  
-  def build_publish(self, topic: z3.SeqRef, client_id: z3.SeqRef, string_tokens,
-                    thing_name: str = None, thing_attrs: dict[str, str] = None):
-    return self.build_allow_constraint(topic, IoT.PUB, string_tokens, client_id, thing_name, thing_attrs)
-
-  def build_subscribe(self, topic: z3.SeqRef, client_id: z3.SeqRef, string_tokens,
-                      thing_name: str = None, thing_attrs: dict[str, str] = None):
-    return self.build_allow_constraint(topic, IoT.SUB, string_tokens, client_id, thing_name, thing_attrs)
-
-  def build_receive(self, topic: z3.SeqRef, client_id: z3.SeqRef, string_tokens,
-                    thing_name: str = None, thing_attrs: dict[str, str] = None):
-    return self.build_allow_constraint(topic, IoT.REC, string_tokens, client_id, thing_name, thing_attrs)
-
-  def build_allow_constraint(self, variable: z3.SeqRef, action: IoT, string_tokens, client_id: z3.SeqRef = None,
-                             thing_name: str = None, thing_attrs: dict[str, str] = None):
-    allow_res = []
-    deny_res = []
-    
+  def init_resources(self):
     for stmt in self.statements:
-      if not action in stmt.actions:
-        continue
+      resources = set()
+      for res in stmt.resources:
+        arn = ARN(res)
+        if not arn.error:
+          arn = re.sub('^(client|topic|topicfilter)\/', '', arn.name)
+        elif res == '*':
+          arn = res
+        elif res.startswith('arn:aws:iot:your-region:00000000000:'):
+          res = res[len('arn:aws:iot:your-region:00000000000:'):]
+          arn = re.sub('^(client|topic|topicfilter)\/', '', res)
+        elif res.startswith('arn:aws:iot:aws-region:aws-account-id:'):
+          res = res[len('arn:aws:iot:aws-region:aws-account-id:'):]
+          arn = re.sub('^(client|topic|topicfilter)\/', '', res)
+        elif res.startswith('arn:aws:iot:us-east-2:1234567890:'):
+          res = res[len('arn:aws:iot:us-east-2:1234567890:'):]
+          arn = re.sub('^(client|topic|topicfilter)\/', '', res)
+        elif res.startswith('arn:aws:iot:us-east-1:1234567890:'):
+          res = res[len('arn:aws:iot:us-east-1:1234567890:'):]
+          arn = re.sub('^(client|topic|topicfilter)\/', '', res)
+        else:
+          logger.warning(f'ARN not formatted correctly: {arn.arn}.')
+        resources.add(arn)
       
-      if stmt.effect == IoT.ALLOW:
-        for res in stmt.resources:
-          allow_res.append(res)
-      elif stmt.effect == IoT.DENY:
-        for res in stmt.resources:
-          deny_res.append(res)
+      for action in stmt.actions:
+        match(action, stmt.effect):
+          case (IoT.CON, IoT.ALLOW):
+            self._con_alw_res.update(resources)
+          case (IoT.CON, IoT.DENY):
+            self._con_den_res.update(resources)
+            
+          case (IoT.PUB, IoT.ALLOW):
+            self._pub_alw_res.update(resources)
+          case (IoT.PUB, IoT.DENY):
+            self._pub_den_res.update(resources)
+            
+          case (IoT.SUB, IoT.ALLOW):
+            self._sub_alw_res.update(resources)
+          case (IoT.SUB, IoT.DENY):
+            self._sub_den_res.update(resources)
+            
+          case (IoT.REC, IoT.ALLOW):
+            self._rec_alw_res.update(resources)
+          case (IoT.REC, IoT.DENY):
+            self._rec_den_res.update(resources)
+            
+          case (IoT.STAR, IoT.ALLOW):
+            self._con_alw_res.update(resources)
+            self._pub_alw_res.update(resources)
+            self._sub_alw_res.update(resources)
+            self._rec_alw_res.update(resources)
+          case (IoT.STAR, IoT.DENY):
+            self._con_den_res.update(resources)
+            self._pub_den_res.update(resources)
+            self._sub_den_res.update(resources)
+            self._rec_den_res.update(resources)
           
-    parsed_allow = [ReExp.parse(res, client_id, IoT.ALLOW, string_tokens, thing_name, thing_attrs) for res in allow_res]
-    parsed_deny = [ReExp.parse(res, client_id, IoT.DENY, string_tokens, thing_name, thing_attrs) for res in deny_res]
+          case _:
+            logger.debug(f'Unrecognised action: {action}.')
+    
+    res_union = self._con_alw_res   \
+                | self._pub_alw_res \
+                | self._sub_alw_res \
+                | self._rec_alw_res \
+                | self._con_den_res \
+                | self._pub_den_res \
+                | self._sub_den_res \
+                | self._rec_den_res
+    self._max_no_of_qmarks = 0
+    self._qmark_near_star = False
+    for res in res_union:
+      if '?*' in res or '*?' in res:
+        self._qmark_near_star = True
+      
+      self._max_no_of_qmarks = max(len(max(re.compile(r'(\?+\?)*').findall(res))), self._max_no_of_qmarks)
+      for res_split in res.split('/'):
+        if '?' in res_split or '*' in res_split or '${iot:ClientId}' in res_split:
+          for wild_substring in [x for x in re.split(ReExp.WILDS_RE, res_split) if x]:
+            match wild_substring:
+              case '?' | '*' | '${iot:ClientId}':
+                continue
+              case _:
+                self._strings_literals_unsafe.add(wild_substring)
+        elif res in self._con_alw_res or res in self._con_den_res:
+          self._strings_literals_unsafe.add(res_split)
+        elif len(res_split) != 1:
+          self._strings_literal.add(res_split)
+          
+    for str in self._strings_literal:
+      string_has_danger = any([string_danger in str for string_danger in self._strings_literals_unsafe])
+      if not string_has_danger and len(str) > self._max_no_of_qmarks:
+        self._strings_literal_safe.add(str)
+        
+  def get_safe_strings_for(self, other: 'IoTPolicy'):
+    if not(self.is_tokenable and other.is_tokenable):
+      return {}
+    
+    safe_strings = set()
+    for str in self._strings_literal_safe:
+      string_has_danger = any([string_danger in str for string_danger in other._strings_literals_unsafe])
+      if not string_has_danger and len(str) > other._max_no_of_qmarks:
+        safe_strings.add(str)
+        
+    for str in other._strings_literal_safe:
+      string_has_danger = any([string_danger in str for string_danger in self._strings_literals_unsafe])
+      if not string_has_danger and len(str) > self._max_no_of_qmarks:
+        safe_strings.add(str)
+
+    return safe_strings
+
+    
+  def build_connect(self, id: z3.SeqRef, tokenable_strings:list = [], 
+                    thing_name: str = None, thing_attrs: dict[str, str] = None):
+    return self.build_allow_constraint(self._con_alw_res, self._con_den_res, id, 
+                                       tokenable_strings, thing_name=thing_name, thing_attrs=thing_attrs)
+  
+  def build_publish(self, topic: z3.SeqRef, client_id: z3.SeqRef, 
+                    tokenable_strings:list = [],
+                    thing_name: str = None, thing_attrs: dict[str, str] = None):
+    return self.build_allow_constraint(self._pub_alw_res, self._pub_den_res, topic, 
+                                       tokenable_strings, client_id, thing_name, thing_attrs)
+
+  def build_subscribe(self, topic: z3.SeqRef, client_id: z3.SeqRef, 
+                      tokenable_strings:list = [],
+                      thing_name: str = None, thing_attrs: dict[str, str] = None):
+    return self.build_allow_constraint(self._sub_alw_res, self._sub_den_res, topic, 
+                                       tokenable_strings, client_id, thing_name, thing_attrs)
+
+  def build_receive(self, topic: z3.SeqRef, client_id: z3.SeqRef,
+                    tokenable_strings:list = [],
+                    thing_name: str = None, thing_attrs: dict[str, str] = None):
+    return self.build_allow_constraint(self._rec_alw_res, self._rec_den_res, topic,
+                                       tokenable_strings, client_id, thing_name, thing_attrs)
+
+  def build_allow_constraint(self, allow_res: list, deny_res: list, for_variable: z3.SeqRef, 
+                             tokenable_strings: list = [], client_id: z3.SeqRef = None,
+                             thing_name: str = None, thing_attrs: dict[str, str] = None,
+                             ):
+
+    # allow_res = []
+    # deny_res = []
+  
+    # for stmt in self.statements:
+    #   if not action in stmt.actions:
+    #     continue
+      
+    #   if stmt.effect == IoT.ALLOW:
+    #     for res in stmt.resources:
+    #       allow_res.append(res)
+    #   elif stmt.effect == IoT.DENY:
+    #     for res in stmt.resources:
+    #       deny_res.append(res)
+          
+    parsed_allow = [ReExp.parse(res, tokenable_strings, client_id, thing_name, thing_attrs) for res in allow_res]
+    parsed_deny = [ReExp.parse(res, tokenable_strings, client_id, thing_name, thing_attrs) for res in deny_res]
 
     re_allow = z3.Union(parsed_allow) if allow_res else ReExp.RE_EMPTY
     re_deny = z3.Union(parsed_deny) if deny_res else ReExp.RE_EMPTY
 
-    return z3.And(z3.InRe(variable, re_allow), z3.Not(z3.InRe(variable, re_deny)))
+    return z3.And(z3.InRe(for_variable, re_allow), z3.Not(z3.InRe(for_variable, re_deny)))

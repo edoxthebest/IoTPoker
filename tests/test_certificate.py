@@ -28,7 +28,6 @@ class TestCertificate(unittest.TestCase):
     policy_file = 'tests/policies/case-study/lambda_fire_alarm.json'
     policy = PolicyReader.read_policy_file(policy_file)
     cert = Certificate([policy], 'TestCert')
-    cert._string_tokens = []
     
     id = z3.String('id')
     topic_pub = z3.String('topic_pub')
@@ -40,10 +39,11 @@ class TestCertificate(unittest.TestCase):
     solver.add(z3.And(cert.get_subscribe(topic_sub, id),
                       cert.get_receive(topic_sub, id)))
     
+    tokens = r'\u03b1|\u03b2|\u03b3|\u03b4'
     self.assertEqual(solver.check(), z3.sat)
-    self.assertEqual(solver.model()[id], '\u03b1')
-    self.assertEqual(solver.model()[topic_pub], '\u03b2/\u03b3')
-    self.assertRegex(solver.model()[topic_sub].__str__(), r'\u03b2/floor./smokeLevels')
+    self.assertEqual(solver.model()[id], 'lambdaFireAlarm')
+    self.assertRegex(str(solver.model()[topic_pub]), tokens + '/' + tokens)
+    self.assertRegex(solver.model()[topic_sub].__str__(), f'{tokens}/floor./{tokens}')
 
   def test_get_topic_witness_early_no_solution(self):
     pol = PolicyReader.read_policy_file(self.pol_dir + 'easy_no_solution.json')
@@ -216,4 +216,76 @@ class TestGetTopicWitness(unittest.TestCase):
     cert2 = Certificate([pol2], 'cert_2')
     witness = cert1.get_topic_witness(cert2)
 
+    self.assertIsNotNone(witness)
+    
+  def test_tokening(self):
+    pol1 = make_test_policy('A', 'floor1', '*', '*')
+    pol2 = make_test_policy('B', '*', 'floor?', '*')
+    cert1 = Certificate([pol1], 'cert_1')
+    cert2 = Certificate([pol2], 'cert_2')
+    witness = cert1.get_topic_witness(cert2)
+    
+    self.assertIsNotNone(witness)
+
+  def test_client_id_token(self):
+    pol1 = make_test_policy('CDEF', 'AB${iot:ClientId}', '*', '*')
+    pol2 = make_test_policy('X', '*', 'ABCDEF', '*')
+    cert1 = Certificate([pol1], 'cert_1')
+    cert2 = Certificate([pol2], 'cert_2')
+    witness = cert1.get_topic_witness(cert2)
+    
+    self.assertIsNotNone(witness)
+    
+  def test_client_id_and_qmarks(self):
+    pol1 = make_test_policy('X', '?BC', '*', '*')
+    pol2 = make_test_policy('AB', '*', '${iot:ClientId}C', '*')
+    cert1 = Certificate([pol1], 'cert_1')
+    cert2 = Certificate([pol2], 'cert_2')
+    witness = cert1.get_topic_witness(cert2)
+    
+    self.assertIsNotNone(witness)
+    
+  def test_danger_connect(self):
+    pol1 = make_test_policy('X', 'AB', '*', '*')
+    pol2 = make_test_policy('AB', '*', '${iot:ClientId}', '*')
+    cert1 = Certificate([pol1], 'cert_1')
+    cert2 = Certificate([pol2], 'cert_2')
+    witness = cert1.get_topic_witness(cert2)
+    
+    self.assertIsNotNone(witness)
+    
+  def test_danger_connect_qmarks(self):
+    pol1 = make_test_policy('X', 'ABC', '*', '*')
+    pol2 = make_test_policy('AB?', '*', '${iot:ClientId}', '*')
+    cert1 = Certificate([pol1], 'cert_1')
+    cert2 = Certificate([pol2], 'cert_2')
+    witness = cert1.get_topic_witness(cert2)
+    
+    self.assertIsNotNone(witness)
+
+  def test_danger_qmarks(self):
+    pol1 = make_test_policy('X', 'ABC', '*', '*')
+    pol2 = make_test_policy('Y', '*', '*', '?')
+    cert1 = Certificate([pol1], 'cert_1')
+    cert2 = Certificate([pol2], 'cert_2')
+    witness = cert1.get_topic_witness(cert2)
+    
+    self.assertIsNone(witness)
+
+  def test_danger_qmarks_length(self):
+    pol1 = make_test_policy('X', 'ABC', '*', '*')
+    pol2 = make_test_policy('Y', '*', '*', '???')
+    cert1 = Certificate([pol1], 'cert_1')
+    cert2 = Certificate([pol2], 'cert_2')
+    witness = cert1.get_topic_witness(cert2)
+    
+    self.assertIsNotNone(witness)
+
+  def test_danger_token_length(self):
+    pol1 = make_test_policy('X', 'ABC', '*', '*')
+    pol2 = make_test_policy('Y', '*', '*', '??*')
+    cert1 = Certificate([pol1], 'cert_1')
+    cert2 = Certificate([pol2], 'cert_2')
+    witness = cert1.get_topic_witness(cert2)
+    
     self.assertIsNotNone(witness)

@@ -4,5 +4,7 @@ class IoT:
   SUB = 'iot:Subscribe'
   REC = 'iot:Receive'
   
+  STAR = 'iot:*'
+  
   ALLOW = 'Allow'
   DENY = 'Deny'

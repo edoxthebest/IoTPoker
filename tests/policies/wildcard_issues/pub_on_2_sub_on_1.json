@@ -16,7 +16,7 @@
     {
       "Effect": "Allow",
       "Action": ["iot:Subscribe"],
-      "Resource": ["arn:aws:iot:us-east-1:123456789012:topicfilter/"]
+      "Resource": ["arn:aws:iot:us-east-1:123456789012:topicfilter/*"]
     },
     {
       "Effect": "Deny",
@@ -26,7 +26,8 @@
         "arn:aws:iot:us-east-1:123456789012:topicfilter/#",
         "arn:aws:iot:us-east-1:123456789012:topicfilter/A/#",
         "arn:aws:iot:us-east-1:123456789012:topicfilter/+/#",
-        "arn:aws:iot:us-east-1:123456789012:topicfilter/?/?/#"
+        "arn:aws:iot:us-east-1:123456789012:topicfilter/?/?/#",
+        "arn:aws:iot:us-east-1:123456789012:topicfilter/AAAAA/B?A/CC*/DDD?/EE${iot:ClientId}/??/FFF/GG"
       ]
     },
     {
