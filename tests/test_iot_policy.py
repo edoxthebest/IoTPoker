@@ -27,9 +27,9 @@ class TestIoTPolicy(unittest.TestCase):
   
   def init_thing(self, test_con, test_pub, test_sub_rec):
     thing_file = 'tests/things/thing_presence_sensor_floor1.json'
+    policy_file = 'tests/policies/case-study/thing_presence_sensor.json'
     self.thing: Thing = Thing.from_file(thing_file, None)
-    return self.init('tests/policies/case-study/thing_presence_sensor.json', 
-                      test_con, test_pub, test_sub_rec,
+    return self.init(policy_file, test_con, test_pub, test_sub_rec,
                       self.thing.name, self.thing.attrs)
     
   def test_parse_iot_resource(self):

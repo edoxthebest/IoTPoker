@@ -2,7 +2,7 @@ import json
 import unittest
 import uuid
 import z3
-from policytool import PolicyReader, Thing
+from policytool import Certificate, PolicyReader, Thing
 from policyuniverse.arn import ARN
 
 class TestThing(unittest.TestCase):
@@ -71,6 +71,7 @@ class TestThing(unittest.TestCase):
     policy = PolicyReader.read_policy_file(policy_file)
     thing_file = 'tests/things/thing_presence_sensor_floor1.json'
     thing: Thing = Thing.from_file(thing_file, policy)
+    thing._safe_strings = []
     
     id = z3.String('id')
     topic_pub = z3.String('topic_pub')
@@ -86,3 +87,18 @@ class TestThing(unittest.TestCase):
     self.assertEqual(solver.model()[id], 'presenceSensor1')
     self.assertEqual(solver.model()[topic_pub], 'physicalAC/floor1/detectedMovement/light1')
     self.assertEqual(solver.model()[topic_sub], 'physicalAC/floor1/presenceSensor1/enable')
+
+  def test_thing_get_witness(self):
+    policy_file = 'tests/policies/case-study/thing_presence_sensor.json'
+    policy = PolicyReader.read_policy_file(policy_file)
+    policy2 = PolicyReader.read_policy_file('tests/policies/case-study/light.json')
+    thing_file = 'tests/things/thing_presence_sensor_floor1.json'
+    thing: Thing = Thing.from_file(thing_file, policy)
+    cert: Certificate = Certificate([policy2], 'cert')
+    
+    witness = thing.get_topic_witness(cert)
+    self.assertIsNotNone(witness)
+    self.assertEqual(witness.id1, 'presenceSensor1')
+    self.assertEqual(witness.id2, 'light1')
+    self.assertEqual(witness.topic, 'physicalAC/floor1/detectedMovement/light1')
+  

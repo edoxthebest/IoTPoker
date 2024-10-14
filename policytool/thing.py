@@ -28,15 +28,15 @@ class Thing(Certificate):
     self.attrs = attrs
   
   def get_connect(self, id: z3.SeqRef):
-    return self.policy.build_connect(id, self.name, self.attrs)
+    return self.policy.build_connect(id, self.safe_strings, self.name, self.attrs)
   
   def get_publish(self, topic: z3.SeqRef, id: z3.SeqRef):
-    return self.policy.build_publish(topic, id, self.name, self.attrs)
+    return self.policy.build_publish(topic, id, self.safe_strings, self.name, self.attrs)
   
   def get_subscribe(self, topic: z3.SeqRef, id: z3.SeqRef):
-    return self.policy.build_subscribe(topic, id, self.name, self.attrs)
+    return self.policy.build_subscribe(topic, id, self.safe_strings, self.name, self.attrs)
     
   def get_receive(self, topic: z3.SeqRef, id: z3.SeqRef):
-    return self.policy.build_receive(topic, id, self.name, self.attrs)
+    return self.policy.build_receive(topic, id, self.safe_strings, self.name, self.attrs)
   
   # TODO: might be smart to add here method that takes solver and adds correct queries to it

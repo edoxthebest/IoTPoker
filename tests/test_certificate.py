@@ -28,6 +28,7 @@ class TestCertificate(unittest.TestCase):
     policy_file = 'tests/policies/case-study/lambda_fire_alarm.json'
     policy = PolicyReader.read_policy_file(policy_file)
     cert = Certificate([policy], 'TestCert')
+    cert._safe_strings = []
     
     id = z3.String('id')
     topic_pub = z3.String('topic_pub')
@@ -39,11 +40,10 @@ class TestCertificate(unittest.TestCase):
     solver.add(z3.And(cert.get_subscribe(topic_sub, id),
                       cert.get_receive(topic_sub, id)))
     
-    tokens = r'\u03b1|\u03b2|\u03b3|\u03b4'
     self.assertEqual(solver.check(), z3.sat)
     self.assertEqual(solver.model()[id], 'lambdaFireAlarm')
-    self.assertRegex(str(solver.model()[topic_pub]), tokens + '/' + tokens)
-    self.assertRegex(solver.model()[topic_sub].__str__(), f'{tokens}/floor./{tokens}')
+    self.assertEqual(solver.model()[topic_pub],  'fire/detected' )
+    self.assertRegex(str(solver.model()[topic_sub]).strip('"'), r'fire/floor./smokeLevels')
 
   def test_get_topic_witness_early_no_solution(self):
     pol = PolicyReader.read_policy_file(self.pol_dir + 'easy_no_solution.json')

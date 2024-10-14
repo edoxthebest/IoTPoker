@@ -39,7 +39,7 @@ class Certificate:
   def __init__(self, policies: list[IoTPolicy], name: str = None):
     self._policy = IoTPolicy.union(policies)
     self._name = name if not name is None else self.policy.client
-    self._safe_strings = list(self._policy.safe_strings)
+    self._safe_strings = list(self._policy.safe_strings) if self._policy is not None else []
     
   def get_connect(self, id: z3.SeqRef):
     return self.policy.build_connect(id, self.safe_strings)
@@ -55,8 +55,6 @@ class Certificate:
   
   def _get_basic_solver(self, other, id1, id2, topic, topic_filter, topic_lvls = []):
     s = z3.Solver()
-    # self._string_tokens = []
-    # other._string_tokens = self._string_tokens
 
     s.add(z3.Length(topic) < 40)
     for topic_level in topic_lvls:
