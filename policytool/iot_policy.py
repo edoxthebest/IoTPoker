@@ -86,18 +86,9 @@ class IoTPolicy(Policy):
           arn = re.sub('^(client|topic|topicfilter)\/', '', arn.name)
         elif res == '*':
           arn = res
-        elif res.startswith('arn:aws:iot:your-region:00000000000:'):
-          res = res[len('arn:aws:iot:your-region:00000000000:'):]
-          arn = re.sub('^(client|topic|topicfilter)\/', '', res)
-        elif res.startswith('arn:aws:iot:aws-region:aws-account-id:'):
-          res = res[len('arn:aws:iot:aws-region:aws-account-id:'):]
-          arn = re.sub('^(client|topic|topicfilter)\/', '', res)
-        elif res.startswith('arn:aws:iot:us-east-2:1234567890:'):
-          res = res[len('arn:aws:iot:us-east-2:1234567890:'):]
-          arn = re.sub('^(client|topic|topicfilter)\/', '', res)
-        elif res.startswith('arn:aws:iot:us-east-1:1234567890:'):
-          res = res[len('arn:aws:iot:us-east-1:1234567890:'):]
-          arn = re.sub('^(client|topic|topicfilter)\/', '', res)
+        elif ':' in res:
+          arn = res[res.rfind(':')+1:]
+          arn = re.sub('^(client|topic|topicfilter)\/', '', arn)
         else:
           logger.warning(f'ARN not formatted correctly: {arn.arn}.')
         resources.add(arn)
@@ -166,25 +157,25 @@ class IoTPolicy(Policy):
         elif len(res_split) != 1:
           self._strings_literal.add(res_split)
           
-    for str in self._strings_literal:
-      string_has_danger = any([string_danger in str for string_danger in self._strings_literals_unsafe])
-      if not string_has_danger and len(str) > self._max_no_of_qmarks:
-        self._strings_literal_safe.add(str)
+    for string in self._strings_literal:
+      string_has_danger = any([string_danger in string for string_danger in self._strings_literals_unsafe])
+      if not string_has_danger and len(string) > self._max_no_of_qmarks:
+        self._strings_literal_safe.add(string)
         
   def get_safe_strings_for(self, other: 'IoTPolicy'):
     if not(self.is_tokenable and other.is_tokenable):
       return {}
     
     safe_strings = set()
-    for str in self._strings_literal_safe:
-      string_has_danger = any([string_danger in str for string_danger in other._strings_literals_unsafe])
-      if not string_has_danger and len(str) > other._max_no_of_qmarks:
-        safe_strings.add(str)
+    for string in self._strings_literal_safe:
+      string_has_danger = any([string_danger in string for string_danger in other._strings_literals_unsafe])
+      if not string_has_danger and len(string) > other._max_no_of_qmarks:
+        safe_strings.add(string)
         
-    for str in other._strings_literal_safe:
-      string_has_danger = any([string_danger in str for string_danger in self._strings_literals_unsafe])
-      if not string_has_danger and len(str) > self._max_no_of_qmarks:
-        safe_strings.add(str)
+    for string in other._strings_literal_safe:
+      string_has_danger = any([string_danger in string for string_danger in self._strings_literals_unsafe])
+      if not string_has_danger and len(string) > self._max_no_of_qmarks:
+        safe_strings.add(string)
 
     return safe_strings
 
@@ -216,20 +207,6 @@ class IoTPolicy(Policy):
                              tokenable_strings: list = [], client_id: z3.SeqRef = None,
                              thing_name: str = None, thing_attrs: dict[str, str] = None,
                              ):
-
-    # allow_res = []
-    # deny_res = []
-  
-    # for stmt in self.statements:
-    #   if not action in stmt.actions:
-    #     continue
-      
-    #   if stmt.effect == IoT.ALLOW:
-    #     for res in stmt.resources:
-    #       allow_res.append(res)
-    #   elif stmt.effect == IoT.DENY:
-    #     for res in stmt.resources:
-    #       deny_res.append(res)
           
     parsed_allow = [ReExp.parse(res, tokenable_strings, client_id, thing_name, thing_attrs) for res in allow_res]
     parsed_deny = [ReExp.parse(res, tokenable_strings, client_id, thing_name, thing_attrs) for res in deny_res]
