@@ -37,19 +37,19 @@ class IoTPolicy(Policy):
   
   @property
   def connect(self):
-    return IoTPolicy.Resource(self._con_alw_res, self._con_den_res)
+    return IoTPolicy.Resource(frozenset(self._con_alw_res), frozenset(self._con_den_res))
   
   @property
   def publish(self):
-    return IoTPolicy.Resource(self._pub_alw_res, self._pub_den_res)
+    return IoTPolicy.Resource(frozenset(self._pub_alw_res), frozenset(self._pub_den_res))
   
   @property
   def subscribe(self):
-    return IoTPolicy.Resource(self._sub_alw_res, self._sub_den_res)
+    return IoTPolicy.Resource(frozenset(self._sub_alw_res), frozenset(self._sub_den_res))
   
   @property
   def receive(self):
-    return IoTPolicy.Resource(self._rec_alw_res, self._rec_den_res)
+    return IoTPolicy.Resource(frozenset(self._rec_alw_res), frozenset(self._rec_den_res))
   
   @property
   def strings(self):

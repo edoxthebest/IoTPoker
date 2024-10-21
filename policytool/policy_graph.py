@@ -1,10 +1,14 @@
+import logging
 import matplotlib.pyplot as plt
 import networkx as nx
 import z3
 from policytool.certificate import Certificate
 from policytool.policy_reader import PolicyReader
 from policytool.node import Node
+from policytool.topic_witness import TopicWitness
 from networkx.algorithms import bipartite
+
+logger = logging.getLogger('IoT:Poker')
 
 class PolicyGraph:
   @property
@@ -23,40 +27,45 @@ class PolicyGraph:
   def graph(self):
     return self._graph
   
+  @property
+  def hard_solver_invokes(self):
+    return self._hard_solver_counts
+  
   def __init__(self, certificates: list[Certificate]):
     self._graph = nx.DiGraph()
     self._simple_graph = nx.DiGraph()
     self._certs = certificates
+    self._hard_solver_counts = 0
+    self._known_witnesses = dict()
   
   # Algorithm 1
   def build_sym_graph(self):
     for cert1 in self._certs:
-      # self._graph.add_node(cert1.name, bipartite=0)
       for cert2 in self._certs:
-        # id1 = z3.String('id_1')
-        # id2 = z3.String('id_2')
-        # topic = z3.String('common_topic')
+        logger.info(f'Checking certificates:\t {cert1.name}  ->  {cert2.name}')
         
-        # solver = z3.Solver()
-        # solver.add(cert1.get_connect(id1))
-        # solver.add(cert2.get_connect(id2))
-        # solver.add(cert1.get_publish(topic, id1))
-        # solver.add(z3.And(cert2.get_subscribe(topic, id2),
-        #                   cert2.get_receive(topic, id2)))
-        print(f'-- {cert1.name}  &  {cert2.name} --')
-        witness = cert1.get_topic_witness(cert2)
+        cert1_id = (cert1.policy.connect, cert1.policy.publish)
+        cert2_id = (cert2.policy.connect, cert2.policy.subscribe, cert2.policy.receive)
+        if (cert1_id, cert2_id) in self._known_witnesses:
+          old_witness = self._known_witnesses[(cert1_id, cert2_id)]
+          if old_witness is None:
+            witness = None
+          else:
+            witness = TopicWitness.from_other_witness(old_witness, cert1, cert2) 
+          logger.debug(f'\t A witness is known: {witness}')
+        else:
+          witness, hard_solver_req = cert1.get_topic_witness(cert2)
+          self._known_witnesses[(cert1_id, cert2_id)] = witness
+          if hard_solver_req:
+            self._hard_solver_counts += 1
 
         if witness is not None:
           # TODO: should change cert.name to cert
           # TODO: change node to witness
-          node = Node(cert1.name, cert2.name, witness.solver, witness.id1, witness.id2, witness.topic)
+          node = Node(cert1.name, cert2.name, witness.id1, witness.id2, witness.topic)
           self._graph.add_edge(cert1.name, node)
           self._graph.add_edge(node, cert2.name)
 
-          # node = f'{cert1.name}->{cert2.name}'  
-          # self._graph.add_node(node, bipartite=1)
-          # self._graph.add_edge(cert1.name, node, weight=model[topic])
-          # self._graph.add_edge(node, cert2.name, weight=model[topic])
           self._simple_graph.add_edge(cert1.name, cert2.name, topic=node.topic)
   
   def draw(self):

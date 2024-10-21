@@ -1,9 +1,11 @@
+import logging
 import time
 import z3
 from policytool.iot_policy import IoTPolicy
 from policytool.topic_witness import TopicWitness
 # z3.set_option(verbose=10)
 
+logger = logging.getLogger('IoT:Poker')
 
 RE_QMARK_NO_SLASH = z3.Union(z3.Range('a', 'z'),
                     z3.Range('A', 'Z'),
@@ -56,7 +58,6 @@ class Certificate:
   def _get_basic_solver(self, other, id1, id2, topic, topic_filter, topic_lvls = []):
     s = z3.Solver()
 
-    s.add(z3.Length(topic) < 40)
     for topic_level in topic_lvls:
       s.add(z3.InRe(topic_level, RE_STAR_CHARS_ONLY))
     s.add(self.get_connect(id1))                    # c1 can connect
@@ -78,12 +79,13 @@ class Certificate:
     # Init solver and test for the following necessary conditions:
     easy_solver = self._get_basic_solver(other, id1, id2, topic, topic_filter)
     if easy_solver.check() == z3.unsat:
-      return None
+      del easy_solver
+      return None, False
     
     # Test for an easy solution: c2 can subscribe to t
     easy_solver.add(topic == topic_filter)
     if easy_solver.check() == z3.sat:
-      return TopicWitness(self, other, easy_solver, self.safe_strings)
+      return TopicWitness(self, other, easy_solver, self.safe_strings), False
     
     topic_levels = z3.Strings('topic_lv_0 topic_lv_1 topic_lv_2 '
                               'topic_lv_3 topic_lv_4 topic_lv_5 '
@@ -99,6 +101,7 @@ class Certificate:
       return z3.Concat(topic_T)
     
     global_t = time.time()
+    logger.debug(f'Solving {self.name} -> {other.name} requires hard solver:')
     for topic_level in range(8):
       hard_solver = self._get_basic_solver(other, id1, id2, get_topic_for_level(topic_level), topic_filter, topic_levels[0:topic_level+1])
       case_1 = []
@@ -128,14 +131,16 @@ class Certificate:
 
       start_time = time.time()
       if hard_solver.check() == z3.unsat:
-        print(f'T:{time.time() - start_time} -- #{topic_level+1} topic levels is {z3.unsat}')
+        logger.debug(f'\t[{time.time() - start_time:.4f}] #{topic_level+1} topic levels is {z3.unsat}')
         continue
-      print(f'T:{time.time() - start_time} -- #{topic_level+1} topic levels is {z3.sat}')
-      print_model(hard_solver.model())
-      return TopicWitness(self, other, hard_solver, self.safe_strings)
+      logger.debug(f'\t[{time.time() - start_time:.4f}] #{topic_level+1} topic levels is {z3.sat}')
+      if logger.level == logging.DEBUG:
+        print_model(hard_solver.model())
+      return TopicWitness(self, other, hard_solver, self.safe_strings), True
 
-    print(f'T:{time.time() - global_t} -- NONE FOUND')
-    return None
+    logger.debug(f'\t[{time.time() - global_t:.4f}] No solution found.')
+    del hard_solver
+    return None, True
 
   
   def get_topic_witness_old(self, other: 'Certificate') -> TopicWitness:

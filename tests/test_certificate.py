@@ -50,16 +50,19 @@ class TestCertificate(unittest.TestCase):
     cert1 = Certificate([pol], 'cert_1')
     cert2 = Certificate([pol], 'cert_2')
     
-    self.assertIsNone(cert1.get_topic_witness(cert2))
+    witness, invokes = cert1.get_topic_witness(cert2)
+    self.assertIsNone(witness)
+    self.assertFalse(invokes)
 
   
   def test_get_topic_witness_no_wildcards(self):
     pol = PolicyReader.read_policy_file(self.pol_dir + 'easy_solution.json')
     cert1 = Certificate([pol], 'cert_1')
     cert2 = Certificate([pol], 'cert_2')
-    witness = cert1.get_topic_witness(cert2)
+    witness, invokes = cert1.get_topic_witness(cert2)
     
     self.assertIsNotNone(witness)
+    self.assertFalse(invokes)
     self.assertIn(witness.id1, ['clientId1', 'clientId2', 'clientId3'])
     self.assertIn(witness.id2, ['clientId1', 'clientId2', 'clientId3'])
     self.assertEqual(witness.topic, witness.topic_filter)
@@ -69,9 +72,10 @@ class TestCertificate(unittest.TestCase):
     pol = PolicyReader.read_policy_file(self.pol_dir + 'can_sub_with_#_or_+.json')
     cert1 = Certificate([pol], 'cert_1')
     cert2 = Certificate([pol], 'cert_2')
-    witness = cert1.get_topic_witness(cert2)
+    witness, invokes = cert1.get_topic_witness(cert2)
   
     self.assertIsNotNone(witness)
+    self.assertTrue(invokes)
     self.assertIn(witness.id1, ['A', 'B', 'C'])
     self.assertIn(witness.id2, ['A', 'B', 'C'])
     self.assertEqual(witness.topic, 'A')
@@ -81,9 +85,10 @@ class TestCertificate(unittest.TestCase):
     pol = PolicyReader.read_policy_file(self.pol_dir + 'can_sub_with_+.json')
     cert1 = Certificate([pol], 'cert_1')
     cert2 = Certificate([pol], 'cert_2')
-    witness = cert1.get_topic_witness(cert2)
+    witness, invokes = cert1.get_topic_witness(cert2)
   
     self.assertIsNotNone(witness)
+    self.assertTrue(invokes)
     self.assertIn(witness.id1, ['A', 'B', 'C'])
     self.assertIn(witness.id2, ['A', 'B', 'C'])
     self.assertEqual(witness.topic, 'A/B/C')
@@ -156,15 +161,20 @@ class TestGetTopicWitness(unittest.TestCase):
     pol = make_test_policy('*', 'C', 'D', 'D')
     cert1 = Certificate([pol], 'cert_1')
     cert2 = Certificate([pol], 'cert_2')
-    self.assertIsNone(cert1.get_topic_witness(cert2))
+    witness, invokes = cert1.get_topic_witness(cert2)
+
+    self.assertIsNone(witness)
+    self.assertFalse(invokes)
+    
     
   def test_subscribe_with_multi_wild(self):
     pol = make_test_policy('A', 'C', '#', '*')
     cert1 = Certificate([pol], 'cert_1')
     cert2 = Certificate([pol], 'cert_2')
-    witness = cert1.get_topic_witness(cert2)
+    witness, invokes = cert1.get_topic_witness(cert2)
     
     self.assertIsNotNone(witness)
+    self.assertTrue(invokes)
     self.assertEqual(witness.id1, 'A')
     self.assertEqual(witness.id2, 'A')
     self.assertEqual(witness.topic, 'C')
@@ -174,16 +184,20 @@ class TestGetTopicWitness(unittest.TestCase):
     pol = make_test_policy('A', 'C', ('#', '#'), '*')
     cert1 = Certificate([pol], 'cert_1')
     cert2 = Certificate([pol], 'cert_2')
-    self.assertIsNone(cert1.get_topic_witness(cert2))
+    witness, invokes = cert1.get_topic_witness(cert2)
+
+    self.assertIsNone(witness)
+    self.assertFalse(invokes)
 
   def test_topic_from_client_ids(self):
     pol1 = make_test_policy('A', '${iot:ClientId}/B', '*', '*')
     pol2 = make_test_policy('B', '*', '+/${iot:ClientId}', 'A/*')
     cert1 = Certificate([pol1], 'cert_1')
     cert2 = Certificate([pol2], 'cert_2')
-    witness = cert1.get_topic_witness(cert2)
+    witness, invokes = cert1.get_topic_witness(cert2)
     
     self.assertIsNotNone(witness)
+    self.assertTrue(invokes)
     self.assertEqual(witness.id1, 'A')
     self.assertEqual(witness.id2, 'B')
     self.assertEqual(witness.topic, 'A/B')
@@ -194,16 +208,30 @@ class TestGetTopicWitness(unittest.TestCase):
     pol2 = PolicyReader.read_policy_file('tests/policies/case-study/light.json')
     cert1 = Certificate([pol1], 'cert_1')
     cert2 = Certificate([pol2], 'cert_2')
-    self.assertIsNone(cert1.get_topic_witness(cert2))
+    witness, invokes = cert1.get_topic_witness(cert2)
+
+    self.assertIsNone(witness)
+    self.assertTrue(invokes)
+    
+  def test_case_study_lambda_badge_light1(self):
+    pol1 = PolicyReader.read_policy_file('tests/policies/case-study/lambda_badge_check.json')
+    pol2 = PolicyReader.read_policy_file('tests/policies/case-study/light.json')
+    cert1 = Certificate([pol1], 'cert_1')
+    cert2 = Certificate([pol2], 'cert_2')
+    witness, invokes = cert1.get_topic_witness(cert2)
+
+    self.assertIsNone(witness)
+    self.assertTrue(invokes)
     
   def test_case_2(self):
     pol1 = make_test_policy('A', 'A/B', '*', '*')
     pol2 = make_test_policy('B', '*', '#', 'A/*')
     cert1 = Certificate([pol1], 'cert_1')
     cert2 = Certificate([pol2], 'cert_2')
-    witness = cert1.get_topic_witness(cert2)
+    witness, invokes = cert1.get_topic_witness(cert2)
     
     self.assertIsNotNone(witness)
+    self.assertTrue(invokes)
     self.assertEqual(witness.id1, 'A')
     self.assertEqual(witness.id2, 'B')
     self.assertEqual(witness.topic, 'A/B')
@@ -214,78 +242,87 @@ class TestGetTopicWitness(unittest.TestCase):
     pol2 = PolicyReader.read_policy_file('tests/policies/policy_benchmark/FLAW1/FLAW1-Error-14.json')
     cert1 = Certificate([pol1], 'cert_1')
     cert2 = Certificate([pol2], 'cert_2')
-    witness = cert1.get_topic_witness(cert2)
+    witness, invokes = cert1.get_topic_witness(cert2)
 
     self.assertIsNotNone(witness)
+    self.assertFalse(invokes)
     
   def test_tokening(self):
     pol1 = make_test_policy('A', 'floor1', '*', '*')
     pol2 = make_test_policy('B', '*', 'floor?', '*')
     cert1 = Certificate([pol1], 'cert_1')
     cert2 = Certificate([pol2], 'cert_2')
-    witness = cert1.get_topic_witness(cert2)
+    witness, invokes = cert1.get_topic_witness(cert2)
     
     self.assertIsNotNone(witness)
+    self.assertFalse(invokes)
 
   def test_client_id_token(self):
     pol1 = make_test_policy('CDEF', 'AB${iot:ClientId}', '*', '*')
     pol2 = make_test_policy('X', '*', 'ABCDEF', '*')
     cert1 = Certificate([pol1], 'cert_1')
     cert2 = Certificate([pol2], 'cert_2')
-    witness = cert1.get_topic_witness(cert2)
+    witness, invokes = cert1.get_topic_witness(cert2)
     
     self.assertIsNotNone(witness)
+    self.assertFalse(invokes)
     
   def test_client_id_and_qmarks(self):
     pol1 = make_test_policy('X', '?BC', '*', '*')
     pol2 = make_test_policy('AB', '*', '${iot:ClientId}C', '*')
     cert1 = Certificate([pol1], 'cert_1')
     cert2 = Certificate([pol2], 'cert_2')
-    witness = cert1.get_topic_witness(cert2)
+    witness, invokes = cert1.get_topic_witness(cert2)
     
     self.assertIsNotNone(witness)
+    self.assertFalse(invokes)
     
   def test_danger_connect(self):
     pol1 = make_test_policy('X', 'AB', '*', '*')
     pol2 = make_test_policy('AB', '*', '${iot:ClientId}', '*')
     cert1 = Certificate([pol1], 'cert_1')
     cert2 = Certificate([pol2], 'cert_2')
-    witness = cert1.get_topic_witness(cert2)
+    witness, invokes = cert1.get_topic_witness(cert2)
     
     self.assertIsNotNone(witness)
+    self.assertFalse(invokes)
     
   def test_danger_connect_qmarks(self):
     pol1 = make_test_policy('X', 'ABC', '*', '*')
     pol2 = make_test_policy('AB?', '*', '${iot:ClientId}', '*')
     cert1 = Certificate([pol1], 'cert_1')
     cert2 = Certificate([pol2], 'cert_2')
-    witness = cert1.get_topic_witness(cert2)
+    witness, invokes = cert1.get_topic_witness(cert2)
     
     self.assertIsNotNone(witness)
+    self.assertFalse(invokes)
 
   def test_danger_qmarks(self):
     pol1 = make_test_policy('X', 'ABC', '*', '*')
     pol2 = make_test_policy('Y', '*', '*', '?')
     cert1 = Certificate([pol1], 'cert_1')
     cert2 = Certificate([pol2], 'cert_2')
-    witness = cert1.get_topic_witness(cert2)
+    witness, invokes = cert1.get_topic_witness(cert2)
     
     self.assertIsNone(witness)
+    self.assertFalse(invokes)
 
   def test_danger_qmarks_length(self):
     pol1 = make_test_policy('X', 'ABC', '*', '*')
     pol2 = make_test_policy('Y', '*', '*', '???')
     cert1 = Certificate([pol1], 'cert_1')
     cert2 = Certificate([pol2], 'cert_2')
-    witness = cert1.get_topic_witness(cert2)
+    witness, invokes = cert1.get_topic_witness(cert2)
     
     self.assertIsNotNone(witness)
+    self.assertFalse(invokes)
 
   def test_danger_token_length(self):
     pol1 = make_test_policy('X', 'ABC', '*', '*')
     pol2 = make_test_policy('Y', '*', '*', '??*')
     cert1 = Certificate([pol1], 'cert_1')
     cert2 = Certificate([pol2], 'cert_2')
-    witness = cert1.get_topic_witness(cert2)
+    witness, invokes = cert1.get_topic_witness(cert2)
     
     self.assertIsNotNone(witness)
+    self.assertFalse(invokes)
