@@ -1,0 +1,608 @@
+[0.0040] Read 16 policy certificates and 4 things.
+2024-10-18 01:16:13,598 [MainThread  ] [INFO ]  Checking certificates:   elevator  ->  elevator
+2024-10-18 01:16:13,612 [MainThread  ] [INFO ]  Checking certificates:   elevator  ->  floor1_fire_alarm
+2024-10-18 01:16:13,626 [MainThread  ] [INFO ]  Checking certificates:   elevator  ->  floor2_fire_alarm
+2024-10-18 01:16:13,641 [MainThread  ] [INFO ]  Checking certificates:   elevator  ->  floor1_fire_siren
+2024-10-18 01:16:13,655 [MainThread  ] [INFO ]  Checking certificates:   elevator  ->  floor2_fire_siren
+2024-10-18 01:16:13,670 [MainThread  ] [INFO ]  Checking certificates:   elevator  ->  floor1_water_pump
+2024-10-18 01:16:13,684 [MainThread  ] [INFO ]  Checking certificates:   elevator  ->  floor2_water_pump
+2024-10-18 01:16:13,698 [MainThread  ] [INFO ]  Checking certificates:   elevator  ->  floor1_badge_reader
+2024-10-18 01:16:13,713 [MainThread  ] [INFO ]  Checking certificates:   elevator  ->  floor2_badge_reader
+2024-10-18 01:16:13,727 [MainThread  ] [INFO ]  Checking certificates:   elevator  ->  floor1_door_lock
+2024-10-18 01:16:13,741 [MainThread  ] [INFO ]  Checking certificates:   elevator  ->  floor2_door_lock
+2024-10-18 01:16:13,756 [MainThread  ] [INFO ]  Checking certificates:   elevator  ->  floor1_smoke_sensor
+2024-10-18 01:16:13,771 [MainThread  ] [INFO ]  Checking certificates:   elevator  ->  floor2_smoke_sensor
+2024-10-18 01:16:13,784 [MainThread  ] [INFO ]  Checking certificates:   elevator  ->  lambda_badge_check
+2024-10-18 01:16:13,798 [MainThread  ] [INFO ]  Checking certificates:   elevator  ->  lambda_fire_alarm
+2024-10-18 01:16:13,813 [MainThread  ] [INFO ]  Checking certificates:   elevator  ->  lambda_logger
+2024-10-18 01:16:13,828 [MainThread  ] [INFO ]  Checking certificates:   elevator  ->  presenceSensor1
+2024-10-18 01:16:13,842 [MainThread  ] [INFO ]  Checking certificates:   elevator  ->  presenceSensor2
+2024-10-18 01:16:13,857 [MainThread  ] [INFO ]  Checking certificates:   elevator  ->  light1
+2024-10-18 01:16:13,871 [MainThread  ] [INFO ]  Checking certificates:   elevator  ->  light2
+2024-10-18 01:16:13,886 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_alarm  ->  elevator
+2024-10-18 01:16:13,957 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_alarm  ->  floor1_fire_alarm
+2024-10-18 01:16:13,970 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_alarm  ->  floor2_fire_alarm
+2024-10-18 01:16:13,984 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_alarm  ->  floor1_fire_siren
+2024-10-18 01:16:14,047 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_alarm  ->  floor2_fire_siren
+2024-10-18 01:16:14,106 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_alarm  ->  floor1_water_pump
+2024-10-18 01:16:14,169 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_alarm  ->  floor2_water_pump
+2024-10-18 01:16:14,230 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_alarm  ->  floor1_badge_reader
+2024-10-18 01:16:14,244 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_alarm  ->  floor2_badge_reader
+2024-10-18 01:16:14,258 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_alarm  ->  floor1_door_lock
+2024-10-18 01:16:14,342 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_alarm  ->  floor2_door_lock
+2024-10-18 01:16:14,424 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_alarm  ->  floor1_smoke_sensor
+2024-10-18 01:16:14,437 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_alarm  ->  floor2_smoke_sensor
+2024-10-18 01:16:14,451 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_alarm  ->  lambda_badge_check
+2024-10-18 01:16:14,467 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_alarm  ->  lambda_fire_alarm
+2024-10-18 01:16:14,482 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_alarm  ->  lambda_logger
+2024-10-18 01:16:14,497 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_alarm  ->  presenceSensor1
+2024-10-18 01:16:14,512 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_alarm  ->  presenceSensor2
+2024-10-18 01:16:14,528 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_alarm  ->  light1
+2024-10-18 01:16:14,543 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_alarm  ->  light2
+2024-10-18 01:16:14,558 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_alarm  ->  elevator
+2024-10-18 01:16:14,630 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_alarm  ->  floor1_fire_alarm
+2024-10-18 01:16:14,644 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_alarm  ->  floor2_fire_alarm
+2024-10-18 01:16:14,659 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_alarm  ->  floor1_fire_siren
+2024-10-18 01:16:14,721 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_alarm  ->  floor2_fire_siren
+2024-10-18 01:16:14,781 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_alarm  ->  floor1_water_pump
+2024-10-18 01:16:14,843 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_alarm  ->  floor2_water_pump
+2024-10-18 01:16:14,905 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_alarm  ->  floor1_badge_reader
+2024-10-18 01:16:14,918 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_alarm  ->  floor2_badge_reader
+2024-10-18 01:16:14,934 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_alarm  ->  floor1_door_lock
+2024-10-18 01:16:15,015 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_alarm  ->  floor2_door_lock
+2024-10-18 01:16:15,092 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_alarm  ->  floor1_smoke_sensor
+2024-10-18 01:16:15,106 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_alarm  ->  floor2_smoke_sensor
+2024-10-18 01:16:15,120 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_alarm  ->  lambda_badge_check
+2024-10-18 01:16:15,136 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_alarm  ->  lambda_fire_alarm
+2024-10-18 01:16:15,151 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_alarm  ->  lambda_logger
+2024-10-18 01:16:15,166 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_alarm  ->  presenceSensor1
+2024-10-18 01:16:15,181 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_alarm  ->  presenceSensor2
+2024-10-18 01:16:15,196 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_alarm  ->  light1
+2024-10-18 01:16:15,212 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_alarm  ->  light2
+2024-10-18 01:16:15,227 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_siren  ->  elevator
+2024-10-18 01:16:15,242 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_siren  ->  floor1_fire_alarm
+2024-10-18 01:16:15,256 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_siren  ->  floor2_fire_alarm
+2024-10-18 01:16:15,270 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_siren  ->  floor1_fire_siren
+2024-10-18 01:16:15,286 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_siren  ->  floor2_fire_siren
+2024-10-18 01:16:15,300 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_siren  ->  floor1_water_pump
+2024-10-18 01:16:15,315 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_siren  ->  floor2_water_pump
+2024-10-18 01:16:15,329 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_siren  ->  floor1_badge_reader
+2024-10-18 01:16:15,343 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_siren  ->  floor2_badge_reader
+2024-10-18 01:16:15,358 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_siren  ->  floor1_door_lock
+2024-10-18 01:16:15,372 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_siren  ->  floor2_door_lock
+2024-10-18 01:16:15,387 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_siren  ->  floor1_smoke_sensor
+2024-10-18 01:16:15,402 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_siren  ->  floor2_smoke_sensor
+2024-10-18 01:16:15,417 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_siren  ->  lambda_badge_check
+2024-10-18 01:16:15,432 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_siren  ->  lambda_fire_alarm
+2024-10-18 01:16:15,447 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_siren  ->  lambda_logger
+2024-10-18 01:16:15,462 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_siren  ->  presenceSensor1
+2024-10-18 01:16:15,477 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_siren  ->  presenceSensor2
+2024-10-18 01:16:15,492 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_siren  ->  light1
+2024-10-18 01:16:15,506 [MainThread  ] [INFO ]  Checking certificates:   floor1_fire_siren  ->  light2
+2024-10-18 01:16:15,522 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_siren  ->  elevator
+2024-10-18 01:16:15,536 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_siren  ->  floor1_fire_alarm
+2024-10-18 01:16:15,550 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_siren  ->  floor2_fire_alarm
+2024-10-18 01:16:15,565 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_siren  ->  floor1_fire_siren
+2024-10-18 01:16:15,580 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_siren  ->  floor2_fire_siren
+2024-10-18 01:16:15,595 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_siren  ->  floor1_water_pump
+2024-10-18 01:16:15,609 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_siren  ->  floor2_water_pump
+2024-10-18 01:16:15,624 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_siren  ->  floor1_badge_reader
+2024-10-18 01:16:15,638 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_siren  ->  floor2_badge_reader
+2024-10-18 01:16:15,653 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_siren  ->  floor1_door_lock
+2024-10-18 01:16:15,667 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_siren  ->  floor2_door_lock
+2024-10-18 01:16:15,682 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_siren  ->  floor1_smoke_sensor
+2024-10-18 01:16:15,697 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_siren  ->  floor2_smoke_sensor
+2024-10-18 01:16:15,712 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_siren  ->  lambda_badge_check
+2024-10-18 01:16:15,725 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_siren  ->  lambda_fire_alarm
+2024-10-18 01:16:15,740 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_siren  ->  lambda_logger
+2024-10-18 01:16:15,756 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_siren  ->  presenceSensor1
+2024-10-18 01:16:15,770 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_siren  ->  presenceSensor2
+2024-10-18 01:16:15,784 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_siren  ->  light1
+2024-10-18 01:16:15,799 [MainThread  ] [INFO ]  Checking certificates:   floor2_fire_siren  ->  light2
+2024-10-18 01:16:15,814 [MainThread  ] [INFO ]  Checking certificates:   floor1_water_pump  ->  elevator
+2024-10-18 01:16:15,829 [MainThread  ] [INFO ]  Checking certificates:   floor1_water_pump  ->  floor1_fire_alarm
+2024-10-18 01:16:15,844 [MainThread  ] [INFO ]  Checking certificates:   floor1_water_pump  ->  floor2_fire_alarm
+2024-10-18 01:16:15,858 [MainThread  ] [INFO ]  Checking certificates:   floor1_water_pump  ->  floor1_fire_siren
+2024-10-18 01:16:15,873 [MainThread  ] [INFO ]  Checking certificates:   floor1_water_pump  ->  floor2_fire_siren
+2024-10-18 01:16:15,888 [MainThread  ] [INFO ]  Checking certificates:   floor1_water_pump  ->  floor1_water_pump
+2024-10-18 01:16:15,902 [MainThread  ] [INFO ]  Checking certificates:   floor1_water_pump  ->  floor2_water_pump
+2024-10-18 01:16:15,916 [MainThread  ] [INFO ]  Checking certificates:   floor1_water_pump  ->  floor1_badge_reader
+2024-10-18 01:16:15,931 [MainThread  ] [INFO ]  Checking certificates:   floor1_water_pump  ->  floor2_badge_reader
+2024-10-18 01:16:15,946 [MainThread  ] [INFO ]  Checking certificates:   floor1_water_pump  ->  floor1_door_lock
+2024-10-18 01:16:15,961 [MainThread  ] [INFO ]  Checking certificates:   floor1_water_pump  ->  floor2_door_lock
+2024-10-18 01:16:15,976 [MainThread  ] [INFO ]  Checking certificates:   floor1_water_pump  ->  floor1_smoke_sensor
+2024-10-18 01:16:15,990 [MainThread  ] [INFO ]  Checking certificates:   floor1_water_pump  ->  floor2_smoke_sensor
+2024-10-18 01:16:16,004 [MainThread  ] [INFO ]  Checking certificates:   floor1_water_pump  ->  lambda_badge_check
+2024-10-18 01:16:16,019 [MainThread  ] [INFO ]  Checking certificates:   floor1_water_pump  ->  lambda_fire_alarm
+2024-10-18 01:16:16,033 [MainThread  ] [INFO ]  Checking certificates:   floor1_water_pump  ->  lambda_logger
+2024-10-18 01:16:16,047 [MainThread  ] [INFO ]  Checking certificates:   floor1_water_pump  ->  presenceSensor1
+2024-10-18 01:16:16,061 [MainThread  ] [INFO ]  Checking certificates:   floor1_water_pump  ->  presenceSensor2
+2024-10-18 01:16:16,075 [MainThread  ] [INFO ]  Checking certificates:   floor1_water_pump  ->  light1
+2024-10-18 01:16:16,090 [MainThread  ] [INFO ]  Checking certificates:   floor1_water_pump  ->  light2
+2024-10-18 01:16:16,104 [MainThread  ] [INFO ]  Checking certificates:   floor2_water_pump  ->  elevator
+2024-10-18 01:16:16,118 [MainThread  ] [INFO ]  Checking certificates:   floor2_water_pump  ->  floor1_fire_alarm
+2024-10-18 01:16:16,132 [MainThread  ] [INFO ]  Checking certificates:   floor2_water_pump  ->  floor2_fire_alarm
+2024-10-18 01:16:16,146 [MainThread  ] [INFO ]  Checking certificates:   floor2_water_pump  ->  floor1_fire_siren
+2024-10-18 01:16:16,160 [MainThread  ] [INFO ]  Checking certificates:   floor2_water_pump  ->  floor2_fire_siren
+2024-10-18 01:16:16,174 [MainThread  ] [INFO ]  Checking certificates:   floor2_water_pump  ->  floor1_water_pump
+2024-10-18 01:16:16,189 [MainThread  ] [INFO ]  Checking certificates:   floor2_water_pump  ->  floor2_water_pump
+2024-10-18 01:16:16,203 [MainThread  ] [INFO ]  Checking certificates:   floor2_water_pump  ->  floor1_badge_reader
+2024-10-18 01:16:16,217 [MainThread  ] [INFO ]  Checking certificates:   floor2_water_pump  ->  floor2_badge_reader
+2024-10-18 01:16:16,231 [MainThread  ] [INFO ]  Checking certificates:   floor2_water_pump  ->  floor1_door_lock
+2024-10-18 01:16:16,245 [MainThread  ] [INFO ]  Checking certificates:   floor2_water_pump  ->  floor2_door_lock
+2024-10-18 01:16:16,260 [MainThread  ] [INFO ]  Checking certificates:   floor2_water_pump  ->  floor1_smoke_sensor
+2024-10-18 01:16:16,274 [MainThread  ] [INFO ]  Checking certificates:   floor2_water_pump  ->  floor2_smoke_sensor
+2024-10-18 01:16:16,289 [MainThread  ] [INFO ]  Checking certificates:   floor2_water_pump  ->  lambda_badge_check
+2024-10-18 01:16:16,303 [MainThread  ] [INFO ]  Checking certificates:   floor2_water_pump  ->  lambda_fire_alarm
+2024-10-18 01:16:16,317 [MainThread  ] [INFO ]  Checking certificates:   floor2_water_pump  ->  lambda_logger
+2024-10-18 01:16:16,333 [MainThread  ] [INFO ]  Checking certificates:   floor2_water_pump  ->  presenceSensor1
+2024-10-18 01:16:16,346 [MainThread  ] [INFO ]  Checking certificates:   floor2_water_pump  ->  presenceSensor2
+2024-10-18 01:16:16,360 [MainThread  ] [INFO ]  Checking certificates:   floor2_water_pump  ->  light1
+2024-10-18 01:16:16,374 [MainThread  ] [INFO ]  Checking certificates:   floor2_water_pump  ->  light2
+2024-10-18 01:16:16,389 [MainThread  ] [INFO ]  Checking certificates:   floor1_badge_reader  ->  elevator
+2024-10-18 01:16:16,404 [MainThread  ] [INFO ]  Checking certificates:   floor1_badge_reader  ->  floor1_fire_alarm
+2024-10-18 01:16:16,418 [MainThread  ] [INFO ]  Checking certificates:   floor1_badge_reader  ->  floor2_fire_alarm
+2024-10-18 01:16:16,432 [MainThread  ] [INFO ]  Checking certificates:   floor1_badge_reader  ->  floor1_fire_siren
+2024-10-18 01:16:16,448 [MainThread  ] [INFO ]  Checking certificates:   floor1_badge_reader  ->  floor2_fire_siren
+2024-10-18 01:16:16,470 [MainThread  ] [INFO ]  Checking certificates:   floor1_badge_reader  ->  floor1_water_pump
+2024-10-18 01:16:16,486 [MainThread  ] [INFO ]  Checking certificates:   floor1_badge_reader  ->  floor2_water_pump
+2024-10-18 01:16:16,502 [MainThread  ] [INFO ]  Checking certificates:   floor1_badge_reader  ->  floor1_badge_reader
+2024-10-18 01:16:16,516 [MainThread  ] [INFO ]  Checking certificates:   floor1_badge_reader  ->  floor2_badge_reader
+2024-10-18 01:16:16,530 [MainThread  ] [INFO ]  Checking certificates:   floor1_badge_reader  ->  floor1_door_lock
+2024-10-18 01:16:16,545 [MainThread  ] [INFO ]  Checking certificates:   floor1_badge_reader  ->  floor2_door_lock
+2024-10-18 01:16:16,561 [MainThread  ] [INFO ]  Checking certificates:   floor1_badge_reader  ->  floor1_smoke_sensor
+2024-10-18 01:16:16,576 [MainThread  ] [INFO ]  Checking certificates:   floor1_badge_reader  ->  floor2_smoke_sensor
+2024-10-18 01:16:16,590 [MainThread  ] [INFO ]  Checking certificates:   floor1_badge_reader  ->  lambda_badge_check
+2024-10-18 01:16:17,093 [MainThread  ] [INFO ]  Checking certificates:   floor1_badge_reader  ->  lambda_fire_alarm
+2024-10-18 01:16:17,108 [MainThread  ] [INFO ]  Checking certificates:   floor1_badge_reader  ->  lambda_logger
+2024-10-18 01:16:17,126 [MainThread  ] [INFO ]  Checking certificates:   floor1_badge_reader  ->  presenceSensor1
+2024-10-18 01:16:17,142 [MainThread  ] [INFO ]  Checking certificates:   floor1_badge_reader  ->  presenceSensor2
+2024-10-18 01:16:17,157 [MainThread  ] [INFO ]  Checking certificates:   floor1_badge_reader  ->  light1
+2024-10-18 01:16:17,184 [MainThread  ] [INFO ]  Checking certificates:   floor1_badge_reader  ->  light2
+2024-10-18 01:16:17,211 [MainThread  ] [INFO ]  Checking certificates:   floor2_badge_reader  ->  elevator
+2024-10-18 01:16:17,227 [MainThread  ] [INFO ]  Checking certificates:   floor2_badge_reader  ->  floor1_fire_alarm
+2024-10-18 01:16:17,242 [MainThread  ] [INFO ]  Checking certificates:   floor2_badge_reader  ->  floor2_fire_alarm
+2024-10-18 01:16:17,259 [MainThread  ] [INFO ]  Checking certificates:   floor2_badge_reader  ->  floor1_fire_siren
+2024-10-18 01:16:17,276 [MainThread  ] [INFO ]  Checking certificates:   floor2_badge_reader  ->  floor2_fire_siren
+2024-10-18 01:16:17,292 [MainThread  ] [INFO ]  Checking certificates:   floor2_badge_reader  ->  floor1_water_pump
+2024-10-18 01:16:17,308 [MainThread  ] [INFO ]  Checking certificates:   floor2_badge_reader  ->  floor2_water_pump
+2024-10-18 01:16:17,325 [MainThread  ] [INFO ]  Checking certificates:   floor2_badge_reader  ->  floor1_badge_reader
+2024-10-18 01:16:17,341 [MainThread  ] [INFO ]  Checking certificates:   floor2_badge_reader  ->  floor2_badge_reader
+2024-10-18 01:16:17,357 [MainThread  ] [INFO ]  Checking certificates:   floor2_badge_reader  ->  floor1_door_lock
+2024-10-18 01:16:17,374 [MainThread  ] [INFO ]  Checking certificates:   floor2_badge_reader  ->  floor2_door_lock
+2024-10-18 01:16:17,391 [MainThread  ] [INFO ]  Checking certificates:   floor2_badge_reader  ->  floor1_smoke_sensor
+2024-10-18 01:16:17,407 [MainThread  ] [INFO ]  Checking certificates:   floor2_badge_reader  ->  floor2_smoke_sensor
+2024-10-18 01:16:17,423 [MainThread  ] [INFO ]  Checking certificates:   floor2_badge_reader  ->  lambda_badge_check
+2024-10-18 01:16:17,902 [MainThread  ] [INFO ]  Checking certificates:   floor2_badge_reader  ->  lambda_fire_alarm
+2024-10-18 01:16:17,918 [MainThread  ] [INFO ]  Checking certificates:   floor2_badge_reader  ->  lambda_logger
+2024-10-18 01:16:17,934 [MainThread  ] [INFO ]  Checking certificates:   floor2_badge_reader  ->  presenceSensor1
+2024-10-18 01:16:17,951 [MainThread  ] [INFO ]  Checking certificates:   floor2_badge_reader  ->  presenceSensor2
+2024-10-18 01:16:17,968 [MainThread  ] [INFO ]  Checking certificates:   floor2_badge_reader  ->  light1
+2024-10-18 01:16:17,995 [MainThread  ] [INFO ]  Checking certificates:   floor2_badge_reader  ->  light2
+2024-10-18 01:16:18,022 [MainThread  ] [INFO ]  Checking certificates:   floor1_door_lock  ->  elevator
+2024-10-18 01:16:18,039 [MainThread  ] [INFO ]  Checking certificates:   floor1_door_lock  ->  floor1_fire_alarm
+2024-10-18 01:16:18,055 [MainThread  ] [INFO ]  Checking certificates:   floor1_door_lock  ->  floor2_fire_alarm
+2024-10-18 01:16:18,072 [MainThread  ] [INFO ]  Checking certificates:   floor1_door_lock  ->  floor1_fire_siren
+2024-10-18 01:16:18,088 [MainThread  ] [INFO ]  Checking certificates:   floor1_door_lock  ->  floor2_fire_siren
+2024-10-18 01:16:18,104 [MainThread  ] [INFO ]  Checking certificates:   floor1_door_lock  ->  floor1_water_pump
+2024-10-18 01:16:18,118 [MainThread  ] [INFO ]  Checking certificates:   floor1_door_lock  ->  floor2_water_pump
+2024-10-18 01:16:18,134 [MainThread  ] [INFO ]  Checking certificates:   floor1_door_lock  ->  floor1_badge_reader
+2024-10-18 01:16:18,148 [MainThread  ] [INFO ]  Checking certificates:   floor1_door_lock  ->  floor2_badge_reader
+2024-10-18 01:16:18,163 [MainThread  ] [INFO ]  Checking certificates:   floor1_door_lock  ->  floor1_door_lock
+2024-10-18 01:16:18,178 [MainThread  ] [INFO ]  Checking certificates:   floor1_door_lock  ->  floor2_door_lock
+2024-10-18 01:16:18,193 [MainThread  ] [INFO ]  Checking certificates:   floor1_door_lock  ->  floor1_smoke_sensor
+2024-10-18 01:16:18,207 [MainThread  ] [INFO ]  Checking certificates:   floor1_door_lock  ->  floor2_smoke_sensor
+2024-10-18 01:16:18,222 [MainThread  ] [INFO ]  Checking certificates:   floor1_door_lock  ->  lambda_badge_check
+2024-10-18 01:16:18,237 [MainThread  ] [INFO ]  Checking certificates:   floor1_door_lock  ->  lambda_fire_alarm
+2024-10-18 01:16:18,253 [MainThread  ] [INFO ]  Checking certificates:   floor1_door_lock  ->  lambda_logger
+2024-10-18 01:16:18,335 [MainThread  ] [INFO ]  Checking certificates:   floor1_door_lock  ->  presenceSensor1
+2024-10-18 01:16:18,382 [MainThread  ] [INFO ]  Checking certificates:   floor1_door_lock  ->  presenceSensor2
+2024-10-18 01:16:18,397 [MainThread  ] [INFO ]  Checking certificates:   floor1_door_lock  ->  light1
+2024-10-18 01:16:18,413 [MainThread  ] [INFO ]  Checking certificates:   floor1_door_lock  ->  light2
+2024-10-18 01:16:18,430 [MainThread  ] [INFO ]  Checking certificates:   floor2_door_lock  ->  elevator
+2024-10-18 01:16:18,446 [MainThread  ] [INFO ]  Checking certificates:   floor2_door_lock  ->  floor1_fire_alarm
+2024-10-18 01:16:18,462 [MainThread  ] [INFO ]  Checking certificates:   floor2_door_lock  ->  floor2_fire_alarm
+2024-10-18 01:16:18,478 [MainThread  ] [INFO ]  Checking certificates:   floor2_door_lock  ->  floor1_fire_siren
+2024-10-18 01:16:18,494 [MainThread  ] [INFO ]  Checking certificates:   floor2_door_lock  ->  floor2_fire_siren
+2024-10-18 01:16:18,510 [MainThread  ] [INFO ]  Checking certificates:   floor2_door_lock  ->  floor1_water_pump
+2024-10-18 01:16:18,526 [MainThread  ] [INFO ]  Checking certificates:   floor2_door_lock  ->  floor2_water_pump
+2024-10-18 01:16:18,543 [MainThread  ] [INFO ]  Checking certificates:   floor2_door_lock  ->  floor1_badge_reader
+2024-10-18 01:16:18,559 [MainThread  ] [INFO ]  Checking certificates:   floor2_door_lock  ->  floor2_badge_reader
+2024-10-18 01:16:18,574 [MainThread  ] [INFO ]  Checking certificates:   floor2_door_lock  ->  floor1_door_lock
+2024-10-18 01:16:18,590 [MainThread  ] [INFO ]  Checking certificates:   floor2_door_lock  ->  floor2_door_lock
+2024-10-18 01:16:18,607 [MainThread  ] [INFO ]  Checking certificates:   floor2_door_lock  ->  floor1_smoke_sensor
+2024-10-18 01:16:18,622 [MainThread  ] [INFO ]  Checking certificates:   floor2_door_lock  ->  floor2_smoke_sensor
+2024-10-18 01:16:18,638 [MainThread  ] [INFO ]  Checking certificates:   floor2_door_lock  ->  lambda_badge_check
+2024-10-18 01:16:18,655 [MainThread  ] [INFO ]  Checking certificates:   floor2_door_lock  ->  lambda_fire_alarm
+2024-10-18 01:16:18,671 [MainThread  ] [INFO ]  Checking certificates:   floor2_door_lock  ->  lambda_logger
+2024-10-18 01:16:18,751 [MainThread  ] [INFO ]  Checking certificates:   floor2_door_lock  ->  presenceSensor1
+2024-10-18 01:16:18,765 [MainThread  ] [INFO ]  Checking certificates:   floor2_door_lock  ->  presenceSensor2
+2024-10-18 01:16:18,815 [MainThread  ] [INFO ]  Checking certificates:   floor2_door_lock  ->  light1
+2024-10-18 01:16:18,831 [MainThread  ] [INFO ]  Checking certificates:   floor2_door_lock  ->  light2
+2024-10-18 01:16:18,848 [MainThread  ] [INFO ]  Checking certificates:   floor1_smoke_sensor  ->  elevator
+2024-10-18 01:16:18,864 [MainThread  ] [INFO ]  Checking certificates:   floor1_smoke_sensor  ->  floor1_fire_alarm
+2024-10-18 01:16:18,880 [MainThread  ] [INFO ]  Checking certificates:   floor1_smoke_sensor  ->  floor2_fire_alarm
+2024-10-18 01:16:18,896 [MainThread  ] [INFO ]  Checking certificates:   floor1_smoke_sensor  ->  floor1_fire_siren
+2024-10-18 01:16:18,912 [MainThread  ] [INFO ]  Checking certificates:   floor1_smoke_sensor  ->  floor2_fire_siren
+2024-10-18 01:16:18,928 [MainThread  ] [INFO ]  Checking certificates:   floor1_smoke_sensor  ->  floor1_water_pump
+2024-10-18 01:16:18,947 [MainThread  ] [INFO ]  Checking certificates:   floor1_smoke_sensor  ->  floor2_water_pump
+2024-10-18 01:16:18,963 [MainThread  ] [INFO ]  Checking certificates:   floor1_smoke_sensor  ->  floor1_badge_reader
+2024-10-18 01:16:18,977 [MainThread  ] [INFO ]  Checking certificates:   floor1_smoke_sensor  ->  floor2_badge_reader
+2024-10-18 01:16:18,993 [MainThread  ] [INFO ]  Checking certificates:   floor1_smoke_sensor  ->  floor1_door_lock
+2024-10-18 01:16:19,010 [MainThread  ] [INFO ]  Checking certificates:   floor1_smoke_sensor  ->  floor2_door_lock
+2024-10-18 01:16:19,026 [MainThread  ] [INFO ]  Checking certificates:   floor1_smoke_sensor  ->  floor1_smoke_sensor
+2024-10-18 01:16:19,041 [MainThread  ] [INFO ]  Checking certificates:   floor1_smoke_sensor  ->  floor2_smoke_sensor
+2024-10-18 01:16:19,057 [MainThread  ] [INFO ]  Checking certificates:   floor1_smoke_sensor  ->  lambda_badge_check
+2024-10-18 01:16:19,074 [MainThread  ] [INFO ]  Checking certificates:   floor1_smoke_sensor  ->  lambda_fire_alarm
+2024-10-18 01:16:19,160 [MainThread  ] [INFO ]  Checking certificates:   floor1_smoke_sensor  ->  lambda_logger
+2024-10-18 01:16:19,174 [MainThread  ] [INFO ]  Checking certificates:   floor1_smoke_sensor  ->  presenceSensor1
+2024-10-18 01:16:19,191 [MainThread  ] [INFO ]  Checking certificates:   floor1_smoke_sensor  ->  presenceSensor2
+2024-10-18 01:16:19,208 [MainThread  ] [INFO ]  Checking certificates:   floor1_smoke_sensor  ->  light1
+2024-10-18 01:16:19,224 [MainThread  ] [INFO ]  Checking certificates:   floor1_smoke_sensor  ->  light2
+2024-10-18 01:16:19,242 [MainThread  ] [INFO ]  Checking certificates:   floor2_smoke_sensor  ->  elevator
+2024-10-18 01:16:19,259 [MainThread  ] [INFO ]  Checking certificates:   floor2_smoke_sensor  ->  floor1_fire_alarm
+2024-10-18 01:16:19,274 [MainThread  ] [INFO ]  Checking certificates:   floor2_smoke_sensor  ->  floor2_fire_alarm
+2024-10-18 01:16:19,290 [MainThread  ] [INFO ]  Checking certificates:   floor2_smoke_sensor  ->  floor1_fire_siren
+2024-10-18 01:16:19,307 [MainThread  ] [INFO ]  Checking certificates:   floor2_smoke_sensor  ->  floor2_fire_siren
+2024-10-18 01:16:19,324 [MainThread  ] [INFO ]  Checking certificates:   floor2_smoke_sensor  ->  floor1_water_pump
+2024-10-18 01:16:19,340 [MainThread  ] [INFO ]  Checking certificates:   floor2_smoke_sensor  ->  floor2_water_pump
+2024-10-18 01:16:19,356 [MainThread  ] [INFO ]  Checking certificates:   floor2_smoke_sensor  ->  floor1_badge_reader
+2024-10-18 01:16:19,372 [MainThread  ] [INFO ]  Checking certificates:   floor2_smoke_sensor  ->  floor2_badge_reader
+2024-10-18 01:16:19,388 [MainThread  ] [INFO ]  Checking certificates:   floor2_smoke_sensor  ->  floor1_door_lock
+2024-10-18 01:16:19,403 [MainThread  ] [INFO ]  Checking certificates:   floor2_smoke_sensor  ->  floor2_door_lock
+2024-10-18 01:16:19,420 [MainThread  ] [INFO ]  Checking certificates:   floor2_smoke_sensor  ->  floor1_smoke_sensor
+2024-10-18 01:16:19,435 [MainThread  ] [INFO ]  Checking certificates:   floor2_smoke_sensor  ->  floor2_smoke_sensor
+2024-10-18 01:16:19,450 [MainThread  ] [INFO ]  Checking certificates:   floor2_smoke_sensor  ->  lambda_badge_check
+2024-10-18 01:16:19,467 [MainThread  ] [INFO ]  Checking certificates:   floor2_smoke_sensor  ->  lambda_fire_alarm
+2024-10-18 01:16:19,551 [MainThread  ] [INFO ]  Checking certificates:   floor2_smoke_sensor  ->  lambda_logger
+2024-10-18 01:16:19,567 [MainThread  ] [INFO ]  Checking certificates:   floor2_smoke_sensor  ->  presenceSensor1
+2024-10-18 01:16:19,583 [MainThread  ] [INFO ]  Checking certificates:   floor2_smoke_sensor  ->  presenceSensor2
+2024-10-18 01:16:19,600 [MainThread  ] [INFO ]  Checking certificates:   floor2_smoke_sensor  ->  light1
+2024-10-18 01:16:19,616 [MainThread  ] [INFO ]  Checking certificates:   floor2_smoke_sensor  ->  light2
+2024-10-18 01:16:19,632 [MainThread  ] [INFO ]  Checking certificates:   lambda_badge_check  ->  elevator
+2024-10-18 01:16:19,649 [MainThread  ] [INFO ]  Checking certificates:   lambda_badge_check  ->  floor1_fire_alarm
+2024-10-18 01:16:19,665 [MainThread  ] [INFO ]  Checking certificates:   lambda_badge_check  ->  floor2_fire_alarm
+2024-10-18 01:16:19,681 [MainThread  ] [INFO ]  Checking certificates:   lambda_badge_check  ->  floor1_fire_siren
+2024-10-18 01:16:19,697 [MainThread  ] [INFO ]  Checking certificates:   lambda_badge_check  ->  floor2_fire_siren
+2024-10-18 01:16:19,714 [MainThread  ] [INFO ]  Checking certificates:   lambda_badge_check  ->  floor1_water_pump
+2024-10-18 01:16:19,731 [MainThread  ] [INFO ]  Checking certificates:   lambda_badge_check  ->  floor2_water_pump
+2024-10-18 01:16:19,748 [MainThread  ] [INFO ]  Checking certificates:   lambda_badge_check  ->  floor1_badge_reader
+2024-10-18 01:16:19,765 [MainThread  ] [INFO ]  Checking certificates:   lambda_badge_check  ->  floor2_badge_reader
+2024-10-18 01:16:19,780 [MainThread  ] [INFO ]  Checking certificates:   lambda_badge_check  ->  floor1_door_lock
+2024-10-18 01:16:20,744 [MainThread  ] [INFO ]  Checking certificates:   lambda_badge_check  ->  floor2_door_lock
+2024-10-18 01:16:21,813 [MainThread  ] [INFO ]  Checking certificates:   lambda_badge_check  ->  floor1_smoke_sensor
+2024-10-18 01:16:21,828 [MainThread  ] [INFO ]  Checking certificates:   lambda_badge_check  ->  floor2_smoke_sensor
+2024-10-18 01:16:21,844 [MainThread  ] [INFO ]  Checking certificates:   lambda_badge_check  ->  lambda_badge_check
+2024-10-18 01:16:21,879 [MainThread  ] [INFO ]  Checking certificates:   lambda_badge_check  ->  lambda_fire_alarm
+2024-10-18 01:16:21,897 [MainThread  ] [INFO ]  Checking certificates:   lambda_badge_check  ->  lambda_logger
+2024-10-18 01:16:22,009 [MainThread  ] [INFO ]  Checking certificates:   lambda_badge_check  ->  presenceSensor1
+2024-10-18 01:16:22,026 [MainThread  ] [INFO ]  Checking certificates:   lambda_badge_check  ->  presenceSensor2
+2024-10-18 01:16:22,044 [MainThread  ] [INFO ]  Checking certificates:   lambda_badge_check  ->  light1
+2024-10-18 01:16:22,376 [MainThread  ] [INFO ]  Checking certificates:   lambda_badge_check  ->  light2
+2024-10-18 01:16:22,689 [MainThread  ] [INFO ]  Checking certificates:   lambda_fire_alarm  ->  elevator
+2024-10-18 01:16:22,743 [MainThread  ] [INFO ]  Checking certificates:   lambda_fire_alarm  ->  floor1_fire_alarm
+2024-10-18 01:16:22,757 [MainThread  ] [INFO ]  Checking certificates:   lambda_fire_alarm  ->  floor2_fire_alarm
+2024-10-18 01:16:22,774 [MainThread  ] [INFO ]  Checking certificates:   lambda_fire_alarm  ->  floor1_fire_siren
+2024-10-18 01:16:22,827 [MainThread  ] [INFO ]  Checking certificates:   lambda_fire_alarm  ->  floor2_fire_siren
+2024-10-18 01:16:22,880 [MainThread  ] [INFO ]  Checking certificates:   lambda_fire_alarm  ->  floor1_water_pump
+2024-10-18 01:16:22,924 [MainThread  ] [INFO ]  Checking certificates:   lambda_fire_alarm  ->  floor2_water_pump
+2024-10-18 01:16:22,968 [MainThread  ] [INFO ]  Checking certificates:   lambda_fire_alarm  ->  floor1_badge_reader
+2024-10-18 01:16:22,983 [MainThread  ] [INFO ]  Checking certificates:   lambda_fire_alarm  ->  floor2_badge_reader
+2024-10-18 01:16:22,999 [MainThread  ] [INFO ]  Checking certificates:   lambda_fire_alarm  ->  floor1_door_lock
+2024-10-18 01:16:23,070 [MainThread  ] [INFO ]  Checking certificates:   lambda_fire_alarm  ->  floor2_door_lock
+2024-10-18 01:16:23,139 [MainThread  ] [INFO ]  Checking certificates:   lambda_fire_alarm  ->  floor1_smoke_sensor
+2024-10-18 01:16:23,155 [MainThread  ] [INFO ]  Checking certificates:   lambda_fire_alarm  ->  floor2_smoke_sensor
+2024-10-18 01:16:23,172 [MainThread  ] [INFO ]  Checking certificates:   lambda_fire_alarm  ->  lambda_badge_check
+2024-10-18 01:16:23,196 [MainThread  ] [INFO ]  Checking certificates:   lambda_fire_alarm  ->  lambda_fire_alarm
+2024-10-18 01:16:23,214 [MainThread  ] [INFO ]  Checking certificates:   lambda_fire_alarm  ->  lambda_logger
+2024-10-18 01:16:23,231 [MainThread  ] [INFO ]  Checking certificates:   lambda_fire_alarm  ->  presenceSensor1
+2024-10-18 01:16:23,247 [MainThread  ] [INFO ]  Checking certificates:   lambda_fire_alarm  ->  presenceSensor2
+2024-10-18 01:16:23,263 [MainThread  ] [INFO ]  Checking certificates:   lambda_fire_alarm  ->  light1
+2024-10-18 01:16:23,281 [MainThread  ] [INFO ]  Checking certificates:   lambda_fire_alarm  ->  light2
+2024-10-18 01:16:23,297 [MainThread  ] [INFO ]  Checking certificates:   lambda_logger  ->  elevator
+2024-10-18 01:16:23,313 [MainThread  ] [INFO ]  Checking certificates:   lambda_logger  ->  floor1_fire_alarm
+2024-10-18 01:16:23,330 [MainThread  ] [INFO ]  Checking certificates:   lambda_logger  ->  floor2_fire_alarm
+2024-10-18 01:16:23,346 [MainThread  ] [INFO ]  Checking certificates:   lambda_logger  ->  floor1_fire_siren
+2024-10-18 01:16:23,361 [MainThread  ] [INFO ]  Checking certificates:   lambda_logger  ->  floor2_fire_siren
+2024-10-18 01:16:23,375 [MainThread  ] [INFO ]  Checking certificates:   lambda_logger  ->  floor1_water_pump
+2024-10-18 01:16:23,390 [MainThread  ] [INFO ]  Checking certificates:   lambda_logger  ->  floor2_water_pump
+2024-10-18 01:16:23,405 [MainThread  ] [INFO ]  Checking certificates:   lambda_logger  ->  floor1_badge_reader
+2024-10-18 01:16:23,419 [MainThread  ] [INFO ]  Checking certificates:   lambda_logger  ->  floor2_badge_reader
+2024-10-18 01:16:23,434 [MainThread  ] [INFO ]  Checking certificates:   lambda_logger  ->  floor1_door_lock
+2024-10-18 01:16:23,450 [MainThread  ] [INFO ]  Checking certificates:   lambda_logger  ->  floor2_door_lock
+2024-10-18 01:16:23,464 [MainThread  ] [INFO ]  Checking certificates:   lambda_logger  ->  floor1_smoke_sensor
+2024-10-18 01:16:23,479 [MainThread  ] [INFO ]  Checking certificates:   lambda_logger  ->  floor2_smoke_sensor
+2024-10-18 01:16:23,493 [MainThread  ] [INFO ]  Checking certificates:   lambda_logger  ->  lambda_badge_check
+2024-10-18 01:16:23,508 [MainThread  ] [INFO ]  Checking certificates:   lambda_logger  ->  lambda_fire_alarm
+2024-10-18 01:16:23,522 [MainThread  ] [INFO ]  Checking certificates:   lambda_logger  ->  lambda_logger
+2024-10-18 01:16:23,536 [MainThread  ] [INFO ]  Checking certificates:   lambda_logger  ->  presenceSensor1
+2024-10-18 01:16:23,550 [MainThread  ] [INFO ]  Checking certificates:   lambda_logger  ->  presenceSensor2
+2024-10-18 01:16:23,565 [MainThread  ] [INFO ]  Checking certificates:   lambda_logger  ->  light1
+2024-10-18 01:16:23,579 [MainThread  ] [INFO ]  Checking certificates:   lambda_logger  ->  light2
+2024-10-18 01:16:23,593 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor1  ->  elevator
+2024-10-18 01:16:23,608 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor1  ->  floor1_fire_alarm
+2024-10-18 01:16:23,623 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor1  ->  floor2_fire_alarm
+2024-10-18 01:16:23,638 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor1  ->  floor1_fire_siren
+2024-10-18 01:16:23,654 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor1  ->  floor2_fire_siren
+2024-10-18 01:16:23,670 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor1  ->  floor1_water_pump
+2024-10-18 01:16:23,686 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor1  ->  floor2_water_pump
+2024-10-18 01:16:23,702 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor1  ->  floor1_badge_reader
+2024-10-18 01:16:23,718 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor1  ->  floor2_badge_reader
+2024-10-18 01:16:23,735 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor1  ->  floor1_door_lock
+2024-10-18 01:16:23,751 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor1  ->  floor2_door_lock
+2024-10-18 01:16:23,766 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor1  ->  floor1_smoke_sensor
+2024-10-18 01:16:23,781 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor1  ->  floor2_smoke_sensor
+2024-10-18 01:16:23,796 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor1  ->  lambda_badge_check
+2024-10-18 01:16:23,813 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor1  ->  lambda_fire_alarm
+2024-10-18 01:16:23,829 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor1  ->  lambda_logger
+2024-10-18 01:16:23,890 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor1  ->  presenceSensor1
+2024-10-18 01:16:23,904 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor1  ->  presenceSensor2
+2024-10-18 01:16:23,919 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor1  ->  light1
+2024-10-18 01:16:24,038 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor1  ->  light2
+2024-10-18 01:16:24,122 [MainThread  ] [DEBUG]  Solving presenceSensor1 -> light2 requires hard solver:
+2024-10-18 01:16:24,137 [MainThread  ] [DEBUG]          [0.0089] #1 topic levels is unsat
+2024-10-18 01:16:24,261 [MainThread  ] [DEBUG]          [0.1157] #2 topic levels is unsat
+2024-10-18 01:16:29,417 [MainThread  ] [DEBUG]          [5.1475] #3 topic levels is unsat
+2024-10-18 01:16:34,467 [MainThread  ] [DEBUG]          [5.0414] #4 topic levels is unsat
+2024-10-18 01:16:45,319 [MainThread  ] [DEBUG]          [10.8432] #5 topic levels is unsat
+2024-10-18 01:17:00,609 [MainThread  ] [DEBUG]          [15.2799] #6 topic levels is unsat
+2024-10-18 01:17:08,248 [MainThread  ] [DEBUG]          [7.6290] #7 topic levels is unsat
+2024-10-18 01:17:20,330 [MainThread  ] [DEBUG]          [12.0721] #8 topic levels is unsat
+2024-10-18 01:17:20,330 [MainThread  ] [DEBUG]          [56.2087] No solution found.
+2024-10-18 01:17:20,332 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor2  ->  elevator
+2024-10-18 01:17:20,348 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor2  ->  floor1_fire_alarm
+2024-10-18 01:17:20,365 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor2  ->  floor2_fire_alarm
+2024-10-18 01:17:20,381 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor2  ->  floor1_fire_siren
+2024-10-18 01:17:20,398 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor2  ->  floor2_fire_siren
+2024-10-18 01:17:20,415 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor2  ->  floor1_water_pump
+2024-10-18 01:17:20,433 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor2  ->  floor2_water_pump
+2024-10-18 01:17:20,450 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor2  ->  floor1_badge_reader
+2024-10-18 01:17:20,466 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor2  ->  floor2_badge_reader
+2024-10-18 01:17:20,484 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor2  ->  floor1_door_lock
+2024-10-18 01:17:20,501 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor2  ->  floor2_door_lock
+2024-10-18 01:17:20,518 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor2  ->  floor1_smoke_sensor
+2024-10-18 01:17:20,535 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor2  ->  floor2_smoke_sensor
+2024-10-18 01:17:20,552 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor2  ->  lambda_badge_check
+2024-10-18 01:17:20,570 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor2  ->  lambda_fire_alarm
+2024-10-18 01:17:20,587 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor2  ->  lambda_logger
+2024-10-18 01:17:20,662 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor2  ->  presenceSensor1
+2024-10-18 01:17:20,677 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor2  ->  presenceSensor2
+2024-10-18 01:17:20,693 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor2  ->  light1
+2024-10-18 01:17:20,823 [MainThread  ] [DEBUG]  Solving presenceSensor2 -> light1 requires hard solver:
+2024-10-18 01:17:20,840 [MainThread  ] [DEBUG]          [0.0090] #1 topic levels is unsat
+2024-10-18 01:17:21,083 [MainThread  ] [DEBUG]          [0.2344] #2 topic levels is unsat
+2024-10-18 01:17:24,707 [MainThread  ] [DEBUG]          [3.6150] #3 topic levels is unsat
+2024-10-18 01:17:36,926 [MainThread  ] [DEBUG]          [12.2102] #4 topic levels is unsat
+2024-10-18 01:17:47,050 [MainThread  ] [DEBUG]          [10.1140] #5 topic levels is unsat
+2024-10-18 01:18:07,371 [MainThread  ] [DEBUG]          [20.3116] #6 topic levels is unsat
+2024-10-18 01:18:13,014 [MainThread  ] [DEBUG]          [5.6328] #7 topic levels is unsat
+2024-10-18 01:18:30,088 [MainThread  ] [DEBUG]          [17.0628] #8 topic levels is unsat
+2024-10-18 01:18:30,088 [MainThread  ] [DEBUG]          [69.2646] No solution found.
+2024-10-18 01:18:30,090 [MainThread  ] [INFO ]  Checking certificates:   presenceSensor2  ->  light2
+2024-10-18 01:18:30,231 [MainThread  ] [INFO ]  Checking certificates:   light1  ->  elevator
+2024-10-18 01:18:30,246 [MainThread  ] [INFO ]  Checking certificates:   light1  ->  floor1_fire_alarm
+2024-10-18 01:18:30,263 [MainThread  ] [INFO ]  Checking certificates:   light1  ->  floor2_fire_alarm
+2024-10-18 01:18:30,280 [MainThread  ] [INFO ]  Checking certificates:   light1  ->  floor1_fire_siren
+2024-10-18 01:18:30,296 [MainThread  ] [INFO ]  Checking certificates:   light1  ->  floor2_fire_siren
+2024-10-18 01:18:30,313 [MainThread  ] [INFO ]  Checking certificates:   light1  ->  floor1_water_pump
+2024-10-18 01:18:30,331 [MainThread  ] [INFO ]  Checking certificates:   light1  ->  floor2_water_pump
+2024-10-18 01:18:30,348 [MainThread  ] [INFO ]  Checking certificates:   light1  ->  floor1_badge_reader
+2024-10-18 01:18:30,364 [MainThread  ] [INFO ]  Checking certificates:   light1  ->  floor2_badge_reader
+2024-10-18 01:18:30,381 [MainThread  ] [INFO ]  Checking certificates:   light1  ->  floor1_door_lock
+2024-10-18 01:18:30,399 [MainThread  ] [INFO ]  Checking certificates:   light1  ->  floor2_door_lock
+2024-10-18 01:18:30,416 [MainThread  ] [INFO ]  Checking certificates:   light1  ->  floor1_smoke_sensor
+2024-10-18 01:18:30,432 [MainThread  ] [INFO ]  Checking certificates:   light1  ->  floor2_smoke_sensor
+2024-10-18 01:18:30,448 [MainThread  ] [INFO ]  Checking certificates:   light1  ->  lambda_badge_check
+2024-10-18 01:18:30,464 [MainThread  ] [INFO ]  Checking certificates:   light1  ->  lambda_fire_alarm
+2024-10-18 01:18:30,480 [MainThread  ] [INFO ]  Checking certificates:   light1  ->  lambda_logger
+2024-10-18 01:18:30,496 [MainThread  ] [INFO ]  Checking certificates:   light1  ->  presenceSensor1
+2024-10-18 01:18:30,512 [MainThread  ] [INFO ]  Checking certificates:   light1  ->  presenceSensor2
+2024-10-18 01:18:30,527 [MainThread  ] [INFO ]  Checking certificates:   light1  ->  light1
+2024-10-18 01:18:30,543 [MainThread  ] [INFO ]  Checking certificates:   light1  ->  light2
+2024-10-18 01:18:30,559 [MainThread  ] [INFO ]  Checking certificates:   light2  ->  elevator
+2024-10-18 01:18:30,576 [MainThread  ] [INFO ]  Checking certificates:   light2  ->  floor1_fire_alarm
+2024-10-18 01:18:30,593 [MainThread  ] [INFO ]  Checking certificates:   light2  ->  floor2_fire_alarm
+2024-10-18 01:18:30,610 [MainThread  ] [INFO ]  Checking certificates:   light2  ->  floor1_fire_siren
+2024-10-18 01:18:30,627 [MainThread  ] [INFO ]  Checking certificates:   light2  ->  floor2_fire_siren
+2024-10-18 01:18:30,643 [MainThread  ] [INFO ]  Checking certificates:   light2  ->  floor1_water_pump
+2024-10-18 01:18:30,659 [MainThread  ] [INFO ]  Checking certificates:   light2  ->  floor2_water_pump
+2024-10-18 01:18:30,677 [MainThread  ] [INFO ]  Checking certificates:   light2  ->  floor1_badge_reader
+2024-10-18 01:18:30,693 [MainThread  ] [INFO ]  Checking certificates:   light2  ->  floor2_badge_reader
+2024-10-18 01:18:30,709 [MainThread  ] [INFO ]  Checking certificates:   light2  ->  floor1_door_lock
+2024-10-18 01:18:30,727 [MainThread  ] [INFO ]  Checking certificates:   light2  ->  floor2_door_lock
+2024-10-18 01:18:30,744 [MainThread  ] [INFO ]  Checking certificates:   light2  ->  floor1_smoke_sensor
+2024-10-18 01:18:30,760 [MainThread  ] [INFO ]  Checking certificates:   light2  ->  floor2_smoke_sensor
+2024-10-18 01:18:30,777 [MainThread  ] [INFO ]  Checking certificates:   light2  ->  lambda_badge_check
+2024-10-18 01:18:30,793 [MainThread  ] [INFO ]  Checking certificates:   light2  ->  lambda_fire_alarm
+2024-10-18 01:18:30,809 [MainThread  ] [INFO ]  Checking certificates:   light2  ->  lambda_logger
+2024-10-18 01:18:30,824 [MainThread  ] [INFO ]  Checking certificates:   light2  ->  presenceSensor1
+2024-10-18 01:18:30,839 [MainThread  ] [INFO ]  Checking certificates:   light2  ->  presenceSensor2
+2024-10-18 01:18:30,855 [MainThread  ] [INFO ]  Checking certificates:   light2  ->  light1
+2024-10-18 01:18:30,871 [MainThread  ] [INFO ]  Checking certificates:   light2  ->  light2
+[137.2879] Built symbolic information flow graph of 55 nodes.
+-- 0.0010s -- No path found from floor1_door_lock to floor2_light.
+-- 0.0000s -- No path found from elevator to floor1_door_lock.
+-- 0.0000s -- Checkin if elevator reaches only [].
+-- 0.0000s -- Correct: elevator reaches only [].
+-- 0.0000s -- Checkin if floor1_door_lock reaches only ['light1', 'presenceSensor1', 'lambda_logger'].
+-- 0.0000s -- Correct: floor1_door_lock reaches only ['light1', 'presenceSensor1', 'lambda_logger'].
+-- 0.0000s -- Checkin if floor1_smoke_sensor reaches only ['elevator', 'floor1_door_lock'].
+-- 0.0000s -- Found the following unexpected paths (11):
+                 floor1_smoke_sensor
+                 (smokeSensor/3) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (doorLock/+)
+                 floor2_door_lock
+                 (doorLockk3) -> physicalAC/floor2/presenceSensor2/enable -> (presenceSensor2)
+                 presenceSensor2
+
+                 floor1_smoke_sensor
+                 (smokeSensor/3) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (sirenl3)
+                 floor2_fire_siren
+
+                 floor1_smoke_sensor
+                 (smokeSensor/3) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (sirenH0)
+                 floor1_fire_siren
+
+                 floor1_smoke_sensor
+                 (smokeSensor/3) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+
+                 floor1_smoke_sensor
+                 (smokeSensor/3) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (pumpz#)
+                 floor1_water_pump
+
+                 floor1_smoke_sensor
+                 (smokeSensor/3) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (doorLock/+)
+                 floor2_door_lock
+
+                 floor1_smoke_sensor
+                 (smokeSensor/3) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (doorLockP#)
+                 floor1_door_lock
+                 (doorLock2#) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 light1
+
+                 floor1_smoke_sensor
+                 (smokeSensor/3) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (doorLockP#)
+                 floor1_door_lock
+                 (doorLock2#) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+
+                 floor1_smoke_sensor
+                 (smokeSensor/3) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (doorLockP#)
+                 floor1_door_lock
+                 (doorLock2/) -> physicalAC/floor1/presenceSensor1/enable -> (lambdaDoorLog)
+                 lambda_logger
+
+                 floor1_smoke_sensor
+                 (smokeSensor/3) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (pump##)
+                 floor2_water_pump
+
+                 floor1_smoke_sensor
+                 (smokeSensor/3) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (doorLock/+)
+                 floor2_door_lock
+                 (doorLockk3) -> physicalAC/floor2/presenceSensor2/enable -> (presenceSensor2)
+                 presenceSensor2
+                 (presenceSensor2) -> physicalAC/floor2/detectedMovement/light2 -> (light2)
+                 light2
+
+-- 0.0000s -- Checkin if elevator reaches only ['floor2_water_pump'].
+-- 0.0000s -- No path found for the nodes:
+                floor2_water_pump
+-- 0.0000s -- Checking if elevator is only reached by ['lambda_fire_alarm', 'floor1_smoke_sensor', 'floor2_smoke_sensor', 'floor1_fire_alarm', 'floor2_fire_alarm'].
+-- 0.0000s -- Correct: elevator is only reached by ['lambda_fire_alarm', 'floor1_smoke_sensor', 'floor2_smoke_sensor', 'floor1_fire_alarm', 'floor2_fire_alarm'].
+-- 0.0000s -- Checking if floor1_fire_siren is only reached by ['floor1_smoke_sensor', 'floor2_smoke_sensor', 'floor1_fire_alarm', 'floor2_fire_alarm', 'lambda_fire_alarm', 'elevator'].
+-- 0.0000s -- No path found for the nodes:
+                elevator
+-- 0.0000s -- Checking if light1 is only reached by ['lambda_fire_alarm'].
+-- 0.0000s -- Found the following unexpected paths (9):
+                 floor2_fire_alarm
+                 (fireAlarmhH) -> fire/detected -> (doorLockP4)
+                 floor1_door_lock
+                 (doorLock2#) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 light1
+
+                 floor2_smoke_sensor
+                 (smokeSensord#) -> fire/floor2/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (doorLockP#)
+                 floor1_door_lock
+                 (doorLock2#) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 light1
+
+                 floor1_smoke_sensor
+                 (smokeSensor/3) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (doorLockP#)
+                 floor1_door_lock
+                 (doorLock2#) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 light1
+
+                 floor1_badge_reader
+                 (badgeReader/3) -> physicalAC/floor1/badgeReader/3/check -> (lambdaBadgeCheck)
+                 lambda_badge_check
+                 (lambdaBadgeCheck) -> physicalAC/floor1/doorLockH#/open -> (doorLockH#)
+                 floor1_door_lock
+                 (doorLock2#) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 light1
+
+                 floor1_door_lock
+                 (doorLock2#) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 light1
+
+                 floor2_badge_reader
+                 (badgeReadermG) -> physicalAC/floor2/badgeReadermG/check -> (lambdaBadgeCheck)
+                 lambda_badge_check
+                 (lambdaBadgeCheck) -> physicalAC/floor1/doorLockH#/open -> (doorLockH#)
+                 floor1_door_lock
+                 (doorLock2#) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 light1
+
+                 lambda_badge_check
+                 (lambdaBadgeCheck) -> physicalAC/floor1/doorLockH#/open -> (doorLockH#)
+                 floor1_door_lock
+                 (doorLock2#) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 light1
+
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 light1
+
+                 floor1_fire_alarm
+                 (fireAlarm#P) -> fire/detected -> (doorLock#3)
+                 floor1_door_lock
+                 (doorLock2#) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 light1
+
+-- 0.0000s -- Checking if the subsystems ['floor1_badge_reader'] and ['floor1_water_pump', 'elevator'] are isolated.
+-- 0.0010s -- The subsystems ['floor1_badge_reader'] and ['floor1_water_pump', 'elevator'] are isolated
+-- 0.0000s -- Checking if the subsystems ['floor2_badge_reader'] and ['lambda_fire_alarm', 'elevator', 'floor2_smoke_sensor'] are isolated.
+-- 0.0000s -- The subsystems ['floor2_badge_reader'] and ['lambda_fire_alarm', 'elevator', 'floor2_smoke_sensor'] are isolated
+-- 0.0000s -- Checking if the subsystems ['light1', 'light2'] and ['lambda_fire_alarm', 'elevator', 'floor2_smoke_sensor'] are isolated. 
+-- 0.0000s -- Not isolated since lambda_fire_alarm can reach light1 with the path:
+-- 0.0000s -- Found the path:
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (doorLockP#)
+                 floor1_door_lock
+                 (doorLock2#) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 light1
+              from lambda_fire_alarm to light1.
+PS C:\Users\edolu\git\IMT\Proposal\IoT\ToolIoT> 

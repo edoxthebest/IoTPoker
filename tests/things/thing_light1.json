@@ -1,0 +1,10 @@
+{
+  "defaultClientId": "light1",
+  "thingName": "light1",
+  "thingId": "ba6bb237-014a-4f88-821c-8af8993620cf",
+  "thingArn": "arn:aws:iot:us-east-1:123456789012:thing/light1",
+  "attributes": {
+    "floor": "1"
+  },
+  "version": 2
+}

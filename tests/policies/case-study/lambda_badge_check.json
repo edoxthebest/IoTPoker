@@ -9,7 +9,7 @@
     {
       "Effect": "Allow",
       "Action": "iot:Publish",
-      "Resource": "arn:aws:iot:us-east-1:123456789012:topic/physicalAC/floor?/doorLock*/open"
+      "Resource": "arn:aws:iot:us-east-1:123456789012:topic/physicalAC/floor?/doorLock??/open"
     },
     {
       "Effect": "Allow",
