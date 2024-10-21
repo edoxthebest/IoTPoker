@@ -14,5 +14,6 @@ from .node import Node
 logger = logging.getLogger('IoT:Poker')
 logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
 handler = logging.StreamHandler()
+# handler.terminator = '\r'
 handler.setFormatter(logFormatter)
 logger.addHandler(handler)
