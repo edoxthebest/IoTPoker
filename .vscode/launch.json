@@ -18,8 +18,8 @@
       "request": "launch",
       "program": "${file}",
       "console": "integratedTerminal",
-      // "args": "tests/policies/policy_benchmark/FLAW1 -c 10 -i 7 --info",
-      "args": "--debug --fixed",
+      "args": "tests/policies/policy_benchmark/FLAW1 -c 10 --info --seq 20 40 60 80 90 100",
+      // "args": "--debug --fixed",
       "env": { "PYTHONPATH": "${workspaceFolder}" }
     }
   ]
