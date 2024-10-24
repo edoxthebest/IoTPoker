@@ -96,7 +96,7 @@ class TestThing(unittest.TestCase):
     thing: Thing = Thing.from_file(thing_file, policy)
     cert: Certificate = Certificate([policy2], 'cert')
     
-    witness = thing.get_topic_witness(cert)
+    witness, invokes = thing.get_topic_witness(cert)
     self.assertIsNotNone(witness)
     self.assertEqual(witness.id1, 'presenceSensor1')
     self.assertEqual(witness.id2, 'light1')
