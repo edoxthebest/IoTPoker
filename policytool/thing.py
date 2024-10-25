@@ -5,11 +5,10 @@ import z3
 from policytool.certificate import Certificate
 from policytool.iot_policy import IoTPolicy
 from policyuniverse.arn import ARN
-from typing import Self
 
 class Thing(Certificate):  
   @staticmethod
-  def from_json(thing_json: json, policy: IoTPolicy) -> Self:
+  def from_json(thing_json: json, policy: IoTPolicy) -> 'Thing':
     name = thing_json['thingName']
     id = uuid.UUID(thing_json['thingId'])
     arn = ARN(thing_json['thingArn'])
@@ -17,7 +16,7 @@ class Thing(Certificate):
     return Thing(name, id, arn, attrs, policy)
   
   @staticmethod
-  def from_file(filename: str, policy: IoTPolicy) -> Self:
+  def from_file(filename: str, policy: IoTPolicy) -> 'Thing':
     file = open(filename)
     return Thing.from_json(json.load(file), policy)
   
