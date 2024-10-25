@@ -6,6 +6,7 @@ IoT:Poker is a Python library which provides utilities to construct a Symbolic I
 
 The library requires the following packages:
 
+- Python (3.10),
 - matplotlib (3.8.4),
 - networkx (3.3),
 - policyuniverse (1.5.1.20231109),
