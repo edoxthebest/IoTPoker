@@ -55,7 +55,7 @@ The code provided in `real_world_benchmark.py` will instead construct graphs of 
 The following command reproduce the experiments.
 
 ```bash
-python real_world_benchmark.py tests/policies/policy_benchmark/FLAW1 -c 30 --seq 20 40 60 80 100
+python real_world_benchmark.py tests/policies/policy_benchmark/FLAW1 -c 30 --seq 20 40 60 80 90 100
 ```
 
 #### Average performance over 30 executions:
@@ -70,6 +70,11 @@ The following table corresponds to Table 2 of the paper.
 | 80   | 4014.8 | 36.3            | 128.33         | 0.0141                |
 | 90   | 4962.0 | 49.5            | 181.66         | 0.0153                |
 | 100  | 6344.3 | 49.4            | 179.26         | 0.0172                |
+
+The results are consistent with the theoretical complexity, which is quadratic on the configuration's size, as shown by the following regression obtained through the least squares method.
+![regression](https://github.com/user-attachments/assets/e7e840f1-69bd-4df1-9b63-f004c332e600)
+
+
 
 #### Fastest and slowest runs details:
 
