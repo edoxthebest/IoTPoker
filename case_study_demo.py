@@ -41,6 +41,8 @@ print(f'[{time.time() - start_time:.4f}] '
 # policy_graph.draw_tree(['floor1_badge_reader'])
 
 prover = Prover(policy_graph.graph)
+prover.reach('presenceSensor1','light1', log_level='info') 
+prover.reach('floor1_smoke_sensor','elevator', log_level='info')                      
 prover.reach('floor1_door_lock', 'floor2_light', log_level='info')
 prover.reach('elevator', 'floor1_door_lock', log_level='info')
 

@@ -34,18 +34,25 @@ This will load the configuration file provided in `case_study.config`, construct
 
 The following table corresponds to Table 1 of the paper.
 
+| query           | parameter 1             | parameter 2                                                                                           | result | reason & witness                                                   | time (ms) |
+| --------------- | ----------------------- | ----------------------------------------------------------------------------------------------------- | ------ | ------------------------------------------------------------------ | --------: |
+| reach           | `presenceSensor1`       | `floor1_light`                                                                                        | True   | `presenceSensor1` &rarr; `light1`                                  |        <1 |
+| reach           | `floor1_smoke_sensor`   | `elevator`                                                                                            | True   | `floor1_smoke_sensor` &rarr; `lambda_fire_alarm` &rarr; `elevator` |        <1 |
+| isolated        | `[floor1_badge_reader]` | `[floor1_water_pump, elevator]`                                                                       | True   |                                                                    |        <1 |
+| only_reached_by | `elevator`              | `[floor1_smoke_sensor, floor2_smoke_sensor, floor1_fire_alarm, floor2_fire_alarm, lambda_fire_alarm]` | True   |                                                                    |        <1 |
+| reach_only      | `floor1_door_lock`      | `[floor1_light, presenceSensor1, lambda_logger]`                                                      | False  | `floor1_light` &rarr; `presenceSensor1` &rarr; `floor2_light`      |        <1 |
+
+More queries are shown in the following table.
+
 | query           | parameter 1                    | parameter 2                                                                                                     | return | reason                                                                                       | time (ms) |
 | --------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------- | ------ | -------------------------------------------------------------------------------------------- | --------: |
 | reach           | `floor1_door_lock`             | `floor2_light`                                                                                                  | True   | `floor1_door_lock` &rarr; `presenceSensor1` &rarr; `floor2_light`                            |        <1 |
 | reach           | `elevator`                     | `floor1_door_lock`                                                                                              | False  |                                                                                              |        <1 |
 | reach_only      | `elevator`                     | `[]`                                                                                                            | True   |                                                                                              |        <1 |
-| reach_only      | `floor1_door_lock`             | `[floor1_light, presenceSensor1, lambda_logger]`                                                                | False  | `floor1_light` &rarr; `presenceSensor1` &rarr; `floor2_light`                                |        <1 |
-| reach_only      | `floor1_smoke_sensor`          | `[elevator, floor1_door_lock]`                                                                                  | False  | Found 11 violating paths.                                                                    |        <1 |
+| reach_only      | `floor1_smoke_sensor`          | `[elevator, floor1_door_lock]`                                                                                  | False  | Found 10 violating paths.                                                                    |        <1 |
 | reach_only      | `elevator`                     | `[floor2_water_pump]`                                                                                           | False  | Missing path.                                                                                |        <1 |
-| only_reached_by | `elevator`                     | `[floor1_smoke_sensor, floor2_smoke_sensor, floor1_fire_alarm, floor2_fire_alarm, lambda_fire_alarm]`           | True   |                                                                                              |        <1 |
-| only_reached_by | `floor1_fire_alarm`            | `[floor1_smoke_sensor, floor2_smoke_sensor, floor1_fire_alarm, floor2_fire_alarm, lambda_fire_alarm, elevator]` | False  | Missing path from `elevator`.                                                                |        <1 |
-| only_reached_by | `floor1_light`                 | `[lambda_fire_alarm]`                                                                                           | False  | Found 10 violating paths.                                                                    |        <1 |
-| isolated        | `[floor1_badge_reader]`        | `[floor1_water_pump, elevator]`                                                                                 | True   |                                                                                              |        <1 |
+| only_reached_by | `floor1_fire_alarm`            | `[floor1_smoke_sensor, floor2_smoke_sensor, floor1_fire_alarm, floor2_fire_alarm, lambda_fire_alarm, elevator]` | False  | Missing path to `elevator`.                                                                  |        <1 |
+| only_reached_by | `floor1_light`                 | `[lambda_fire_alarm]`                                                                                           | False  | Found 11 violating paths.                                                                    |        <1 |
 | isolated        | `[floor2_badge_reader]`        | `[lambda_fire_alarm, elevator, floor2_smoke_sensor]`                                                            | True   |                                                                                              |        <1 |
 | isolated        | `[floor1_light, floor2_light]` | `[lambda_fire_alarm, elevator, floor2_smoke_sensor]`                                                            | False  | `lambda_fire_alarm` &rarr; `floor1_door_lock` &rarr; `presenceSensor1` &rarr; `floor1_light` |        <1 |
 
@@ -72,9 +79,7 @@ The following table corresponds to Table 2 of the paper.
 | 100  | 6344.3 | 49.4            | 179.26         | 0.0172                |
 
 The results are consistent with the theoretical complexity, which is quadratic on the configuration's size, as shown by the following regression obtained through the least squares method.
-![regression](https://github.com/user-attachments/assets/e7e840f1-69bd-4df1-9b63-f004c332e600)
-
-
+![regression](img/regression.png)
 
 #### Fastest and slowest runs details:
 
