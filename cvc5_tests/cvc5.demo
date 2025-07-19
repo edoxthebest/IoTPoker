@@ -1,0 +1,219 @@
+[0.0045] Read 18 policy certificates and 2 things.
+[53.5832] Built symbolic information flow graph of 57 nodes.
+-- 0.0005s -- Found the path:
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 floor1_light
+              from presenceSensor1 to floor1_light.
+-- 0.0000s -- Found the path:
+                 floor1_smoke_sensor
+                 (smokeSensoraa) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (elevatoraa)
+                 elevator
+              from floor1_smoke_sensor to elevator.
+-- 0.0000s -- Found the path:
+                 floor1_door_lock
+                 (doorLockaa) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 floor2_light
+              from floor1_door_lock to floor2_light.
+-- 0.0000s -- No path found from elevator to floor1_door_lock.
+-- 0.0000s -- Checkin if elevator reaches only [].
+-- 0.0010s -- Correct: elevator reaches only [].
+-- 0.0000s -- Checkin if floor1_door_lock reaches only ['floor1_light', 'presenceSensor1', 'lambda_logger'].
+-- 0.0000s -- Found the following unexpected paths (2):
+                 floor1_door_lock
+                 (doorLockaa) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 floor2_light
+
+                 floor1_door_lock
+                 (doorLockaa) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor2
+
+-- 0.0000s -- Checkin if floor1_smoke_sensor reaches only ['elevator', 'floor1_door_lock'].
+-- 0.0000s -- Found the following unexpected paths (11):
+                 floor1_smoke_sensor
+                 (smokeSensoraa) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (doorLockaa)
+                 floor1_door_lock
+                 (doorLockaa) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 floor1_light
+
+                 floor1_smoke_sensor
+                 (smokeSensoraa) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (sirenaa)
+                 floor2_fire_siren
+
+                 floor1_smoke_sensor
+                 (smokeSensoraa) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (pumpaa)
+                 floor2_water_pump
+
+                 floor1_smoke_sensor
+                 (smokeSensoraa) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (doorLockaa)
+                 floor1_door_lock
+                 (doorLockaa) -> physicalAC/floor1/presenceSensor1/enable -> (lambdaDoorLog)
+                 lambda_logger
+
+                 floor1_smoke_sensor
+                 (smokeSensoraa) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (sirenaa)
+                 floor1_fire_siren
+
+                 floor1_smoke_sensor
+                 (smokeSensoraa) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (doorLockaa)
+                 floor1_door_lock
+                 (doorLockaa) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor2
+
+                 floor1_smoke_sensor
+                 (smokeSensoraa) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (pumpaa)
+                 floor1_water_pump
+
+                 floor1_smoke_sensor
+                 (smokeSensoraa) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+
+                 floor1_smoke_sensor
+                 (smokeSensoraa) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (doorLockaa)
+                 floor1_door_lock
+                 (doorLockaa) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 floor2_light
+
+                 floor1_smoke_sensor
+                 (smokeSensoraa) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (doorLockaa)
+                 floor1_door_lock
+                 (doorLockaa) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+
+                 floor1_smoke_sensor
+                 (smokeSensoraa) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (doorLockaa)
+                 floor2_door_lock
+
+-- 0.0000s -- Checkin if elevator reaches only ['floor2_water_pump'].
+-- 0.0000s -- No path found for the nodes:
+                floor2_water_pump
+-- 0.0000s -- Checking if elevator is only reached by ['lambda_fire_alarm', 'floor1_smoke_sensor', 'floor2_smoke_sensor', 'floor1_fire_alarm', 'floor2_fire_alarm'].
+-- 0.0005s -- Correct: elevator is only reached by ['lambda_fire_alarm', 'floor1_smoke_sensor', 'floor2_smoke_sensor', 'floor1_fire_alarm', 'floor2_fire_alarm'].
+-- 0.0000s -- Checking if floor1_fire_siren is only reached by ['floor1_smoke_sensor', 'floor2_smoke_sensor', 'floor1_fire_alarm', 'floor2_fire_alarm', 'lambda_fire_alarm', 'elevator'].
+-- 0.0000s -- No path found for the nodes:
+                elevator
+-- 0.0000s -- Checking if floor1_light is only reached by ['lambda_fire_alarm'].
+-- 0.0005s -- Found the following unexpected paths (10):
+                 floor1_door_lock
+                 (doorLockaa) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 floor1_light
+
+                 lambda_badge_check
+                 (lambdaBadgeCheck) -> physicalAC/floor1/doorLockaa/open -> (doorLockaa)
+                 floor1_door_lock
+                 (doorLockaa) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 floor1_light
+
+                 floor1_badge_reader
+                 (badgeReaderaa) -> physicalAC/floor1/badgeReaderaa/check -> (lambdaBadgeCheck)
+                 lambda_badge_check
+                 (lambdaBadgeCheck) -> physicalAC/floor1/doorLockaa/open -> (doorLockaa)
+                 floor1_door_lock
+                 (doorLockaa) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 floor1_light
+
+                 presenceSensor2
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 floor1_light
+
+                 floor2_smoke_sensor
+                 (smokeSensoraa) -> fire/floor2/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (doorLockaa)
+                 floor1_door_lock
+                 (doorLockaa) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 floor1_light
+
+                 floor2_badge_reader
+                 (badgeReaderaa) -> physicalAC/floor2/badgeReaderaa/check -> (lambdaBadgeCheck)
+                 lambda_badge_check
+                 (lambdaBadgeCheck) -> physicalAC/floor1/doorLockaa/open -> (doorLockaa)
+                 floor1_door_lock
+                 (doorLockaa) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 floor1_light
+
+                 floor1_smoke_sensor
+                 (smokeSensoraa) -> fire/floor1/smokeLevels -> (lambdaFireAlarm)
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (doorLockaa)
+                 floor1_door_lock
+                 (doorLockaa) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 floor1_light
+
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 floor1_light
+
+                 floor1_fire_alarm
+                 (fireAlarmaa) -> fire/detected -> (doorLockaa)
+                 floor1_door_lock
+                 (doorLockaa) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 floor1_light
+
+                 floor2_fire_alarm
+                 (fireAlarmaa) -> fire/detected -> (doorLockaa)
+                 floor1_door_lock
+                 (doorLockaa) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 floor1_light
+
+-- 0.0000s -- Checking if the subsystems ['floor1_badge_reader'] and ['floor1_water_pump', 'elevator'] are isolated.
+-- 0.0000s -- The subsystems ['floor1_badge_reader'] and ['floor1_water_pump', 'elevator'] are isolated
+-- 0.0000s -- Checking if the subsystems ['floor2_badge_reader'] and ['lambda_fire_alarm', 'elevator', 'floor2_smoke_sensor'] are isolated.
+-- 0.0000s -- The subsystems ['floor2_badge_reader'] and ['lambda_fire_alarm', 'elevator', 'floor2_smoke_sensor'] are isolated
+-- 0.0000s -- Checking if the subsystems ['floor1_light', 'floor2_light'] and ['lambda_fire_alarm', 'elevator', 'floor2_smoke_sensor'] are isolated.
+-- 0.0010s -- Not isolated since lambda_fire_alarm can reach floor1_light with the path:
+-- 0.0000s -- Found the path:
+                 lambda_fire_alarm
+                 (lambdaFireAlarm) -> fire/detected -> (doorLockaa)
+                 floor1_door_lock
+                 (doorLockaa) -> physicalAC/floor1/presenceSensor1/enable -> (presenceSensor1)
+                 presenceSensor1
+                 (presenceSensor1) -> physicalAC/floor1/detectedMovement/light1 -> (light1)
+                 floor1_light
+              from lambda_fire_alarm to floor1_light.

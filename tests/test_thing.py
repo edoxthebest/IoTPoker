@@ -1,7 +1,7 @@
 import json
 import unittest
 import uuid
-import z3
+import cvc5.pythonic as cvc5
 from policytool import Certificate, PolicyReader, Thing
 from policyuniverse.arn import ARN
 
@@ -73,17 +73,17 @@ class TestThing(unittest.TestCase):
     thing: Thing = Thing.from_file(thing_file, policy)
     thing._safe_strings = []
     
-    id = z3.String('id')
-    topic_pub = z3.String('topic_pub')
-    topic_sub = z3.String('topic_sub')
+    id = cvc5.String('id')
+    topic_pub = cvc5.String('topic_pub')
+    topic_sub = cvc5.String('topic_sub')
 
-    solver = z3.Solver()
+    solver = cvc5.Solver()
     solver.add(thing.get_connect(id))
     solver.add(thing.get_publish(topic_pub, id))
-    solver.add(z3.And(thing.get_subscribe(topic_sub, id),
+    solver.add(cvc5.And(thing.get_subscribe(topic_sub, id),
                       thing.get_receive(topic_sub, id)))
     
-    self.assertEqual(solver.check(), z3.sat)
+    self.assertEqual(solver.check(), cvc5.sat)
     self.assertEqual(solver.model()[id], 'presenceSensor1')
     self.assertEqual(solver.model()[topic_pub], 'physicalAC/floor1/detectedMovement/light1')
     self.assertEqual(solver.model()[topic_sub], 'physicalAC/floor1/presenceSensor1/enable')

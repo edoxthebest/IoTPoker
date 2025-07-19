@@ -23,12 +23,12 @@ class TopicWitness:
     model = solver.model()
     self.id1 = self._token_replace('id_1')
     self.id2 = self._token_replace('id_2')
-    if model[cvc5.String('topic')] != None:
+    if cvc5.String('topic') in model:
       topic = self._token_replace('topic')
     else:
       topic_lvs = []
       for i in range(8):
-        if model[cvc5.String('topic_lv_' + str(i))] is not None:
+        if cvc5.String('topic_lv_' + str(i)) in model:
           topic_lvs.append(self._token_replace('topic_lv_' + str(i)))
       topic = '/'.join(topic_lvs)
     self.topic = topic
