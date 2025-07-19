@@ -1,5 +1,6 @@
 import unittest
 import z3
+import cvc5.pythonic as cvc5
 from policytool import Certificate, IoTPolicy, TopicWitness, PolicyReader
 from policyuniverse.policy import Policy
 
@@ -30,17 +31,17 @@ class TestCertificate(unittest.TestCase):
     cert = Certificate([policy], 'TestCert')
     cert._safe_strings = []
     
-    id = z3.String('id')
-    topic_pub = z3.String('topic_pub')
-    topic_sub = z3.String('topic_sub')
+    id = cvc5.String('id')
+    topic_pub = cvc5.String('topic_pub')
+    topic_sub = cvc5.String('topic_sub')
 
-    solver = z3.Solver()
+    solver = cvc5.Solver()
     solver.add(cert.get_connect(id))
     solver.add(cert.get_publish(topic_pub, id))
-    solver.add(z3.And(cert.get_subscribe(topic_sub, id),
+    solver.add(cvc5.And(cert.get_subscribe(topic_sub, id),
                       cert.get_receive(topic_sub, id)))
     
-    self.assertEqual(solver.check(), z3.sat)
+    self.assertEqual(solver.check(), cvc5.sat)
     self.assertEqual(solver.model()[id], 'lambdaFireAlarm')
     self.assertEqual(solver.model()[topic_pub],  'fire/detected' )
     self.assertRegex(str(solver.model()[topic_sub]).strip('"'), r'fire/floor./smokeLevels')

@@ -1,3 +1,4 @@
+import cvc5.pythonic as cvc5
 import logging
 import re
 import z3
@@ -211,7 +212,7 @@ class IoTPolicy(Policy):
     parsed_allow = [ReExp.parse(res, tokenable_strings, client_id, thing_name, thing_attrs) for res in allow_res]
     parsed_deny = [ReExp.parse(res, tokenable_strings, client_id, thing_name, thing_attrs) for res in deny_res]
 
-    re_allow = z3.Union(parsed_allow) if allow_res else ReExp.RE_EMPTY
-    re_deny = z3.Union(parsed_deny) if deny_res else ReExp.RE_EMPTY
+    re_allow = cvc5.Union(parsed_allow) if allow_res else ReExp.RE_EMPTY
+    re_deny = cvc5.Union(parsed_deny) if deny_res else ReExp.RE_EMPTY
 
-    return z3.And(z3.InRe(for_variable, re_allow), z3.Not(z3.InRe(for_variable, re_deny)))
+    return cvc5.And(cvc5.InRe(for_variable, re_allow), cvc5.Not(cvc5.InRe(for_variable, re_deny)))

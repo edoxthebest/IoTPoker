@@ -1,24 +1,25 @@
 import logging
 import time
 import z3
+import cvc5.pythonic as cvc5
 from policytool.iot_policy import IoTPolicy
 from policytool.topic_witness import TopicWitness
 # z3.set_option(verbose=10)
 
 logger = logging.getLogger('IoT:Poker')
 
-RE_QMARK_NO_SLASH = z3.Union(z3.Range('a', 'z'),
-                    z3.Range('A', 'Z'),
-                    z3.Range('0', '9'),
-                    z3.Re('+'),
-                    z3.Re('#'))
-RE_STAR_NO_SLASH = z3.Star(RE_QMARK_NO_SLASH)
-RE_QMARK_CHARS_ONLY = z3.Union(z3.Range('a', 'z'),
-                               z3.Range('A', 'Z'),
-                               z3.Range('0', '9'),
-                               z3.Range('α', 'ω'))
-RE_STAR_CHARS_ONLY = z3.Star(RE_QMARK_CHARS_ONLY)
-RE_SLASH = [RE_STAR_NO_SLASH, z3.Re('/')]
+RE_QMARK_NO_SLASH = cvc5.Union(cvc5.Range('a', 'z'),
+                    cvc5.Range('A', 'Z'),
+                    cvc5.Range('0', '9'),
+                    cvc5.Re('+'),
+                    cvc5.Re('#'))
+RE_STAR_NO_SLASH = cvc5.Star(RE_QMARK_NO_SLASH)
+RE_QMARK_CHARS_ONLY = cvc5.Union(cvc5.Range('a', 'z'),
+                               cvc5.Range('A', 'Z'),
+                               cvc5.Range('0', '9'),
+                               cvc5.Range('α', 'ω'))
+RE_STAR_CHARS_ONLY = cvc5.Star(RE_QMARK_CHARS_ONLY)
+RE_SLASH = [RE_STAR_NO_SLASH, cvc5.Re('/')]
 
 def print_model(model):
   for k,v in sorted([(k, model[k]) for k in model], key = lambda x: str(x[0])):
@@ -56,10 +57,10 @@ class Certificate:
     return self.policy.build_receive(topic, id, self.safe_strings)
   
   def _get_basic_solver(self, other, id1, id2, topic, topic_filter, topic_lvls = []):
-    s = z3.Solver()
+    s = cvc5.Solver()
 
     for topic_level in topic_lvls:
-      s.add(z3.InRe(topic_level, RE_STAR_CHARS_ONLY))
+      s.add(cvc5.InRe(topic_level, RE_STAR_CHARS_ONLY))
     s.add(self.get_connect(id1))                    # c1 can connect
     s.add(other.get_connect(id2))                   # c2 can connect
     s.add(self.get_publish(topic, id1))             # c1 can publish on a topic t
@@ -71,23 +72,23 @@ class Certificate:
     self._safe_strings = list(self.policy.get_safe_strings_for(other.policy))
     other._safe_strings = self._safe_strings
     
-    id1 = z3.String('id_1')
-    id2 = z3.String('id_2')
-    topic = z3.String('topic')
-    topic_filter = z3.String('topic_filter')
+    id1 = cvc5.String('id_1')
+    id2 = cvc5.String('id_2')
+    topic = cvc5.String('topic')
+    topic_filter = cvc5.String('topic_filter')
     
     # Init solver and test for the following necessary conditions:
     easy_solver = self._get_basic_solver(other, id1, id2, topic, topic_filter)
-    if easy_solver.check() == z3.unsat:
+    if easy_solver.check() == cvc5.unsat:
       del easy_solver
       return None, False
     
     # Test for an easy solution: c2 can subscribe to t
     easy_solver.add(topic == topic_filter)
-    if easy_solver.check() == z3.sat:
+    if easy_solver.check() == cvc5.sat:
       return TopicWitness(self, other, easy_solver, self.safe_strings), False
     
-    topic_levels = z3.Strings('topic_lv_0 topic_lv_1 topic_lv_2 '
+    topic_levels = cvc5.Strings('topic_lv_0 topic_lv_1 topic_lv_2 '
                               'topic_lv_3 topic_lv_4 topic_lv_5 '
                               'topic_lv_6 topic_lv_7')
     def get_topic_for_level(level):
@@ -98,7 +99,7 @@ class Certificate:
       for topic_level in range(level):
         topic_T.append('/')
         topic_T.append(topic_levels[topic_level + 1])
-      return z3.Concat(topic_T)
+      return cvc5.Concat(topic_T)
     
     global_t = time.time()
     logger.debug(f'Solving {self.name} -> {other.name} requires hard solver:')
@@ -107,33 +108,33 @@ class Certificate:
       case_1 = []
       for i in range(topic_level):
         # hard_solver.add(z3.InRe(topic_levels[i], RE_STAR_NO_SLASH))
-        case_1.append(z3.Union(z3.Re(topic_levels[i]), z3.Re('+')))
-        case_1.append(z3.Re('/'))
+        case_1.append(cvc5.Union(cvc5.Re(topic_levels[i]), cvc5.Re('+')))
+        case_1.append(cvc5.Re('/'))
       # hard_solver.add(z3.InRe(topic_levels[topic_level], RE_STAR_NO_SLASH))
-      case_1.append(z3.Union(z3.Re(topic_levels[topic_level]),
-                          z3.Re('+'),
-                          z3.Re('#')))
+      case_1.append(cvc5.Union(cvc5.Re(topic_levels[topic_level]),
+                          cvc5.Re('+'),
+                          cvc5.Re('#')))
 
-      case_2 = []
+      case_2 = [False]
       for i in range(topic_level):
         sub_case_2 = []
         for j in range(i):
-          sub_case_2.append(z3.Union(z3.Re(topic_levels[j]), z3.Re('+')))
-          sub_case_2.append(z3.Re('/'))
-        sub_case_2.append(z3.Re('#'))
-        case_2.append(z3.InRe(topic_filter, z3.Concat(sub_case_2) if i != 0 else sub_case_2[0]))
+          sub_case_2.append(cvc5.Union(cvc5.Re(topic_levels[j]), cvc5.Re('+')))
+          sub_case_2.append(cvc5.Re('/'))
+        sub_case_2.append(cvc5.Re('#'))
+        case_2.append(cvc5.InRe(topic_filter, cvc5.Concat(sub_case_2) if i != 0 else sub_case_2[0]))
 
-      hard_solver.add(z3.Or(z3.InRe(topic_filter, z3.Concat(case_1) if topic_level != 0 else case_1[0]),
-                            z3.Or(case_2 if topic_level != 0 else False)))
+      hard_solver.add(cvc5.Or(cvc5.InRe(topic_filter, cvc5.Concat(case_1) if topic_level != 0 else case_1[0]),
+                            cvc5.Or(case_2 if topic_level != 0 else False)))
 
 
       # hard_solver.add(z3.InRe(topic_filter, z3.Concat(case_1) if topic_level != 0 else case_1[0]))
 
       start_time = time.time()
-      if hard_solver.check() == z3.unsat:
-        logger.debug(f'\t[{time.time() - start_time:.4f}] #{topic_level+1} topic levels is {z3.unsat}')
+      if hard_solver.check() == cvc5.unsat:
+        logger.debug(f'\t[{time.time() - start_time:.4f}] #{topic_level+1} topic levels is {cvc5.unsat}')
         continue
-      logger.debug(f'\t[{time.time() - start_time:.4f}] #{topic_level+1} topic levels is {z3.sat}')
+      logger.debug(f'\t[{time.time() - start_time:.4f}] #{topic_level+1} topic levels is {cvc5.sat}')
       if logger.level == logging.DEBUG:
         print_model(hard_solver.model())
       return TopicWitness(self, other, hard_solver, self.safe_strings), True

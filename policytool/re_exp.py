@@ -1,16 +1,18 @@
+import cvc5.pythonic as cvc5
 import re
 import z3
 from policytool.iot import IoT
+from cvc5 import Kind
 
 class ReExp:
-  RE_EMPTY = z3.Empty(z3.ReSort(z3.StringSort()))
-  RE_QMARK = z3.Union(z3.Range('a', 'z'),
-                      z3.Range('A', 'Z'),
-                      z3.Range('0', '9'),
-                      z3.Re('+'),
-                      z3.Re('#'),
-                      z3.Re('/'))
-  RE_STAR = z3.Star(z3.Union(RE_QMARK, z3.Range('α', 'ω'))) #TODO: rewrite this into unicode
+  RE_EMPTY = cvc5.ReRef(cvc5.main_ctx().tm.mkTerm(Kind.REGEXP_NONE))
+  RE_QMARK = cvc5.Union(cvc5.Range('a', 'z'),
+                      cvc5.Range('A', 'Z'),
+                      cvc5.Range('0', '9'),
+                      cvc5.Re('+'),
+                      cvc5.Re('#'),
+                      cvc5.Re('/'))
+  RE_STAR = cvc5.Star(cvc5.Union(RE_QMARK, cvc5.Range('α', 'ω'))) #TODO: rewrite this into unicode
   TOKENS = ['α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'ς', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω']
 
   # Encoding the special tokens
@@ -32,7 +34,7 @@ class ReExp:
       if first:
         first = False
       else:
-        res.append(z3.Re('/'))
+        res.append(cvc5.Re('/'))
         
       if '?' in res_split or '*' in res_split or '${iot:ClientId}' in res_split:
         x_split = [y for y in re.split(ReExp.WILDS_RE, res_split) if y]
@@ -43,18 +45,18 @@ class ReExp:
             case '*':
               res.append(ReExp.RE_STAR)
             case '${iot:ClientId}':
-              res.append(z3.Re(client_id))
+              res.append(cvc5.Re(client_id))
             case _:
-              res.append(z3.Re(z))
+              res.append(cvc5.Re(z))
       # elif res_split == '+' or res_split == '#':
       elif len(res_split) == 1:
-        res.append(z3.Re(res_split))
+        res.append(cvc5.Re(res_split))
       elif res_split in tokenable_string:
         current_token_index = tokenable_string.index(res_split)
         current_token = ReExp.TOKENS[current_token_index]
-        res.append(z3.Re(current_token))
+        res.append(cvc5.Re(current_token))
       else:
-        res.append(z3.Re(res_split))
+        res.append(cvc5.Re(res_split))
 
       # else:
       #   if res_split in tokenable_string:
@@ -65,7 +67,7 @@ class ReExp:
       #   current_token = ReExp.TOKENS[current_token_index]
       #   res.append(z3.Re(current_token))
                 
-    return res.pop() if len(res) == 1 else z3.Concat(res)
+    return res.pop() if len(res) == 1 else cvc5.Concat(res)
   
   @staticmethod
   def parse_thing(res: str, thing_name: str, thing_attrs: dict[str, str]):

@@ -1,3 +1,4 @@
+import cvc5.pythonic as cvc5
 import z3
 
 class TopicWitness:
@@ -22,12 +23,12 @@ class TopicWitness:
     model = solver.model()
     self.id1 = self._token_replace('id_1')
     self.id2 = self._token_replace('id_2')
-    if model[z3.String('topic')] != None:
+    if model[cvc5.String('topic')] != None:
       topic = self._token_replace('topic')
     else:
       topic_lvs = []
       for i in range(8):
-        if model[z3.String('topic_lv_' + str(i))] is not None:
+        if model[cvc5.String('topic_lv_' + str(i))] is not None:
           topic_lvs.append(self._token_replace('topic_lv_' + str(i)))
       topic = '/'.join(topic_lvs)
     self.topic = topic
@@ -52,7 +53,7 @@ class TopicWitness:
 
   def _token_replace(self, string_for):
     model = self.solver.model()
-    base_string = str(model[z3.String(string_for)]).strip('"')
+    base_string = str(model[cvc5.String(string_for)]).strip('"')
 
     result_string = []
     for sub_string in base_string.split('/'):
