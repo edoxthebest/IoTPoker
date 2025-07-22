@@ -111,3 +111,7 @@ class TestReExp(unittest.TestCase):
                             cvc5.Re('/'),
                             cvc5.Re('\u03b3'))
     self.assertEqual(re_parsed, re_expected)
+
+  def test_radix(self):
+    res = '$aws/aaa*'
+    print(ReExp.radix(res))

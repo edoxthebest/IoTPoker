@@ -1,5 +1,6 @@
 import cvc5.pythonic as cvc5
 import re
+import string
 import z3
 from policytool.iot import IoT
 from cvc5 import Kind
@@ -12,7 +13,7 @@ class ReExp:
                       cvc5.Re('+'),
                       cvc5.Re('#'),
                       cvc5.Re('/'))
-  RE_STAR = cvc5.Star(cvc5.Union(RE_QMARK, cvc5.Range('α', 'ω'))) #TODO: rewrite this into unicode
+  RE_STAR = cvc5.Star(cvc5.Union( cvc5.Range('α', 'ω'),RE_QMARK, )) #TODO: rewrite this into unicode
   TOKENS = ['α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'ς', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω']
 
   # Encoding the special tokens
@@ -80,3 +81,20 @@ class ReExp:
                    thing_attrs[attr], res)
       
     return res
+  
+  @staticmethod
+  def radix(resource: str):
+    resource = resource.replace('$aws', 'aws')
+    non_problematic = list(string.ascii_letters + string.digits + '/')
+    first_problematic_index = next((i for i, v in enumerate(resource) if v not in non_problematic), -1)
+    
+    if first_problematic_index == -1:
+      res = resource
+    else:
+      res = resource[:first_problematic_index]
+
+    non_problematic_cvc5 = cvc5.Union(cvc5.Range('a', 'z'), 
+                                      cvc5.Range('A', 'Z'), 
+                                      cvc5.Range('0', '9'), 
+                                      cvc5.Re('/'))
+    return cvc5.Concat(cvc5.Re(res), cvc5.Star(non_problematic_cvc5)), len(res)

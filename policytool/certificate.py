@@ -56,7 +56,26 @@ class Certificate:
   def get_receive(self, topic: z3.SeqRef, id: z3.SeqRef):
     return self.policy.build_receive(topic, id, self.safe_strings)
   
+  def get_publish_radix(self, topic: cvc5.ExprRef):
+    return self.policy.build_publish_radix(topic)
+  
+  def get_subscribe_radix(self, topic: cvc5.ExprRef):
+    return self.policy.build_subscribe_radix(topic)
+  
+  def get_receive_radix(self, topic: cvc5.ExprRef):
+    return self.policy.build_receive_radix(topic)
+  
+  def _get_radix_solver(self, other: 'Certificate', topic):
+    s = cvc5.SolverFor('QF_SLIA')
+    s.setOption('strings-exp', 'true')
+    cons = [self.get_publish_radix(topic), other.get_receive_radix(topic), other.get_subscribe_radix(topic)]
+    cons = sorted(cons, key=lambda x: x[1], reverse=True)
+    s.add([con for con, _ in cons])
+    return s
+  
   def _get_basic_solver(self, other, id1, id2, topic, topic_filter, topic_lvls = []):
+    # s = cvc5.SolverFor('QF_SLIA')
+    # s.setOption('strings-exp', 'true')
     s = cvc5.Solver()
 
     for topic_level in topic_lvls:
@@ -76,6 +95,12 @@ class Certificate:
     id2 = cvc5.String('id_2')
     topic = cvc5.String('topic')
     topic_filter = cvc5.String('topic_filter')
+    
+    # Radix necessary condition:
+    radix_solver = self._get_radix_solver(other, topic)
+    if radix_solver.check() == cvc5.unsat:
+      del radix_solver
+      return None, False
     
     # Init solver and test for the following necessary conditions:
     easy_solver = self._get_basic_solver(other, id1, id2, topic, topic_filter)

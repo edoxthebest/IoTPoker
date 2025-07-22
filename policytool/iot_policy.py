@@ -212,7 +212,28 @@ class IoTPolicy(Policy):
     parsed_allow = [ReExp.parse(res, tokenable_strings, client_id, thing_name, thing_attrs) for res in allow_res]
     parsed_deny = [ReExp.parse(res, tokenable_strings, client_id, thing_name, thing_attrs) for res in deny_res]
 
-    re_allow = cvc5.Union(parsed_allow) if allow_res else ReExp.RE_EMPTY
-    re_deny = cvc5.Union(parsed_deny) if deny_res else ReExp.RE_EMPTY
+    re_allow = cvc5.Union(parsed_allow) if allow_res else '' #ReExp.RE_EMPTY
+    re_deny = cvc5.Union(parsed_deny) if deny_res else ''#ReExp.RE_EMPTY
 
-    return cvc5.And(cvc5.InRe(for_variable, re_allow), cvc5.Not(cvc5.InRe(for_variable, re_deny)))
+    return cvc5.And(cvc5.InRe(for_variable, re_allow) if allow_res else False, 
+                    cvc5.Not(cvc5.InRe(for_variable, re_deny) if deny_res else False))
+    
+  def build_publish_radix(self, topic: cvc5.ExprRef):
+    return self.build_radix(self._pub_alw_res, topic)
+  
+  def build_subscribe_radix(self, topic: cvc5.ExprRef):
+    return self.build_radix(self._sub_alw_res, topic)
+
+  def build_receive_radix(self, topic: cvc5.ExprRef):
+    return self.build_radix(self._rec_alw_res, topic)
+    
+  def build_radix(self, allow_res: list, topic: cvc5.ExprRef):
+    if len(allow_res) == 0:
+      return False, 0
+    radix_allows = []
+    shortest_lenght = 100
+    for res in allow_res:
+      re_exp, lenght = ReExp.radix(res)
+      radix_allows.append(re_exp)
+      shortest_lenght = lenght if lenght < shortest_lenght else shortest_lenght
+    return cvc5.InRe(topic, cvc5.Union(radix_allows)), shortest_lenght
