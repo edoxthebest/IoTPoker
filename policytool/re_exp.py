@@ -1,4 +1,5 @@
 import re
+import string
 import z3
 from policytool.iot import IoT
 
@@ -10,7 +11,7 @@ class ReExp:
                       z3.Re('+'),
                       z3.Re('#'),
                       z3.Re('/'))
-  RE_STAR = z3.Star(z3.Union(RE_QMARK, z3.Range('α', 'ω'))) #TODO: rewrite this into unicode
+  RE_STAR = z3.Star(z3.Union(z3.Range('α', 'ω'), RE_QMARK )) #TODO: rewrite this into unicode
   TOKENS = ['α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'ς', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω']
 
   # Encoding the special tokens
@@ -78,3 +79,20 @@ class ReExp:
                    thing_attrs[attr], res)
       
     return res
+
+  @staticmethod
+  def radix(resource: str):
+    resource = resource.replace('$aws', 'aws')
+    non_problematic = list(string.ascii_letters + string.digits + '/')
+    first_problematic_index = next((i for i, v in enumerate(resource) if v not in non_problematic), -1)
+    
+    if first_problematic_index == -1:
+      res = resource
+    else:
+      res = resource[:first_problematic_index]
+
+    non_problematic_z3 = z3.Union(z3.Range('a', 'z'), 
+                                      z3.Range('A', 'Z'), 
+                                      z3.Range('0', '9'), 
+                                      z3.Re('/'))
+    return z3.Concat(z3.Re(res), z3.Star(non_problematic_z3)), len(res)

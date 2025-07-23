@@ -14,16 +14,36 @@ parser.add_argument('-c', type=int, default=1, help='Number of tests carried out
 parser.add_argument('--debug', action='store_true')
 parser.add_argument('--info', action='store_true')
 parser.add_argument('-v', '--verbose', action='store_true')
+parser.add_argument('-g', '--generate', action='store_true')
+parser.add_argument('-C', '--config', action='store_true')
 args = parser.parse_args()
 if args.debug:
-  logging.StreamHandler.terminator = '\r'
+  # logging.StreamHandler.terminator = '\r'
   logging.getLogger('IoT:Poker').setLevel(logging.DEBUG)
 if args.info:
   logging.StreamHandler.terminator = '\r'
   logging.getLogger('IoT:Poker').setLevel(logging.INFO)
 power_two_tests = args.seq == None
-
 test_range = range(args.min, args.n) if power_two_tests else range(len(args.seq))
+
+if args.generate:
+  flaw_secure_max = 258
+  
+  with open('test.perms', 'w') as file:  
+    for test_n in test_range:
+      for test_c in range(args.c):
+        policies = [str(x + 1) for x in random.sample(range(flaw_secure_max), args.seq[test_n])]
+        file.write(','.join(policies) + '\n')
+  exit(0)
+  
+
+if args.config:
+  policies_nos = []
+  test_counter = 0
+  with open('test.perms', 'r') as file:
+    for line in file:
+      policies_nos.append([int(i) for i in line.split(',')])
+
 
 bench_dir = args.dir
 start_time = time.time()
@@ -51,10 +71,21 @@ for test_n in test_range:
     start_time_c = time.time()
 
     certs = []
-    for cert_count in range(max_certs):
-      pol_name, pol = random.choice(list(policies.items()))
-      cert = Certificate([pol], f'cert_{cert_count}')
-      certs.append(cert)
+    if args.config:
+      for pol_no in policies_nos[test_counter]:
+        if pol_no > 216:
+          pol_name = f'FLAW1-Secure-{pol_no - 216}.json'
+        else:
+          pol_name = f'FLAW1-Error-{pol_no}.json'
+        pol = policies[pol_name]
+        cert = Certificate([pol], f'cert_{pol_no}({pol_name})')
+        certs.append(cert)
+      test_counter += 1
+    else:
+      for cert_count in range(max_certs):
+        pol_name, pol = random.choice(list(policies.items()))
+        cert = Certificate([pol], f'cert_{cert_count}({pol_name})')
+        certs.append(cert)
 
     start_time = time.time()
     policy_graph = PolicyGraph(certs)

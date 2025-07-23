@@ -215,3 +215,23 @@ class IoTPolicy(Policy):
     re_deny = z3.Union(parsed_deny) if deny_res else ReExp.RE_EMPTY
 
     return z3.And(z3.InRe(for_variable, re_allow), z3.Not(z3.InRe(for_variable, re_deny)))
+  
+  def build_publish_radix(self, topic: z3.SeqRef):
+    return self.build_radix(self._pub_alw_res, topic)
+  
+  def build_subscribe_radix(self, topic: z3.SeqRef):
+    return self.build_radix(self._sub_alw_res, topic)
+
+  def build_receive_radix(self, topic: z3.SeqRef):
+    return self.build_radix(self._rec_alw_res, topic)
+    
+  def build_radix(self, allow_res: list, topic: z3.SeqRef):
+    if len(allow_res) == 0:
+      return False, 0
+    radix_allows = []
+    shortest_lenght = 100
+    for res in allow_res:
+      re_exp, lenght = ReExp.radix(res)
+      radix_allows.append(re_exp)
+      shortest_lenght = lenght if lenght < shortest_lenght else shortest_lenght
+    return z3.InRe(topic, z3.Union(radix_allows)), shortest_lenght
