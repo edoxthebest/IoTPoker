@@ -33,10 +33,7 @@ if args.generate:
   with open('test.perms', 'w') as file:  
     for test_n in test_range:
       for test_c in range(args.c):
-        policies = []
-        for cert_count in range(args.seq[test_n]):
-          policies_no = str(random.choice(range(flaw_secure_max)) + 1)
-          policies.append(policies_no)
+        policies = [str(x + 1) for x in random.sample(range(flaw_secure_max), args.seq[test_n])]
         file.write(','.join(policies) + '\n')
   exit(0)
   
