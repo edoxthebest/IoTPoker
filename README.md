@@ -59,42 +59,28 @@ More queries are shown in the following table.
 ### RQ2: How does IoT:Poker scale when an IoT configuration's size (number of certificates) grows?
 
 The code provided in `real_world_benchmark.py` will instead construct graphs of different sizes loading policies at random from a specified configuration folder.
-The following command reproduce the experiments.
+The following command reproduce the experiments using the generated sequence of certificates to use which can be found in `test.perms`.
 
 ```bash
-python real_world_benchmark.py tests/policies/policy_benchmark/FLAW1 -c 30 --seq 20 40 60 80 90 100
+python real_world_benchmark.py tests/policies/policy_benchmark/FLAW1 -c 30 --seq 20 40 60 80 100 120 140 160 180 200 220 240 258 -C
 ```
 
 #### Average performance over 30 executions:
 
-The following table corresponds to Table 2 of the paper.
+The following tables correspond to Table 3 of the paper, comparing the execution times of the two SMT solvers.
 
-| Size | Nodes  | Hard strategies | Graph time (s) | 1000 queries time (s) |
-| ---- | ------ | --------------- | -------------- | --------------------- |
-| 20   | 280.8  | 4.2             | 11.921         | 0.0063                |
-| 40   | 995.4  | 11.4            | 38.693         | 0.0082                |
-| 60   | 2213.2 | 22.0            | 68.082         | 0.0115                |
-| 80   | 4014.8 | 36.3            | 128.33         | 0.0141                |
-| 90   | 4962.0 | 49.5            | 181.66         | 0.0153                |
-| 100  | 6344.3 | 49.4            | 179.26         | 0.0172                |
-
-The results are consistent with the theoretical complexity, which is quadratic on the configuration's size, as shown by the following regression obtained through the least squares method.
-![regression](img/regression.png)
-
-#### Fastest and slowest runs details:
-
-|         | Size | Nodes | Hard strategies | Graph time (s) |
-| ------- | ---- | ----- | --------------- | -------------- |
-| Fastest | 20   | 396   | 0               | 0.65           |
-|         | 40   | 852   | 0               | 3.47           |
-|         | 60   | 1802  | 7               | 22.22          |
-|         | 80   | 3527  | 11              | 46.18          |
-|         | 90   | 4518  | 31              | 65.06          |
-|         | 100  | 5803  | 19              | 57.78          |
-|         |      |       |                 |
-| Slowest | 20   | 205   | 13              | 63.54          |
-|         | 40   | 983   | 28              | 150.48         |
-|         | 60   | 2268  | 56              | 189.75         |
-|         | 80   | 4612  | 69              | 249.5          |
-|         | 90   | 4967  | 91              | 293.24         |
-|         | 100  | 7082  | 90              | 261.55         |
+| Size | Nodes   | Hard strategies | Graph time min. \[cvc5\] (s) | Graph time min. \[z3\] (s) | Graph time avg. \[cvc5\] (s) | Graph time avg. \[z3\] (s) | Graph time max. \[cvc5\] (s) | Graph time max. \[z3\] (s) | 1000 queries time (s) |
+| ---- | ------- | --------------- | ---------------------------- | -------------------------- | ---------------------------- | -------------------------- | ---------------------------- | -------------------------- | --------------------- |
+| 20   | 264.6   | 1.8             | 0.42                         | 1.22                       | 2.87                         | 4.94                       | 12.00                        | 10.69                      | 0.0060                |
+| 40   | 973.0   | 4.5             | 2.30                         | 6.17                       | 6.28                         | 12.64                      | 16.55                        | 20.28                      | 0.0086                |
+| 60   | 2211.2  | 5.6             | 2.93                         | 7.04                       | 9.22                         | 18.22                      | 23.39                        | 30.00                      | 0.0108                |
+| 80   | 3903.9  | 13.6            | 5.93                         | 18.67                      | 16.34                        | 30.72                      | 29.08                        | 47.88                      | 0.0136                |
+| 100  | 6098.1  | 16.7            | 7.50                         | 18.89                      | 19.46                        | 39.82                      | 36.55                        | 58.76                      | 0.0167                |
+| 120  | 8764.2  | 21.5            | 13.58                        | 35.17                      | 24.69                        | 52.35                      | 41.49                        | 87.98                      | 0.0198                |
+| 140  | 12080.1 | 28.7            | 18.61                        | 42.75                      | 31.06                        | 64.81                      | 46.63                        | 100.06                     | 0.0244                |
+| 160  | 15415.9 | 29.6            | 20.03                        | 51.89                      | 33.01                        | 72.11                      | 44.43                        | 90.16                      | 0.0280                |
+| 180  | 19571.7 | 37.0            | 26.61                        | 69.91                      | 37.87                        | 86.89                      | 52.79                        | 109.81                     | 0.0318                |
+| 200  | 24209.9 | 45.8            | 31.62                        | 78.76                      | 46.06                        | 103.63                     | 57.34                        | 125.65                     | 0.0349                |
+| 220  | 29066.2 | 50.5            | 32.39                        | 95.42                      | 50.93                        | 117.21                     | 62.02                        | 129.81                     | 0.0393                |
+| 240  | 34732.6 | 59.0            | 42.11                        | 114.48                     | 57.68                        | 130.17                     | 62.41                        | 141.43                     | 0.0430                |
+| 258  | 40019.0 | 65.0            | 62.35                        | 141.24                     | 62.67                        | 144.20                     | 63.53                        | 152.19                     | 0.0473                |
