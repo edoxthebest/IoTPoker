@@ -1,3 +1,4 @@
+from enum import Enum
 import logging
 import time
 import z3
@@ -24,6 +25,12 @@ RE_SLASH = [RE_STAR_NO_SLASH, cvc5.Re('/')]
 def print_model(model):
   for k,v in sorted([(k, model[k]) for k in model], key = lambda x: str(x[0])):
     print(f'\t{k}\t->\t{v}')
+    
+class SolverStrategy(Enum):
+  RADIX = 1
+  EARLY_EXIT = 2
+  EARLY_SUCCESS = 3
+  HARD = 4
 
 class Certificate:
   @property
@@ -88,6 +95,7 @@ class Certificate:
     return s
   
   def get_topic_witness(self, other: 'Certificate') -> TopicWitness:
+    solver_times = [0.0, 0.0, 0.0, 0.0]
     self._safe_strings = list(self.policy.get_safe_strings_for(other.policy))
     other._safe_strings = self._safe_strings
     
@@ -97,22 +105,31 @@ class Certificate:
     topic_filter = cvc5.String('topic_filter')
     
     # Radix necessary condition:
+    solver_time = time.time()
     radix_solver = self._get_radix_solver(other, topic)
     if radix_solver.check() == cvc5.unsat:
       del radix_solver
-      return None, False
+      solver_times[0] = time.time() - solver_time
+      return None, SolverStrategy.RADIX, solver_times
+    solver_times[0] = time.time() - solver_time
     
     # Init solver and test for the following necessary conditions:
+    solver_time = time.time()
     easy_solver = self._get_basic_solver(other, id1, id2, topic, topic_filter)
     if easy_solver.check() == cvc5.unsat:
       del easy_solver
-      return None, False
+      solver_times[1] = time.time() - solver_time
+      return None, SolverStrategy.EARLY_EXIT, solver_times
+    solver_times[1] = time.time() - solver_time
     
     # Test for an easy solution: c2 can subscribe to t
+    solver_time = time.time()
     easy_solver.add(topic == topic_filter)
     if easy_solver.check() == cvc5.sat:
-      return TopicWitness(self, other, easy_solver, self.safe_strings), False
-    
+      solver_times[2] = time.time() - solver_time
+      return TopicWitness(self, other, easy_solver, self.safe_strings), SolverStrategy.EARLY_SUCCESS, solver_times
+    solver_times[2] = time.time() - solver_time
+
     topic_levels = cvc5.Strings('topic_lv_0 topic_lv_1 topic_lv_2 '
                               'topic_lv_3 topic_lv_4 topic_lv_5 '
                               'topic_lv_6 topic_lv_7')
@@ -162,11 +179,13 @@ class Certificate:
       logger.debug(f'\t[{time.time() - start_time:.4f}] #{topic_level+1} topic levels is {cvc5.sat}')
       if logger.level == logging.DEBUG:
         print_model(hard_solver.model())
-      return TopicWitness(self, other, hard_solver, self.safe_strings), True
+      solver_times[3] = time.time() - solver_time
+      return TopicWitness(self, other, hard_solver, self.safe_strings), SolverStrategy.HARD, solver_times
 
     logger.debug(f'\t[{time.time() - global_t:.4f}] No solution found.')
     del hard_solver
-    return None, True
+    solver_times[3] = time.time() - solver_time
+    return None, SolverStrategy.HARD, solver_times
 
   
   def get_topic_witness_old(self, other: 'Certificate') -> TopicWitness:

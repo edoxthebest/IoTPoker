@@ -2,7 +2,7 @@ import logging
 import matplotlib.pyplot as plt
 import networkx as nx
 import z3
-from policytool.certificate import Certificate
+from policytool.certificate import Certificate, SolverStrategy
 from policytool.policy_reader import PolicyReader
 from policytool.node import Node
 from policytool.topic_witness import TopicWitness
@@ -28,14 +28,54 @@ class PolicyGraph:
     return self._graph
   
   @property
+  def known_witness_count(self):
+    return self._known_witness_counts
+  
+  @property
+  def radix_solver_invokes(self):
+    return self._radix_solver_counts
+  
+  @property
+  def radix_solver_times(self):
+    return self._radix_solver_times
+    
+  @property
+  def early_exit_solver_invokes(self):
+    return self._early_exit_solver_counts
+  
+  @property
+  def early_exit_solver_times(self):
+    return self._early_exit_solver_times
+    
+  @property
+  def early_success_solver_invokes(self):
+    return self._early_success_solver_counts
+  
+  @property
+  def early_success_solver_times(self):
+    return self._early_success_solver_times
+    
+  @property
   def hard_solver_invokes(self):
     return self._hard_solver_counts
+  
+  @property
+  def hard_solver_times(self):
+    return self._hard_solver_times
   
   def __init__(self, certificates: list[Certificate]):
     self._graph = nx.DiGraph()
     self._simple_graph = nx.DiGraph()
     self._certs = certificates
+    self._radix_solver_counts = 0
+    self._radix_solver_times = []
+    self._early_exit_solver_counts = 0
+    self._early_exit_solver_times = []
+    self._early_success_solver_counts = 0
+    self._early_success_solver_times = []
     self._hard_solver_counts = 0
+    self._hard_solver_times = []
+    self._known_witness_counts = 0
     self._known_witnesses = dict()
   
   # Algorithm 1
@@ -51,13 +91,32 @@ class PolicyGraph:
           if old_witness is None:
             witness = None
           else:
-            witness = TopicWitness.from_other_witness(old_witness, cert1, cert2) 
+            witness = TopicWitness.from_other_witness(old_witness, cert1, cert2)
+          
+          self._known_witness_counts += 1
           logger.debug(f'\t A witness is known: {witness}')
         else:
-          witness, hard_solver_req = cert1.get_topic_witness(cert2)
+          witness, strategy_used, solver_times = cert1.get_topic_witness(cert2)
           self._known_witnesses[(cert1_id, cert2_id)] = witness
-          if hard_solver_req:
-            self._hard_solver_counts += 1
+          match(strategy_used):
+            case SolverStrategy.RADIX:
+              self._radix_solver_counts += 1
+              self._radix_solver_times.append(solver_times[0])
+            case SolverStrategy.EARLY_EXIT:
+              self._early_exit_solver_counts += 1
+              self._radix_solver_times.append(solver_times[0])
+              self._early_exit_solver_times.append(solver_times[1])
+            case SolverStrategy.EARLY_SUCCESS:
+              self._early_success_solver_counts += 1
+              self._radix_solver_times.append(solver_times[0])
+              self._early_exit_solver_times.append(solver_times[1])
+              self._early_success_solver_times.append(solver_times[2])
+            case SolverStrategy.HARD:
+              self._hard_solver_counts += 1
+              self._radix_solver_times.append(solver_times[0])
+              self._early_exit_solver_times.append(solver_times[1])
+              self._early_success_solver_times.append(solver_times[2])              
+              self._hard_solver_times.append(solver_times[3])
 
         if witness is not None:
           # TODO: should change cert.name to cert
