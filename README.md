@@ -1,8 +1,18 @@
 # IoT:Poker
 
-IoT:Poker is a Python library which provides utilities to construct a Symbolic Information Flow Graph of a given IoT policy configuration.
+IoT:Poker is a Python library that provides utilities for constructing a Symbolic Information Flow Graph for a given IoT policy configuration, as presented in the corresponding paper "Checking Information Flow in Cloud-based IoT Access Control Policies" by Lorenzo Ceragioli, Letterio Galletta, and Edoardo Lunati.
 
-## Requirements
+We evaluate the tool’s effectiveness in detecting misconfigurations and unintended information flows using a case study designed to capture a typical Build Automation System. Although synthetic, the case study reflects the main structural constraints and operational patterns of real IoT systems.
+
+In addition, we assess the tool’s performance by randomly synthesising a network of devices and associating them with real-world IoT policies available online [15, in the related paper]: we show that IoT:Poker scales well in practice as the network grows.
+## Installation
+A docker image is provided to run the tool without installing any dependencies. To build the docker image, run the following command:
+
+```bash
+docker build -t iotpoker .
+```
+
+## Manual installation
 
 The library requires the following packages:
 
@@ -25,6 +35,10 @@ pip install -r policytool/requirements.txt
 
 To reproduce the experiment of the tool on the case study discussed in the paper use the following command:
 
+```bash
+docker run --rm iotpoker case-study
+```
+or, alternatively, if you have installed the dependencies manually, run:
 ```bash
 python case_study_demo.py
 ```
@@ -63,6 +77,10 @@ The code provided in `real_world_benchmark.py` will instead construct graphs of 
 The following command reproduce the experiments using the generated sequence of certificates to use which can be found in `test.perms`.
 
 ```bash
+docker run --rm -it iotpoker benchmark
+```
+or
+```bash
 python real_world_benchmark.py tests/policies/policy_benchmark/FLAW1 -c 30 --seq 20 40 60 80 100 120 140 160 180 200 220 240 258 -C
 ```
 
@@ -85,3 +103,14 @@ The following tables correspond to Table 3 of the paper, comparing the execution
 | 220  | 29066.2 | 50.5            | 32.39                        | 95.42                      | 50.93                        | 117.21                     | 62.02                        | 129.81                     | 0.0393                |
 | 240  | 34732.6 | 59.0            | 42.11                        | 114.48                     | 57.68                        | 130.17                     | 62.41                        | 141.43                     | 0.0430                |
 | 258  | 40019.0 | 65.0            | 62.35                        | 141.24                     | 62.67                        | 144.20                     | 63.53                        | 152.19                     | 0.0473                |
+
+#### Solver frequency and average time
+To answer how frequently each solver is used and the average time spent on each solver, the following experiment can be run:
+
+```bash
+docker run --rm -it iotpoker benchmark-solvers
+```
+or, alternatively,
+```bash
+python real_world_benchmark_solvers.py tests/policies/policy_benchmark/FLAW1
+``` 
